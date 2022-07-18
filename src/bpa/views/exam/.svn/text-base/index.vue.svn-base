@@ -1,0 +1,144 @@
+<template>
+  <div id="onlineExam">
+    <el-row style="width:100%;height:100%">
+      <el-col :span="20" :offset="2">
+        <el-row :gutter="48">
+          <el-col v-for="item in roleList" :span="6" :key="item.id" class="onlineExam-box">
+            <el-row class="floating" style="">
+              <el-col :span="24" class="floating-title">标  题：{{ item.testName }}</el-col>
+              <el-col :span="24" class="floating-title">总  分：{{ item.totalScore }}</el-col>
+              <!-- <el-col :span="24" class="floating-title">可用时：{{ item.times }}</el-col> -->
+              <el-col :span="24" class="floating-title">状  态：{{ item.done === false ? '未做' : '已做' }}</el-col>
+              <el-col :span="24" class="floating-title">
+                <el-button type="primary" icon="el-icon-edit" @click="goQuestion(item)">去做题</el-button>
+              </el-col>
+            </el-row>
+          </el-col>
+        </el-row>
+      </el-col>
+    </el-row>
+  </div>
+</template>
+
+<script>
+import { queryMyAllTest } from '@/api/examination'
+import { getFormateDate } from '@/utils/common'
+export default {
+  components: {
+  },
+  data() {
+    return {
+      roleList: [],
+      questionObj: {
+        questions: []
+      }
+    }
+  },
+  mounted() {
+    this.getList()
+  },
+  methods: {
+    // 获取考试类型列表
+    getList() {
+      queryMyAllTest().then(res => {
+        console.log(res)
+        res.sort((a, b) => a.createTime - b.createTime).reverse()
+        this.roleList = res.map(item => {
+          item.createTime = getFormateDate(new Date(item.createTime), 'yyyy-MM-dd hh:mm:ss')
+          return item
+        })
+      })
+    },
+    // 处理题的差异
+    goQuestion(val) {
+      // this.questionObj.times = val.times // 倒计时
+      // this.questionObj.subjectId = val.subjectId
+      this.questionObj.testId = val.testId
+      // this.questionObj.testName = val.testName
+      // this.questionObj.totalScore = val.totalScore
+      // this.questionObj.questions = val.questions.map(item => {
+      //   var subject = {
+      //     questionContent: []
+      //   }
+      //   subject.id = item.id
+      //   subject.type = item.type
+      //   subject.singleScore = item.singleScore
+      //   subject.questionTitle = item.questionTitle
+      //   subject.subjectId = item.subjectId
+      //   subject.answer = ''
+      //   if (item.type === 2) {
+      //     subject.answer = []
+      //   }
+      //   if (item.type !== 3) {
+      //     console.log(item.questionContent,777)
+      //     if (item.questionContent.indexOf('|') !== -1) {
+      //       item.questionContent.split('|').map(items => {
+      //         console.log(items, '1111')
+      //         subject.questionContent.push({ name: items })
+      //       })
+      //     } else {
+      //       subject.questionContent = item.questionContent
+      //     }
+      //   } else {
+      //     subject.questionContent = ''
+      //   }
+      //   return subject
+      // })
+
+      const routes = this.$router.resolve({
+        name: 'onlineExamInfo',
+        query: { info: this.questionObj.testId }
+      })
+      window.open(routes.href, '_blank')
+    }
+  }
+}
+</script>
+<style lang="scss" scoped>
+#onlineExam {
+  width: 100%;
+  min-height: calc(100vh - 148px);
+  .onlineExam-box{
+    height: 240px;
+    margin-top:48px;
+    .floating{
+      background-color: #00bcd4;
+      padding: 18px;
+    //   opacity: 0.6;
+      border-radius:5px;
+      height:100%;
+      cursor: pointer;
+      position: relative;
+      transform: translateY(0);
+      transition: transform 1s;
+      .floating-title{
+          font-size: 16px;
+          padding: 10px 0px;
+      }
+    }
+    .floating:after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    height: 8px;
+    width: 100%;
+    box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.4);
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.2);
+    transform: translate(-50%, 0);
+    transition: transform 1s;
+}
+/*鼠标移上去的效果*/
+.floating:hover {
+    transform: translateY(-40px);
+    transition: transform 1s;
+}
+.floating:hover:after {
+    transform: translate(-50%, 40px) scale(0.75);
+    transition: transform 1s;
+}
+  }
+}
+</style>

@@ -1,0 +1,56 @@
+// 文字
+$tc1: #333333;
+$tc2: #666666;
+$tc3: #999999;
+// $tc4: #fb1c1c;
+$tc4: #fb1c1c;
+$tc5: #0066cc;
+$tc6: #535353;
+
+// 背景
+$bc1: #ffffff;
+$bc2: #f8f8f8;
+//$bc2: #F5F5F5;
+$bc3: #3141a9;
+// $bc4: #fb1c1c;
+//$bc4: #2d42af;
+$bc4: #2d42af;
+$bc5: #ebebeb;
+// $bc6: #004C96;
+$bc6: #2d42af;
+$bc7: #2d42af;
+
+//$active-color: #2d42af;
+$active-color: var(--activeColor, #2d42af);
+
+// 分割线
+$dc1: #e5e5e5;
+
+$success: #46c37b !default;
+$warning: #e6a43a !default;
+$danger: #ea3c40 !default;
+$info: #909399 !default;
+
+//红色
+
+$active-red-color: #ed1111;
+
+// // 文字
+// $tc1: #333333;
+// $tc2: #666666;
+// $tc3: #373d41;
+// $tc4: #fb1c1c;
+// $tc5: #427efc;
+
+// // 背景
+// $bc1: #FFFFFF;
+// $bc2: #F5F5F5;
+// $bc3: #1556A8;
+// $bc4: #E4393C;
+// $bc5: #4ba2ef;
+
+// // 分割线
+// $dc1: #dedede;
+
+// 图标颜色
+$ico: #959599;

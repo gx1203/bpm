@@ -1,0 +1,317 @@
+<template>
+  <div id="onlineExaminfo">
+    <div class="jqContent">
+      <!-- <div class="divMaxTime">
+        <div class="divMaxTime-word">剩余作答时间</div>
+        <div class="divMaxTime-time">{{ minutes }}:{{ second }}</div>
+      </div> -->
+      <el-row class="jqContent-box">
+        <el-col :span="20" :offset="2" class="jqContent-title"> {{ examInfo.testName }}</el-col>
+        <el-col :span="20" :offset="2" class="jqContent-ts">
+          {{$t('testSystem.ThisSetOfPapersContains')}}{{ questionNum }}{{$t('testSystem.ThisSetOfPapersHasATotalOfTopicsATotalOf')}}{{ examInfo.totalScore }}{{$t('testSystem.point')}}。{{$t('testSystem.ThePassingScoreIs')}}{{ examInfo.passScore }}{{$t('testSystem.point')}}。
+        </el-col>
+        <el-col :span="20" :offset="2">
+          <el-row v-for="(item, index) in examInfo.questions" :key="index" class="div_question">
+            <el-col :span="24" class="div_title_question_all">
+              {{ index + 1 }}. {{ item.questionTitle }}
+            </el-col>
+            <el-col v-if="item.type === 1" :span="24" class="div_table_radio_question">
+              <el-radio-group v-model="item.answer">
+                <el-radio v-for="(items, indexs) in item.questionContent" :key="indexs" :label="'选项'  + (indexs + 1)"> <p class="checkClass">{{ items.name }}</p></el-radio>
+              </el-radio-group>
+            </el-col>
+            <el-col v-if="item.type === 2" :span="24" class="div_table_radio_question">
+              <el-checkbox-group  v-model="item.answer">
+                <el-checkbox v-for="(items, indexs) in item.questionContent" :key="indexs" :label="'选项' + (indexs + 1)"><p class="checkClass">{{ items.name }}</p></el-checkbox>
+              </el-checkbox-group>
+            </el-col>
+            <el-col v-if="item.type === 3" :span="24" class="div_table_radio_question">
+              <el-input
+                :autosize="{ minRows: 4, maxRows: 8}"
+                v-model="item.answer"
+                type="textarea"
+                :placeholder="$t('testSystem.PleaseEnterTheAnswer')"/>
+            </el-col>
+          </el-row>
+        </el-col>
+        <el-col :span="2" :offset="11" style="margin-bottom:24px">
+          <el-button type="primary" style="text-algin:center;width:100%" @click="submitTestPaper">{{$t('testSystem.InVolume')}}</el-button>
+        </el-col>
+      </el-row>
+    </div>
+    <el-dialog :visible.sync="answerDialog" width="45%" :title="$t('testSystem.testScore')" append-to-body>
+      <div v-if="answerData.qualified==1">
+        {{$t('testSystem.CongratulationsOnYourPassingThisExamYourExamScoreIs')}}{{ answerData.score }}{{$t('testSystem.point')}},{{$t('testSystem.ClickOKToReturn')}}
+      </div>
+      <div v-if="answerData.qualified==0">
+        {{$t('testSystem.ImSorryThatYouFailedInThisExamYourExamScoreIs')}}{{ answerData.score }}{{$t('testSystem.point')}}，{{$t('testSystem.DoYouInitiateAReexamination')}}
+      </div>
+      <div v-if="answerData.qualified==0" slot="footer" class="dialog-footer">
+        <el-button @click="submit">{{$t('testSystem.cancel')}}</el-button>
+        <el-button type="primary" @click="repeatAnswer">{{$t('testSystem.makeupTest')}}</el-button>
+      </div>
+      <div v-if="answerData.qualified==1" slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submit">{{$t('testSystem.verify')}}</el-button>
+      </div>
+    </el-dialog>
+  </div>
+</template>
+
+<script>
+import { answerTest, queryMyAllTest, getTestPapersDetailsInfo } from '@/bpa/api/examination'
+
+import { getFormateDate } from '@/bpa/utils/common'
+export default {
+  components: {
+  },
+  data() {
+    return {
+      isAnswer: true,
+      answerData: {},
+      answerDialog: false,
+      questionNum: '0',
+      examInfo: {},
+      minutes: 0,
+      seconds: 0
+    }
+  },
+  computed: {
+    second: function() {
+      return this.num(this.seconds)
+    },
+    minute: function() {
+      return this.num(this.minutes)
+    }
+  },
+  watch: {
+    second: {
+      handler(newVal) {
+        this.num(newVal)
+      }
+    },
+    minute: {
+      handler(newVal) {
+        this.num(newVal)
+      }
+    }
+  },
+  mounted() {
+    // this.add()
+    this.getDetail()
+  },
+  methods: {
+    num: function(n) {
+      return n < 10 ? '0' + n : '' + n
+    },
+    getDetail() {
+      getTestPapersDetailsInfo(this.$route.query.info).then(res => {
+        console.log(res)
+        this.examInfo = res
+        this.questionNum = res.questions.length
+        // this.minutes = parseInt(res.times)
+        this.examInfo.questions = res.questions.map(item => {
+          var subject = {
+            questionContent: []
+          }
+          subject.id = item.id
+          subject.type = item.type
+          subject.singleScore = item.singleScore
+          subject.questionTitle = item.questionTitle
+          subject.subjectId = item.subjectId
+          subject.answer = ''
+          if (item.type === 2) {
+            subject.answer = []
+          }
+          if (item.type !== 3) {
+            if (item.questionContent.indexOf('|') !== -1) {
+              item.questionContent.split('|').map(items => {
+                console.log(items, '1111')
+                subject.questionContent.push({ name: items })
+              })
+            } else {
+              subject.questionContent = item.questionContent
+            }
+          } else {
+            subject.questionContent = ''
+          }
+          return subject
+        })
+        console.log(this.examInfo.questions, 999)
+      })
+    },
+    // 定时器
+    add: function() {
+      var _this = this
+      var time = window.setInterval(function() {
+        if (_this.seconds === 0 && _this.minutes !== 0) {
+          _this.seconds = 59
+          _this.minutes -= 1
+        } else if (_this.minutes === 0 && _this.seconds === 0) {
+          _this.seconds = 0
+          _this.submitTestPaper()
+          window.clearInterval(time)
+        } else {
+          _this.seconds -= 1
+        }
+      }, 1000)
+    },
+    // 重新考试
+    repeatAnswer() {
+      location.reload()
+    },
+    submit() {
+      window.opener.location.reload()
+      window.open('', '_self').close()
+      this.answerDialog = false
+    },
+    // 提交试卷
+    submitTestPaper() {
+      this.isAnswer = true
+      var newObj = {}
+      newObj.subjectId = this.examInfo.subjectId
+      newObj.testId = this.examInfo.testId
+      newObj.testName = this.examInfo.testName
+      newObj.totalScore = this.examInfo.totalScore
+      newObj.bpmId = '1'
+      newObj.questions = this.examInfo.questions.map(item => {
+        var questions = {}
+        questions.id = item.id
+        questions.questionTitle = item.questionTitle
+        questions.singleScore = item.singleScore
+        questions.subjectId = item.subjectId
+        questions.answer = item.answer
+        questions.questionContent = item.questionContent
+        if (item.type === 2) {
+          questions.answer = item.answer.join('|')
+        }
+        if (item.type !== 3) {
+          var questionContent = []
+          item.questionContent.map(items => {
+            questionContent.push(items.name)
+          })
+
+          questions.questionContent = questionContent.join('|')
+        }
+        if (item.answer == '') {
+          console.log(item.answer, 111)
+          this.isAnswer = false
+        }
+        return questions
+      })
+      if (this.isAnswer) {
+        answerTest(newObj).then(res => {
+        // console.log(res,11)
+        // this.$message({
+        //   type: 'success',
+        //   message: '试卷已提交！'
+        // })
+          this.answerDialog = true
+          this.answerData = res
+        // window.opener.location.reload()
+        // window.open('', '_self').close()
+        })
+      } else {
+        this.$message({
+          type: 'error',
+          message: this.$t('testSystem.PleaseAnswer')
+        })
+      }
+    }
+  }
+}
+</script>
+<style lang="scss" scoped>
+.checkClass{
+  width: 100%;  
+  display: inline-block;
+    height: auto;  
+    line-height: 30px;
+    word-wrap:break-word;  
+    word-break:break-all;  
+    // overflow: hidden;
+}
+#onlineExaminfo {
+  // width: 100%;
+  // min-height: calc(100vh);
+  overflow: hidden;
+  background: #ddf4ff url('../../../../assets/img/kaosi-bg.jpg') repeat-x;
+  background-size: cover;
+  .divMaxTime{
+    text-align: center;
+    width: 80px;
+    background: white;
+    position: fixed;
+    top: 105px;
+    border: 1px solid rgb(219, 219, 219);
+    padding: 8px;
+    z-index: 10;
+    left: 95px;
+    .divMaxTime-word{
+      border-bottom: 1px solid #dbdbdb;
+      height: 30px;
+      line-height: 30px;
+    }
+    .divMaxTime-time{
+      color: Red;
+      font-size: 16px;
+      height: 30px;
+      line-height: 30px;
+    }
+  }
+  .jqContent {
+    width: 80%;
+    background: url('../../../../assets/img/kaosi-bg2.png') no-repeat top center;
+    padding-top: 105px;
+    margin: 0 auto;
+    .jqContent-box{
+      margin-bottom:24px;
+      min-height: calc(100vh - 129px);
+      background: #ffffff;
+      .jqContent-title{
+        font-size: 24px !important;
+        font-weight: bold;
+        color: #19a8ee;
+        vertical-align: middle;
+        padding: 24px 0;
+        margin-top: 10px;
+        line-height: 30px;
+        text-align: center
+      }
+      .jqContent-ts{
+        color: #555555;
+        line-height: 24px;
+        text-align: left;
+        font-size: 16px;
+        padding-bottom: 15px;
+        border-bottom: 1px dashed #ccc;
+      }
+      .div_question{
+        border: 2px solid white;
+        padding: 4px;
+        clear: both;
+        margin: 2px auto 10px;
+        width: 96%;
+        height: auto;
+        .div_title_question_all{
+          padding-top: 2px;
+          font-size: 15px;
+          color: #444444;
+          font-weight: bold;
+          height: auto;
+          line-height: 20px;
+          position: relative;
+        }
+        .div_table_radio_question{
+            clear: both;
+            padding-top: 14px;
+            padding-left: 24px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid #EFEFEF;
+            font-size: 15px;
+            color: #333333;
+        }
+      }
+    }
+  }
+}
+</style>

@@ -1,0 +1,143 @@
+﻿<html>
+
+<head>
+    <meta content="IE=10" http-equiv="X-UA-Compatible" />
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <title>OFFICE文档</title>
+    <link href="officecontrol/ntkoStyle.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="officecontrol/ntko.js?v=2"></script>
+    <style type="text/css">
+        #officecontrol {
+            height: 100vh;
+            width: calc(100% - 40px);
+            position: absolute;
+        }
+        body {
+            margin:0 20px;
+            padding: 0px;
+            overflow: hidden;
+            font-size: 18px;
+        }
+        #DataToChild {
+            display: none;
+        }
+        .myButton {
+            box-shadow: none;
+            display: none;
+            border: none;
+            background: #2d42af;
+            -moz-border-radius: 6px;
+            -webkit-border-radius: 6px;
+            border-radius: 6px;
+            cursor: pointer;
+            color: #ffffff;
+            font-family: Arial;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 8px 4px;
+            text-decoration: none;
+        }
+    </style>
+    <script type="text/javascript">
+        var cmd;	//命令类型
+        var type;	//是否可以编辑
+        var axiosUrl;	//服务器地址
+        var item;	//服务器地址
+        function getQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(r[2]);
+            return null;
+        }
+        //在子页面定义的向父页面回传值的方法，方法名可以自定义
+        function ntkoSendDataToParentPage(cmd) {
+            var varData = new Array();
+            varData = JSON.parse(document.getElementById("DataToChild").innerHTML)
+            ntkoBrowser.ntkoSetReturnValueToParentPage("OnData", varData);
+        }
+        function ntkoDataToChild(data) {
+            var _list = [data, item]
+            document.getElementById("DataToChild").innerHTML = JSON.stringify(_list);
+        }
+        function ntkoGetParentData(data) {
+            ntkoDataToChild(data);
+        }
+    </script>
+</head>
+
+<body
+    onload="cmd=getQueryString('cmd');type=getQueryString('type'); item=getQueryString('item');id=getQueryString('id');axiosUrl=getQueryString('href');init(cmd,type,axiosUrl,item,id);"
+    onunload="opener.ntkoCloseEvent();">
+    <form id="form1" enctype="multipart/form-data" style="padding:0px;margin:0px;">
+        <!-- <input class="myButton" type="button" value="打开文档" onclick="OpenOfficeFromServerDir()">  </input> -->
+        <h3 id="DataToChild"></h3>
+        <input class="myButton" id="saveOffice" type="button" value="保存文档" onclick="SaveOfficeToServerDir()"> </input>
+        <!-- <input type="text" id="FileUploadText" name="FileUploadText" style="font-size:18px;border:1px solid #ccc;width:500px;" ></input>
+        <input class="myButton" type="button" id="FileUpload" value="选择附件上传" onclick="AddAttachFile()"></input> -->
+       <div id="officecontrol">
+        <script language="javascript" type="text/javascript"
+                src="officecontrol/ntkoofficecontrol.min.js?v=1"></script>
+        </div>
+    </form>
+    <!--文档打开后触发事件-->
+    <script language="JScript" for="TANGER_OCX" event="OnDocumentOpened(str,obj)">
+        ntkoondocumentopened(str, obj);
+
+    </script>
+    <!--文档关闭后触发事件-->
+    <script language="JScript" for="TANGER_OCX" event="OnDocumentClosed()">
+        if (cmd == 4) ntkoSendDataToParentPage();
+    </script>
+    <!--自定义工具栏按钮触发事件-->
+    <script language="javascript" for="TANGER_OCX" event="OnCustomToolBarCommand(btnIdx)">
+        CustomToolBarCom(btnIdx);
+    </script>
+
+    <script language="javascript" for="TANGER_OCX" event="OnDocActivated(IsActivated)">
+    </script>
+    <script language="javascript" for="TANGER_OCX" event="OnSaveToURL(type,code,html)">
+    </script>
+    <!--自定义菜单栏触发事件-->
+    <script language="JScript" for="TANGER_OCX"
+        event="OnCustomMenuCmd2(menuPos,submenuPos,subsubmenuPos,menuCaption,menuID)">
+            CustomMenuCmd(menuPos, submenuPos, subsubmenuPos, menuCaption, menuID);
+        </script>
+    <!--自定义全屏触发事件-->
+    <script language="javascript" for="TANGER_OCX" event="OnScreenModeChanged(IsFullScreenMode)">
+    </script>
+    <!--自定义文件菜单触发事件-->
+    <script language="javascript" for="TANGER_OCX" event="OnFileCommand(Item, IsCancel)">
+        FileCommand(Item, IsCancel);
+    </script>
+    <!--自定义文件菜单触发事件-->
+    <script language="javascript" for="TANGER_OCX" event="OnWordBeforeRightClick(Item, IsCancel)">
+        //WordBeforeRightClick(Item, IsCancel);
+    </script>
+    <!--自定义word光标改变单触发事件-->
+    <script language="javascript" for="TANGER_OCX" event="OnWordWPSSelChange( )">
+        if (Selection.start != Selection.end) {
+            //Selection.MoveRight ();
+        }
+    </script>
+    <!--自定义EXCEL光标改变单触发事件-->
+    <script language="javascript" for="TANGER_OCX" event="OnSheetSelectionChange(SheetName, row, col)">
+    </script>
+    <!--自定义EXCEL双击触发事件-->
+    <script language="javascript" for="TANGER_OCX" event="OnSheetBeforeDoubleClick(SheetName, row, col, IsCancel)">
+        //alert("OnSheetBeforeDoubleClick"+row);
+    </script>
+    <!--自定义EXCEL单元格改变触发事件-->
+    <script language="javascript" for="TANGER_OCX" event="OnSheetChange(SheetName, row, col)">
+    </script>
+    <script language="JScript" for="TANGER_OCX" event=" OnClickCustomContextMenu(MenuIndex)">
+        ClickCustomContextMenu(MenuIndex);
+    </script>
+    <script language="JScript" for="TANGER_OCX" event=" OnCustomButtonOnMenuCmd(btnPos,btnCaption,btnCmdid)">
+        CustomButtonOnMenuCmd(btnPos, btnCaption, btnCmdid);
+    </script>
+    <script language="JScript" for="TANGER_OCX" event=" OnAddTemplateFromURL(lFuncType, lStatCode, bstrRetData)">
+
+    </script>
+</body>
+
+</html>

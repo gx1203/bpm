@@ -1,0 +1,319 @@
+﻿{    
+    "UID": "100",
+    "Name": "软件开发100",
+    "StartDate": "2007-01-01T08:00:00",
+	"FinishDate": "2007-05-14T15:00:00",
+    "CalendarUID": "1",
+
+    "Calendars": [{
+        "WeekDays": [{
+            "DayWorking": 0,
+            "DayType": 1
+        },
+        {
+            "DayWorking": 1,
+            "DayType": 2,
+            "WorkingTimes": [{
+                "FromTime": "08:00:00",
+                "ToTime": "12:00:00"
+            },
+            {
+                "FromTime": "13:00:00",
+                "ToTime": "17:00:00"
+            }]
+        },
+        {
+            "DayWorking": 1,
+            "DayType": 3,
+            "WorkingTimes": [{
+                "FromTime": "08:00:00",
+                "ToTime": "12:00:00"
+            },
+            {
+                "FromTime": "13:00:00",
+                "ToTime": "17:00:00"
+            }]
+        },
+        {
+            "DayWorking": 1,
+            "DayType": 4,
+            "WorkingTimes": [{
+                "FromTime": "08:00:00",
+                "ToTime": "12:00:00"
+            },
+            {
+                "FromTime": "13:00:00",
+                "ToTime": "17:00:00"
+            }]
+        },
+        {
+            "DayWorking": 1,
+            "DayType": 5,
+            "WorkingTimes": [{
+                "FromTime": "08:00:00",
+                "ToTime": "12:00:00"
+            },
+            {
+                "FromTime": "13:00:00",
+                "ToTime": "17:00:00"
+            }]
+        },
+        {
+            "DayWorking": 1,
+            "DayType": 6,
+            "WorkingTimes": [{
+                "FromTime": "08:00:00",
+                "ToTime": "12:00:00"
+            },
+            {
+                "FromTime": "13:00:00",
+                "ToTime": "17:00:00"
+            }]
+        },
+        {
+            "DayWorking": 0,
+            "DayType": 7
+        }],
+        "Name": "标准",
+        "UID": "1",
+        "BaseCalendarUID": "-1",
+        "IsBaseCalendar": 1,
+        "Exceptions": []
+    }],
+    "Tasks": [{
+            "UID": "2",
+            "ActualDuration": 0,
+            "Duration": 1,
+            "PercentComplete": 0,
+            "Department": null,
+            "ProjectUID": "100",
+            "Milestone": 0,
+            "Finish": "2007-01-01T23:59:59",
+            "ConstraintType": 0,
+            "Principal": null,
+            "ParentTaskUID": "1",
+            "WBS": "1.1",
+            "Assignments": [{
+                "ResourceUID": "1",
+                "TaskUID": "2",
+                "Units": 100
+            }],
+            "Start": "2007-01-01T00:00:00",
+            "OutlineLevel": 2,
+            "OutlineNumber": "1.1",
+            "Critical": 0,
+            "Notes": null,
+            "Summary": 0,
+            "ActualFinish": null,
+            "Name": "确定项目范围",
+            "ID": 2,
+            "Critical2": null,
+            "Weight": 0,
+            "FixedDate": 0,
+            "Work": 4,
+            "ConstraintDate": null,
+            "PredecessorLink": [],
+            "Priority": 500,
+            "ActualStart": null
+        },
+        {
+            "UID": "3",
+            "ActualDuration": 0,
+            "Duration": 2,
+            "PercentComplete": 0,
+            "Department": null,
+            "ProjectUID": "100",
+            "Milestone": 0,
+            "Finish": "2007-01-03T23:59:59",
+            "ConstraintType": 0,
+            "Principal": null,
+            "ParentTaskUID": "1",
+            "WBS": "1.2",
+            "Assignments": [{
+                "ResourceUID": "1",
+                "TaskUID": "3",
+                "Units": 100
+            }],
+            "Start": "2007-01-02T00:00:00",
+            "OutlineLevel": 2,
+            "OutlineNumber": "1.2",
+            "Critical": 0,
+            "Notes": null,
+            "Summary": 0,
+            "ActualFinish": null,
+            "Name": "获得项目所需资金",
+            "ID": 3,
+            "Critical2": null,
+            "Weight": 0,
+            "FixedDate": 0,
+            "Work": 8,
+            "ConstraintDate": null,
+            "PredecessorLink": [{
+                "TaskUID": "3",
+                "LinkLag": 0,
+                "LagFormat": 7,
+                "Type": 1,
+                "PredecessorUID": "2"
+            }],
+            "Priority": 500,
+            "ActualStart": null
+        },
+        {
+            "UID": "4",
+            "ActualDuration": 0,
+            "Duration": 2,
+            "PercentComplete": 0,
+            "Department": null,
+            "ProjectUID": "100",
+            "Milestone": 0,
+            "Finish": "2007-01-05T23:59:59",
+            "ConstraintType": 0,
+            "Principal": null,
+            "ParentTaskUID": "1",
+            "WBS": "1.3",
+            "Assignments": [{
+                "ResourceUID": "2",
+                "TaskUID": "4",
+                "Units": 100
+            }],
+            "Start": "2007-01-04T00:00:00",
+            "OutlineLevel": 2,
+            "OutlineNumber": "1.3",
+            "Critical": 0,
+            "Notes": null,
+            "Summary": 0,
+            "ActualFinish": null,
+            "Name": "定义预备资源",
+            "ID": 4,
+            "Critical2": null,
+            "Weight": 0,
+            "FixedDate": 0,
+            "Work": 8,
+            "ConstraintDate": null,
+            "PredecessorLink": [{
+                "TaskUID": "4",
+                "LinkLag": 0,
+                "LagFormat": 7,
+                "Type": 1,
+                "PredecessorUID": "3"
+            }],
+            "Priority": 500,
+            "ActualStart": null
+        }
+        ],
+    "Principals": [{
+        "Name": "张三",
+        "UID": 1,
+        "Department": "1"
+    },
+    {
+        "Name": "李四",
+        "UID": 2,
+        "Department": "1"
+    },
+    {
+        "Name": "赵五",
+        "UID": 3,
+        "Department": "1"
+    },
+    {
+        "Name": "Jack",
+        "UID": 4,
+        "Department": "2"
+    },
+    {
+        "Name": "Rose",
+        "UID": 5,
+        "Department": "2"
+    },
+    {
+        "Name": "Mark",
+        "UID": 6,
+        "Department": "2"
+    },
+    {
+        "Name": "Niko",
+        "UID": 7,
+        "Department": "2"
+    },
+    {
+        "Name": "李泉",
+        "UID": 8,
+        "Department": "3"
+    },
+    {
+        "Name": "陈光",
+        "UID": 9,
+        "Department": "3"
+    },
+    {
+        "Name": "李健",
+        "UID": 10,
+        "Department": "3"
+    },
+    {
+        "Name": "顾姗姗",
+        "UID": 11,
+        "Department": "3"
+    }],
+    "Departments": [{
+        "Name": "研发部",
+        "UID": 1
+    },
+    {
+        "Name": "财务部",
+        "UID": 2
+    },
+    {
+        "Name": "人事部",
+        "UID": 3
+    }],
+	"Resources": [{
+        "Name": "管理人员",
+        "UID": "1",
+        "Type": 1,
+        "MaxUnits": 100
+    },
+    {
+        "Name": "项目经理",
+        "UID": "2",
+        "Type": 1,
+        "MaxUnits": 100
+    },
+    {
+        "Name": "分析人员",
+        "UID": "3",
+        "Type": 1,
+        "MaxUnits": 100
+    },
+    {
+        "Name": "开发人员",
+        "UID": "4",
+        "Type": 1,
+        "MaxUnits": 100
+    },
+    {
+        "Name": "测试人员",
+        "UID": "5",
+        "Type": 1,
+        "MaxUnits": 100
+    },
+    {
+        "Name": "讲师",
+        "UID": "6",
+        "Type": 1,
+        "MaxUnits": 100
+    },
+    {
+        "Name": "技术联络人员",
+        "UID": "7",
+        "Type": 1,
+        "MaxUnits": 100
+    },
+    {
+        "Name": "部署小组",
+        "UID": "8",
+        "Type": 1,
+        "MaxUnits": 100
+    }]
+}

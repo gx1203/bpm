@@ -1,0 +1,119 @@
+<template>
+  <el-card shadow="never" class="card-reset">
+    <!-- <el-tabs v-model="active" type="card" class='topCustom'> -->
+      <!-- <el-tab-pane :label="$t('wholeProcessTest')" name="organization"> -->
+        <!-- <organization-authority ref="organizationAuthority"></organization-authority> -->
+        <!-- <automated-test></automated-test> -->
+      <!-- </el-tab-pane> -->
+      <!-- <el-tab-pane :label="$t('singleInstanceTest')" name="function"> -->
+        <apply-test></apply-test>
+        <!-- <function-permission ref="functionPermission"></function-permission> -->
+      <!-- </el-tab-pane> -->
+    <!-- </el-tabs> -->
+  </el-card>
+</template>
+<script>
+import automatedTest from '@/bpm/views/process/processBasic/automatedTest/index1';
+import applyTest from '@/bpm/views/staging/personal/applyTest';
+// import functionPermission from './functionPermission';
+export default {
+  components: {
+    automatedTest,
+    applyTest
+  },
+  data () {
+    return {
+      active: 'organization',
+      commonTitle: '功能权限管理'
+    };
+  },
+  mounted () { },
+  methods: {
+    rest () {
+      if (this.active == 'organization') {
+        this.$refs.organizationAuthority.rest();
+      } else {
+        this.$refs.functionPermission.rest();
+      }
+    }
+  }
+};
+</script>
+
+<style scoped>
+/* .topCustom {
+  background: #f5f5f5;
+} */
+
+.urge {
+  color: #ea3c40;
+  font-weight: 600;
+}
+.all-check {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+}
+
+.el-tabs {
+  /* margin-top: 49px; */
+}
+</style>
+<style lang="scss">
+#toDoTasks {
+  .tag {
+    .el-tag {
+      position: relative;
+      cursor: pointer;
+      vertical-align: bottom;
+      height: 33px;
+      line-height: 33px;
+      margin: 0;
+      padding: 0 24px;
+      border: 1px solid #e0e0e0;
+      border-left: none;
+      border-radius: 0;
+      font-size: 14px;
+      font-weight: 600;
+      color: $tc1;
+      background-color: #f0f0f0;
+      cursor: pointer;
+      /deep/ .el-icon-close {
+        width: 20px;
+        height: 20px;
+        line-height: 21px;
+        text-align: center;
+        font-size: 20px;
+        color: #717171;
+        &:hover {
+          background-color: transparent;
+        }
+      }
+    }
+    .el-tag.active {
+      position: relative;
+      background-color: #ffffff;
+      border-bottom-color: transparent;
+      &:before {
+        content: "";
+        position: absolute;
+        top: -1px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background-color: $active-color;
+      }
+    }
+    &:first-child .el-tag {
+      border-left: 1px solid #e0e0e0;
+    }
+    &:first-child .el-tag.active {
+      border-left-color: transparent;
+    }
+    .el-divider--horizontal {
+      margin: 5px 0;
+    }
+  }
+}
+
+</style>

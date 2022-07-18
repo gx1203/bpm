@@ -1,0 +1,366 @@
+/**
+ * Eric Meyer's Reset CSS v2.0 (http://meyerweb.com/eric/tools/css/reset/)
+ * http://cssreset.com
+ */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video, input {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+body {
+  font-family: Arial,"微软雅黑","Microsoft Sans Serif";
+  font-size: 12px;
+  min-width: 1305px;
+  overflow: auto;
+}
+ul,li {
+  list-style: none;
+}
+img {
+  border: none;
+}
+a, a:link, a:visited, a:hover, a:active{
+  color: #333;
+  text-decoration: none;
+  cursor: pointer;
+}
+.cursor-pointer{
+  cursor: pointer;
+}
+
+textarea {
+  overflow: auto;
+  border: 1px solid #eee;
+  resize: none;
+  padding: 5px;
+}
+
+/*-----------------------------------------------------------------常用的公共样式--开始--------------------------------------------------------------------------*/
+/*左右浮动*/
+.float-r{
+  float: right;
+}
+.float-l{
+  float: left;
+}
+.float-none{
+  float:none;
+}
+
+/*相对定位*/
+.pos-relative{
+  position: relative;
+}
+/*变块元素*/
+.dis-block {
+  display: block;
+}
+/*变行内块元素元素*/
+.dis-in-block {
+  display: inline-block;
+}
+/*常用的设置部分*/
+.vertical-middle{
+  vertical-align: middle;
+}
+
+/*清浮动*/
+.clear-fix:after{
+  content:".";
+  clear:both;
+  display:block;
+  height:0;
+  overflow:hidden;
+  visibility:hidden;
+}
+
+/*改变合模型的表现形式*/
+.border-box{
+  box-sizing: border-box;
+}
+
+/*文字不换行,显示省略号*/
+.overflow-els{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+
+/*文字换行,显示两行，超出隐藏*/
+.overflow-els-ver{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+}
+
+/*常用外边距*/
+.margin-t5{
+  margin-top: 5px;
+}
+.margin-t10{
+  margin-top: 10px;
+}
+.margin-t15{
+  margin-top: 15px;
+}
+.margin-t20{
+  margin-top: 20px;
+}
+.margin-b5{
+  margin-bottom: 5px;
+}
+.margin-b10{
+  margin-bottom: 10px;
+}
+.margin-b20{
+  margin-bottom: 20px;
+}
+.margin-l15{
+  margin-left: 15px;
+}
+.margin-l5{
+  margin-left: 5px;
+}
+.margin-b10{
+  margin-bottom: 10px;
+}
+.margin-b15{
+  margin-bottom: 15px;
+}
+.margin-lr10{
+  margin: 0 10px;
+}
+.margin-lr5{
+  margin: 0 5px;
+}
+.margin-l10{
+  margin-left: 10px;
+}
+.margin-r10{
+  margin-right: 10px;
+}
+.margin-r5{
+  margin-right: 5px;
+}
+
+/*常用内边距*/
+.padding10px{
+  padding: 10px;
+}
+.padding-l10px{
+  padding-left: 10px;
+}
+.padding-r10px {
+  padding-right: 10px;
+}
+.padding-lr8px{
+  padding: 0 8px;
+}
+.pad-l15px{
+  padding-left: 15px;
+}
+.pad-l25px{
+  padding-left: 25px!important;
+}
+.pad-b15px{
+  padding-bottom: 15px;
+}
+.pad-5px{
+  padding: 5px;
+}
+.pad-10px{
+  padding: 10px;
+}
+.pad-t15px{
+  padding-top: 15px;
+}
+
+.pad-t15px{
+  padding-top: 15px;
+}
+
+.pad-t12px{
+  padding-top: 12px;
+}
+.pad20{
+  padding: 20px;
+}
+
+
+/*设置字体大小*/
+.font14{
+  font-size: 14px;
+}
+.font16{
+  font-size: 16px;
+}
+.font20{
+  font-size: 20px;
+}
+.font22{
+  font-size: 22px;
+}
+
+/*设置字体颜色*/
+.font-link{
+  color: #409EFF!important;
+}
+.font-gray{
+  color: #333333;
+}
+
+
+
+/*常用长度的设置*/
+.w90{
+  width: 90%;
+}
+.w100{
+  width: 100%;
+}
+.w105px{
+  width: 105px;
+}
+.w150px{
+  width: 150px;
+}
+.h100{
+  height: 100%;
+}
+.h25{
+  height: 25%;
+}
+.h300px{
+  height: 300px;
+}
+.h333px{
+  height: 333px;
+}
+.h240px{
+  height: 240px;
+}
+.minH30px{
+  min-height: 30px;
+}
+
+/*清除边距*/
+.remove-margin{
+  margin: 0!important;
+}
+.remove-margin-l{
+  margin-left: 0!important;
+}
+.remove-margin-r{
+  margin-right: 0!important;
+}
+.remove-margin-t{
+  margin-top: 0!important;
+}
+.remove-margin-b{
+  margin-bottom: 0!important;
+}
+
+.remove-padding{
+  padding: 0!important;
+}
+.remove-padding-l{
+  padding-left: 0!important;
+}
+.remove-padding-r{
+  padding-right: 0!important;
+}
+.remove-padding-t{
+  padding-top: 0!important;
+}
+.remove-padding-b{
+  padding-bottom: 0!important;
+}
+
+/*边框*/
+.remove-border-b {
+  border-bottom: 0px!important;
+}
+
+/*常用的行高*/
+.line-height28{
+  line-height: 28px;
+}
+.line-height35{
+  line-height: 35px;
+}
+
+// 文字对齐方式
+.text-center{
+  text-align: center;
+}
+.text-left{
+  text-align: left;
+}
+.text-right{
+  text-align: right;
+}
+
+.bg-white{
+  background-color: $bc1;
+}
+
+.inline-block{
+  display: inline-block;
+}
+
+/*设置滚动条*/
+// ::-webkit-scrollbar-track {
+//   background-color: #F5F5F5;
+// }
+// ::-webkit-scrollbar-thumb {
+//   background-color: #888;
+//   border-radius: 1px;
+// }
+// ::-webkit-scrollbar {
+//   width: 6px;
+//   height: 8px;
+//   background-color: #F5F5F5;
+// }
+
+// 初始化icon-font
+.icon, .iconfont {
+  font-family:"iconfont" !important;
+  font-size:18px;
+  font-style:normal;
+  margin-right: 6px;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icon, .iconfont_search {
+  display: inline-block;
+  font-family:"iconfont" !important;
+  font-size:20px;
+  font-style:normal;
+  margin-right: 6px;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+  color: #fff;
+  font-weight: 700;
+  padding-top: 4px;
+  box-sizing: border-box;
+}

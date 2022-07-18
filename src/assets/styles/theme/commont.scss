@@ -1,0 +1,188 @@
+.breadcrumb {
+  .el-tag.active {
+    color: $active-color !important;
+    &:before {
+      background-color: $active-color !important;
+    }
+  }
+}
+
+.left-aside {
+  .tool-bal {
+    span {
+      background-color: $active-color !important;
+    }
+
+    span.setting {
+      background-color: $active-color !important;
+    }
+  }
+}
+
+.el-submenu {
+  &__title {
+    i {
+      color: $active-color !important;
+    }
+  }
+}
+
+.el-menu-item.is-active,
+.el-menu-item:hover {
+  color: $active-color !important;
+
+  i {
+    color: $active-color !important;
+  }
+}
+
+.right-conent {
+  .user-bar {
+    .user-info {
+      .el-badge {
+        .el-badge__content {
+          background-color: $active-color !important;
+        }
+      }
+    }
+  }
+  //.nav-bar {
+  //  .tab.active {
+  //    color: $active-color !important;
+  //    border-color: $active-color !important;
+  //  }
+  //}
+}
+.el-submenu .el-submenu__icon-arrow{
+  right: inherit !important;
+}
+// 高级查询 模块 ---------------- start
+.tool-common-wrap {
+  .search-wrap {
+    .el-select {
+      .el-input__inner {
+        border: 1px solid $active-color !important;
+        color: $active-color !important;
+      }
+
+      ::-webkit-input-placeholder {
+        color: $active-color!important;
+      }
+
+      :-moz-placeholder {
+        color: $active-color!important;
+      }
+
+      ::-moz-placeholder {
+        color: $active-color!important;
+      }
+
+      :-ms-input-placeholder {
+        color: $active-color!important;
+      }
+
+      .el-input__suffix {
+        i {
+          color: $active-color!important;
+        }
+      }
+    }
+
+    .el-input-group.el-input {
+      .el-input__inner {
+        color: $active-color!important;
+        border: 1px solid $active-color!important;
+      }
+
+      .el-input-group__append {
+        background-color: $active-color!important;
+      }
+    }
+  }
+  > a {
+    color: $active-color !important;
+  }
+}
+// 高级查询 模块 ---------------- end
+
+.transition-box .el-button--primary {
+  background-color: $active-color !important;
+  border-color: $active-color !important;
+}
+
+// .el-button--primary.is-disabled {
+//   background-color: $disabled-color !important;
+//   border-color: $disabled-color !important;
+// }
+
+// .el-button--primary.is-plain {
+//   color: $font-color !important;
+// }
+
+// .el-button--text i {
+//   color: $active-color !important;
+// }
+// & .el-pagination.is-background .el-pager li:not(.disabled).active {
+//   background-color: $active-color !important;
+// }
+// & .el-backtop {
+//   color: $active-color !important;
+// }
+// & .el-radio__input.is-checked {
+//   .el-radio__inner {
+//     background-color: $active-color !important;
+//     border-color: $active-color !important;
+//   }
+//   + .el-radio__label {
+//     color: $active-color !important;
+//   }
+// }
+& #apply-create .my_shortcuts {
+  background-color: $active-color !important;
+  .el-button--text i {
+    color: $font-color !important;
+  }
+}
+// .el-checkbox__input.is-checked .el-checkbox__inner, .el-checkbox__input.is-indeterminate .el-checkbox__inner{
+//   background-color:$active-color !important;
+//   border-color: $active-color !important;
+// }
+
+& .SortButton .red {
+  color: $active-color !important;
+}
+
+// .el-switch.is-checked .el-switch__core {
+//   background-color:$active-color !important;
+//   border-color: $active-color !important;
+// }
+& .SelectPeople .checkList {
+  background-color:$active-color !important;
+  .el-button--text i {
+    color: $font-color !important;
+  }
+}
+.quickLaunch .quickLayout .circle{
+  background-color: $active-color;
+}
+#category .apply .button i{
+  color: #fff!important;
+}
+#frame #apply-create #applyBox .applyItem .itemContent h2{
+  background-color: $active-color;
+}
+#category .apply .apply-icon{
+  background-color: $active-color;
+}
+#category #apply-create .classifyNav .classify-div .classify-but.active{
+  background-color: $active-color;
+}
+#category #apply-create #applyBox h3{
+  border-left-color: $active-color;
+}
+.left-menu .left-basics .left-p .active {
+  border-right: 5px solid  $active-color;
+}
+// & .elTree .el-tree-node.is-current > .el-tree-node__content {
+//   color: $active-color !important;
+// }

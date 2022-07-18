@@ -1,0 +1,282 @@
+/**
+ * Eric Meyer's Reset CSS v2.0 (http://meyerweb.com/eric/tools/css/reset/)
+ * http://cssreset.com
+ */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video, input {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+body {
+  font-family: Arial,"微软雅黑","Microsoft Sans Serif";
+  font-size: 12px;
+  color: $tc1;
+}
+.w90{
+  width: 90%;
+}
+.w100{
+  width: 100%;
+}
+ul,li {
+  list-style: none;
+}
+img {
+  border: none;
+}
+a, a:link, a:visited, a:hover, a:active{
+  color: #333;
+  text-decoration: none;
+  cursor: pointer;
+}
+.cursor-pointer{
+  cursor: pointer;
+}
+
+textarea {
+  overflow: auto;
+  border: 1px solid #eee;
+  resize: none;
+  padding: 5px;
+}
+
+/*-----------------------------------------------------------------常用的公共样式--开始--------------------------------------------------------------------------*/
+/*左右浮动*/
+.float-r{
+  float: right;
+}
+.float-l{
+  float: left;
+}
+.float-none{
+  float:none;
+}
+
+/*左右对齐*/
+.text-r{
+  text-align: right;
+}
+.text-l{
+  text-align: left;
+}
+.text-c{
+  text-align: center;
+}
+
+
+/*相对定位*/
+.pos-relative{
+  position: relative;
+}
+/*变块元素*/
+.dis-block {
+  display: block;
+}
+/*变行内块元素元素*/
+.dis-in-block {
+  display: inline-block;
+}
+
+/*清浮动*/
+.clear-fix:after{
+  content:".";
+  clear:both;
+  display:block;
+  height:0;
+  overflow:hidden;
+  visibility:hidden;
+}
+
+/*文字不换行,显示省略号*/
+.overflow-els{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/*文字换行,显示两行，超出隐藏*/
+.overflow-els-ver{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+}
+.w65{
+  width: 60px;
+}
+/*常用外边距*/
+.margin-t5{
+  margin-top: 5px;
+}
+.margin-t10{
+  margin-top: 10px;
+}
+.margin-t15{
+  margin-top: 15px;
+}
+.margin-b5{
+  margin-bottom: 5px;
+}
+.margin-l15{
+  margin-left: 15px;
+}
+.margin-b10{
+  margin-bottom: 10px;
+}
+.margin-b15{
+  margin-bottom: 15px;
+}
+.margin-b20{
+  margin-bottom: 20px;
+}
+.margin-lr10{
+  margin: 0 10px;
+}
+.margin-lr5{
+  margin: 0 5px;
+}
+.margin-l10{
+  margin-left: 10px;
+}
+.margin-r10{
+  margin-right: 10px;
+}
+
+/*常用内边距*/
+.padding-l10px{
+  padding-left: 10px;
+}
+.padding-l20{
+  padding-left: 20px;
+}
+.padding-r10px {
+  padding-right: 10px;
+}
+.padding-r15px {
+  padding-right: 15px;
+}
+.padding-lr8px{
+  padding: 0 8px;
+}
+.pad-l15px{
+  padding-left: 15px;
+}
+.pad-l25px{
+  padding-left: 25px!important;
+}
+
+.pad-l46px{
+  padding-left: 46px;
+}
+
+.pad-b15px{
+  padding-bottom: 15px;
+}
+.pad-5px{
+  padding: 5px;
+}
+.pad-10px{
+  padding: 10px;
+}
+
+.pad-t15px{
+  padding-top: 15px;
+}
+.tr-empty{
+  color: #888;
+  font-size: 14px;
+}
+
+/*设置滚动条*/
+::-webkit-scrollbar-track {
+  background-color: #F5F5F5;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 1px;
+}
+::-webkit-scrollbar {
+  width: 6px;
+  height: 8px!important;
+  background-color: #F5F5F5;
+}
+
+/* flex样式 */
+.display-flex{
+  display:flex;
+}
+.display-flex-center{
+  display:flex;
+  align-items: center;
+}
+.flex-flow-row{
+  display: flex;
+  flex-wrap: nowrap;
+  flex-flow: row;
+}
+.flex-flow-column {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-flow: column;
+}
+
+/*设置全局下划线*/
+.text-decoration-cursor{
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.bottom-divider {
+  border-bottom: 1px solid $dc1;
+}
+/* 去除i em i 默认样式 */
+.i-nostyle,
+.em-nostyle {
+  font-style: normal;
+}
+
+.required{
+  color: $tc4;
+}
+//审批意见
+.approvalText{
+  text-align: left;
+  position: relative;
+  top: 0;
+  width:100%;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
+.bg-333 {
+  background-color: #dedede !important;
+}
+.red{
+  color: red;
+}
+
+// 初始化icon-font
+.icon, .iconfont {
+  font-family:"iconfont" !important;
+  font-size:18px;
+  font-style:normal;
+  margin-right: 6px;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+}

@@ -1,0 +1,1147 @@
+<template>
+  <div id="testDetail">
+    <el-row>
+      <el-col :span="6">
+        <el-input
+          v-model="testName"
+          placeholder="请输入内容"
+          class="search_component"
+          clearable
+          @keyup.13.native="queryTestPapers"
+        >
+          <el-button slot="append" type="primary" @click="queryTestPapers">搜索</el-button>
+        </el-input>
+      </el-col>
+      <el-button type="primary" size="small" class="float-r margin-r10" @click="addTest">创建试卷</el-button>
+    </el-row>
+    <el-table :data="roleList" border class="main_tab">
+      <el-table-column label="序号" type="index" width="50px" />
+      <!-- <el-table-column prop="id" label="试卷编号" /> -->
+      <el-table-column prop="testName" label="试卷名称" />
+      <el-table-column prop="belongSubject" label="试卷类型" />
+      <!-- <el-table-column prop="codeName" label="编号及名称" /> -->
+      <el-table-column prop="totalScore" label="总分" />
+      <el-table-column prop="passScore" label="合格分数线" />
+      <!-- <el-table-column prop="description" label="所属类型" /> -->
+      <el-table-column prop="cnname" label="创建人" />
+      <el-table-column prop="createTime" label="创建时间" />
+      <el-table-column label="操作">
+        <template slot-scope="scope">
+          <el-tooltip :open-delay="1000" class="item" effect="dark" content="修改" placement="top">
+            <el-button
+              class="no-border"
+              icon="el-icon-edit-outline"
+              circle
+              @click="updateTest(scope.row)"
+            />
+          </el-tooltip>
+          <el-tooltip :open-delay="1000" class="item" effect="dark" content="详情" placement="top">
+            <el-button
+              class="no-border"
+              icon="el-icon-document-copy"
+              circle
+              @click="editRole(scope.row)"
+            />
+          </el-tooltip>
+          <el-tooltip :open-delay="1000" v-if="getUserAuthor.indexOf('3') > -1" class="item" effect="dark" content="删除" placement="top">
+            <el-button
+              class="no-border"
+              icon="el-icon-delete"
+              circle
+              @click="deleteRow(scope.row)"
+            />
+          </el-tooltip>
+        </template>
+      </el-table-column>
+    </el-table>
+    <el-pagination background
+      :total="pages.total"
+      :current-page="pages.pageNum"
+      :page-size="pages.pageSize"
+      layout="total, prev, pager, next, jumper"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+    />
+    <!-- 试卷新增 -->
+    <el-dialog :title="testTitle" :close-on-click-modal="false" :visible.sync="testPaperAdd" :before-close="handleClose" width="62%">
+      <el-form
+        ref="form"
+        :rules="rules"
+        :model="testPaperForm"
+        label-position="right"
+        label-width="92px"
+      >
+        <el-card class="box-card" shadow="never">
+          <div slot="header" class="clearfix">
+            <span>试卷信息</span>
+          </div>
+          <el-form-item label="试卷名称" prop="testName">
+            <el-row>
+              <el-col :span="20">
+                <el-input
+                  v-model="testPaperForm.testName"
+                  placeholder="请输入试卷名称"
+                />
+              </el-col>
+            </el-row>
+          </el-form-item>
+          <el-form-item label="编号及名称" prop="codeName">
+            <el-row>
+              <el-col :span="20">
+                <el-input v-model="testPaperForm.codeName" disabled />
+              </el-col>
+            </el-row>
+          </el-form-item>
+          <el-form-item label="试卷类型" prop="subjectId">
+            <el-row>
+              <el-col :span="20">
+                <el-select
+                  v-model="testPaperForm.subjectId"
+                  placeholder="请选择试卷类型"
+                >
+                  <el-option
+                    v-for="item in SubjectList"
+                    :key="item.id"
+                    :label="item.subjectName"
+                    :value="item.id"
+                  />
+                </el-select>
+              </el-col>
+            </el-row>
+          </el-form-item>
+          <el-form-item label="合格分数线" prop="passScore">
+            <el-row>
+              <el-col :span="20">
+                <el-input
+                  v-model="testPaperForm.passScore"
+                  placeholder="请输入合格分数线"
+                />
+              </el-col>
+            </el-row>
+          </el-form-item>
+          <!-- <el-form-item label="考试时间">
+            <el-row>
+              <el-col :span="14">
+                <el-input v-model="testPaperForm.times" placeholder="请输入考试时间" />
+              </el-col>
+              <el-col :span="5" :offset="1">
+                <el-select v-model="timeTsypes" :disabled="true" placeholder="单位">
+                  <el-option
+                    v-for="item in timeType"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  />
+                </el-select>
+              </el-col>
+            </el-row>
+          </el-form-item>-->
+        </el-card>
+        <el-card class="box-card" shadow="never" style="margin-top: 24px">
+          <div slot="header" class="clearfix">
+            <span>试题信息</span>
+          </div>
+          <el-row>
+            <el-col
+              v-for="(item, index) in testPaperForm.questions"
+              :span="24"
+              :key="index"
+              style="margin-bottom: 24px"
+            >
+              <el-form-item :label="'第' + (index + 1) + '题'">
+                <el-row>
+                  <el-col :span="14">
+                    <el-input
+                      v-model="item.questionTitle"
+                      placeholder="请输入试题名称"
+                    />
+                  </el-col>
+                  <el-col :span="4" :offset="2">
+                    <el-button
+                      type="primary"
+                      icon="el-icon-delete"
+                      @click="subjectDelete(index)"
+                    >删除</el-button
+                    >
+                  </el-col>
+                </el-row>
+              </el-form-item>
+              <el-row>
+                <el-col
+                  v-for="(items, indexs) in item.option"
+                  :span="14"
+                  :offset="1"
+                  :key="indexs"
+                >
+                  <el-form-item :label="'选项' + (indexs + 1)">
+                    <el-row>
+                      <el-col :span="18">
+                        <el-input
+                          v-model="items.name"
+                          placeholder="请输入选项内容"
+                        />
+                      </el-col>
+                      <el-col
+                        :span="2"
+                        :offset="2"
+                        style="cursor: pointer"
+                        @click.native="optionDelete(index, indexs)"
+                      >
+                        <i class="el-icon-delete" />
+                      </el-col>
+                    </el-row>
+                  </el-form-item>
+                </el-col>
+                <el-col v-if="item.type !== '3'" :span="14" :offset="1">
+                  <el-form-item>
+                    <el-button
+                      type="primary"
+                      icon="el-icon-plus"
+                      @click="optionAdd(index, indexs)"
+                    >新增选项</el-button
+                    >
+                  </el-form-item>
+                </el-col>
+                <el-col v-if="item.type !== '3'" :span="14" :offset="1">
+                  <el-form-item label="参考答案">
+                    <el-select
+                      v-model="item.answer"
+                      :multiple="item.type === '2' || item.type === 2"
+                      placeholder="请选择参考答案"
+                    >
+                      <el-option
+                        v-for="(itema, indexa) in item.option"
+                        :key="indexa"
+                        :label="'选项' + (indexa + 1)"
+                        :value="'选项' + (indexa + 1)"
+                      />
+                    </el-select>
+                  </el-form-item>
+                </el-col>
+                <el-col v-if="item.type === '3'" :span="14" :offset="1">
+                  <el-form-item label="参考答案">
+                    <el-input
+                      :autosize="{ minRows: 4, maxRows: 8 }"
+                      v-model="item.answer"
+                      type="textarea"
+                      placeholder="请输入参考答案"
+                    />
+                  </el-form-item>
+                </el-col>
+                <el-col :span="14" :offset="1">
+                  <el-form-item label="该题分数">
+                    <el-input
+                      v-model="item.singleScore"
+                      placeholder="请输入选项内容"
+                    />
+                  </el-form-item>
+                </el-col>
+              </el-row>
+            </el-col>
+            <el-col :span="24" style="margin-bottom: 24px">
+              <el-form-item>
+                <el-button
+                  type="primary"
+                  icon="el-icon-plus"
+                  @click="
+                    testPaperForm.diy
+                      ? (addQuestionsType = true)
+                      : queryQuestions()
+                  "
+                >新增试题</el-button
+                >
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-card>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="handleClose">取 消</el-button>
+        <el-button type="primary" @click="addtestPaper('form')"
+        >确 定</el-button
+        >
+      </span>
+    </el-dialog>
+    <!-- 试题新增选择 -->
+    <el-dialog :visible.sync="queryQuestionsList" width="62%" title="试题列表" append-to-body>
+      <el-row>
+        <el-col :span="24">
+          <el-table
+            ref="multipleTable"
+            :row-key="getRowKeys"
+            :data="QuestionsList"
+            border
+            class="main_tab"
+            @selection-change="handleSelectionChange"
+          >
+            <el-table-column :reserve-selection="true" type="selection" width="55" />
+            <el-table-column label="序号" type="index" width="50px" />
+            <el-table-column prop="questionTitle" label="题目" />
+            <el-table-column prop="type" label="题目类型">
+              <template slot-scope="scope">
+                <el-row>
+                  <el-col
+                    :span="20"
+                  >{{ scope.row.type === 1 ? '单选' : scope.row.type === 2 ? '多选' : '自定义' }}</el-col>
+                </el-row>
+              </template>
+            </el-table-column>
+            <el-table-column prop="questionContent" label="选项" />
+            <el-table-column prop="answer" label="参考答案" />
+            <el-table-column prop="createTime" label="创建时间" />
+          </el-table>
+          <el-pagination background
+            :total="pagess.total"
+            :current-page="pagess.pageNum"
+            :page-size="pagess.pageSize"
+            layout="total, prev, pager, next, jumper"
+            @size-change="handleSizeChanges"
+            @current-change="handleCurrentChanges"
+          />
+        </el-col>
+      </el-row>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="queryQuestionsList = false;selectArray=[]">取 消</el-button>
+        <el-button type="primary" @click="selectTest">确 定</el-button>
+      </div>
+    </el-dialog>
+    <!-- 题库 -->
+    <el-dialog :visible.sync="addQuestionsType" width="42%" title="新增试题" append-to-body>
+      <el-row>
+        <el-col :span="24">
+          <el-form label-position="right" label-width="92px" style="margin:24px 0">
+            <el-form-item label="试题类型">
+              <el-select v-model="questionsType" placeholder="请选择试题类型">
+                <el-option label="单选" value="1" />
+                <el-option label="多选" value="2" />
+                <el-option label="自定义" value="3" />
+              </el-select>
+            </el-form-item>
+          </el-form>
+        </el-col>
+      </el-row>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="addQuestionsType = false">取 消</el-button>
+        <el-button type="primary" @click="addQuestionsTypes()">确 定</el-button>
+      </div>
+    </el-dialog>
+    <!-- 试题新增选择 -->
+    <el-dialog :visible.sync="addQuestions" width="65%" title="新增试卷" append-to-body>
+      <el-row>
+        <el-col :span="24">
+          <el-form label-position="right" label-width="92px" style="margin:24px 0">
+            <el-form-item label="新增方式">
+              <el-select v-model="questionsMode" placeholder="请选择新增方式">
+                <el-option label="从题库中获取" value="1" />
+                <el-option label="自定义新增" value="2" />
+              </el-select>
+            </el-form-item>
+          </el-form>
+        </el-col>
+      </el-row>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="addQuestions = false">取 消</el-button>
+        <el-button type="primary" @click="addQuestionsState()">确 定</el-button>
+      </div>
+    </el-dialog>
+    <el-dialog :visible.sync="questionsDetail" width="65%" title="试卷详情" append-to-body class="testDetailDialog">
+      <el-row class="jqContent-box">
+        <el-col :span="20" :offset="2" class="jqContent-title">{{ examInfo.testName }}</el-col>
+        <el-col
+          :span="20"
+          :offset="2"
+          class="jqContent-ts"
+        >本套试卷共{{ questionNum }}个题目，共{{ examInfo.totalScore }}分。</el-col>
+        <el-col :span="20" :offset="2">
+          <el-row v-for="(item, index) in examInfo.questions" :key="index" class="div_question">
+            <el-col
+              :span="24"
+              class="div_title_question_all"
+            >{{ index + 1 }}. {{ item.questionTitle }}</el-col>
+            <el-col v-if="item.type === 1" :span="24" class="div_table_radio_question">
+              <el-radio-group v-model="item.answer">
+                <el-radio
+                  v-for="(items, indexs) in item.questionContent"
+                  :key="indexs"
+                  :label=" items.name"
+                >
+                  <p class="checkClass">{{ items.name }}</p>
+                  <!-- {{ items.name }} -->
+                </el-radio>
+              </el-radio-group>
+            </el-col>
+            <el-col v-if="item.type === 2" :span="24" class="div_table_radio_question">
+              <el-checkbox-group v-model="item.answer">
+                <el-checkbox
+                  v-for="(items, indexs) in item.questionContent"
+                  :key="indexs"
+                  :label="items.name"
+                >
+                  <p class="checkClass">{{ items.name }}</p>
+                  <!-- <span class="flexbox">{{ items.name }}</span> -->
+                </el-checkbox>
+              </el-checkbox-group>
+            </el-col>
+            <el-col v-if="item.type === 3" :span="24" class="div_table_radio_question">
+              <el-input
+                :autosize="{ minRows: 4, maxRows: 8}"
+                v-model="item.answer"
+                type="textarea"
+                placeholder="请输入答案"
+              />
+            </el-col>
+          </el-row>
+        </el-col>
+      </el-row>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="questionsDetail = false">取 消</el-button>
+        <el-button type="primary" @click="questionsDetail = false">确 定</el-button>
+      </div>
+    </el-dialog>
+  </div>
+</template>
+
+<script>
+import {
+  querySubject,
+  queryQuestions,
+  createTest,
+  queryTestPapers,
+  deleteTestPapers,
+  getTestPapersDetailsInfo,
+  editQuestions
+} from '@/api/examination'
+import paginations from '@/mixins/pagination_mixin'
+import { getFormateDate } from '@/utils/common'
+import { createNamespacedHelpers } from 'vuex'
+const userInfo = createNamespacedHelpers('userInfo')
+export default {
+  components: {},
+  mixins: [paginations],
+  data() {
+    return {
+      testTitle: "新增试卷",
+      testobj: {},
+      logobj: {
+        tableName: "考试试卷管理",
+        tableId: "",
+        operateItem: "新增",
+        systemType: "bpa",
+        type: "3",
+        operatorname: "考试试卷新增成功",
+        status: "0",
+        instid: "",
+      },
+      isCreateTest: true,
+      questionNum: '',
+      examInfo: {},
+      questionsDetail: false,
+      questionsMode: '2',
+      testName: '',
+      questionsType: '',
+      testPaperAdd: false,
+      addQuestionsType: false,
+      addQuestions: false, // 新增试题
+      allQuestions: false,
+      queryQuestionsList: false,
+      SubjectList: [],
+      QuestionsList: [],
+      testPaperForm: {
+        subjectId: '',
+        // time: '',
+        testName: '',
+        passScore: '',
+        // codeName: '',
+        option: [],
+        questions: [
+          {
+            questionTitle: '',
+            type: '1',
+            answer: '',
+            singleScore: '', // 分数
+            option: [
+              {
+                name: ''
+              },
+              {
+                name: ''
+              },
+              {
+                name: ''
+              },
+              {
+                name: ''
+              }
+            ]
+          },
+          {
+            questionTitle: '',
+            answer: [],
+            type: '2',
+            singleScore: '', // 分数
+            option: [
+              {
+                name: ''
+              },
+              {
+                name: ''
+              },
+              {
+                name: ''
+              },
+              {
+                name: ''
+              }
+            ]
+          }
+          // {
+          //   questionTitle: "",
+          //   questionContent: "",
+          //   type: "3",
+          //   singleScore: "", // 分数
+          //   answer: "",
+          // },
+        ]
+      },
+      optionsType: [
+        {
+          value: '考试类型1',
+          label: '考试类型1'
+        },
+        {
+          value: '考试类型2',
+          label: '考试类型2'
+        }
+      ],
+      timeTsypes: '分钟',
+      timeType: [
+        {
+          value: '分钟',
+          label: '分钟'
+        }
+      ],
+      pages: {
+        pageSize: 10,
+        pageNum: 1,
+        total: 0
+      },
+      pagess: {
+        pageSize: 10,
+        pageNum: 1,
+        total: 0
+      },
+      rules: {
+        testName: [
+          { required: true, message: '请输入试卷名称！', trigger: 'blur' }
+        ],
+        subjectId: [
+          { required: true, message: '请选择考试类型！', trigger: 'change' }
+        ],
+        // codeName: [
+        //   { required: true, message: '请输入编码及名称！', trigger: 'blur' }
+        // ],
+        passScore: [
+          { required: true, message: '请输入合格分数！', trigger: 'blur' }
+        ]
+      },
+      selectArray: [],
+      roleList: []
+    }
+  },
+  mounted() {
+    this.getList()
+    this.queryTestPapers()
+  },
+  computed: {
+    ...userInfo.mapGetters(['getUserAuthor'])
+  },
+  methods: {
+    getRowKeys(row) {
+      return row.id
+    },
+    // 删除选项
+    optionDelete(index, indexs) {
+      this.testPaperForm.questions[index].option.splice(indexs, 1)
+    },
+    // 删除题目
+    subjectDelete(index) {
+      this.testPaperForm.questions.splice(index, 1)
+    },
+    // 新增选项
+    optionAdd(index, indexs) {
+      this.testPaperForm.questions[index].option.push({
+        name: ''
+      })
+    },
+    // 清除数据
+    handleClose() {
+      this.$nextTick(() => {
+        this.$refs.form.resetFields() // 等弹窗里的form表单的dom渲染完在执行this.$refs.staffForm.resetFields()，去除验证
+      })
+      this.testPaperAdd = false
+    },
+    addTest() {
+      this.addQuestions = true
+    },
+    // 试题新增
+    addtestPaper(formName) {
+      var obj = {}
+      this.isCreateTest = true
+      // this.testobj = JSON.parse(JSON.stringify(this.testPaperForm))
+      obj = JSON.parse(JSON.stringify(this.testPaperForm))
+      obj.questions.map((item) => {
+        if (item.type !== '3') {
+          var questionContent = []
+          item.option.map((items) => {
+            questionContent.push(items.name)
+          })
+          item.questionContent = questionContent.join('|')
+          if (item.type === '2') {
+            console.log(item.answer)
+            item.answer = item.answer.join('|')
+          }
+          // delete item.option;
+        }
+        return item
+      })
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          if (obj.questions.length > 0) {
+            obj.questions.map((item) => {
+              if (
+                item.answer == '' ||
+                item.questionTitle == '' ||
+                item.singleScore == ''
+              ) {
+                console.log(item, 111)
+                this.isCreateTest = false
+              }
+            })
+            // obj = this.testPaperForm
+
+            if (this.isCreateTest) {
+              obj.questions.map((item) => {
+                if (item.type !== '3') {
+                  delete item.option
+                }
+                return item
+              })
+              // 表单上传
+              if (this.testTitle == "新增试卷") {
+                createTest(obj).then((res) => {
+                  this.testPaperAdd = false;
+                  this.$message({
+                    message: "创建试卷成功!",
+                    type: "success",
+                  });
+                  this.logobj.instid = "";
+                  this.logobj.operateItem = "新增";
+                  this.logobj.type = "3";
+                  this.logobj.operatorname = `考试试卷${this.testPaperForm.testName}新增成功`;
+                  // this.addOperateLog(this.logobj);
+                  this.queryTestPapers();
+                  window.open("", "_self").close();
+                });
+              } else {
+                obj.id = obj.testId;
+                console.log(obj, "修改试卷");
+                editQuestions(obj).then((res) => {
+                  this.testPaperAdd = false;
+                  this.$message({
+                    message: "修改试卷成功!",
+                    type: "success",
+                  });
+                  this.logobj.instid = "";
+                  this.logobj.operateItem = "修改";
+                  this.logobj.type = "3";
+                  this.logobj.operatorname = `考试试卷${this.testPaperForm.testName}修改成功`;
+                  // this.addOperateLog(this.logobj);
+                  this.queryTestPapers();
+                });
+              }
+            } else {
+              // this.testPaperForm = this.testobj
+              // this.testPaperForm.questions.map((item) => {
+              //   if (item.type !== '3') {
+              //     if (item.type === '2') {
+              //       item.answer = item.answer.split('|')
+              //     }
+              //   }
+              //   return item
+              // })
+              //
+              // console.log(this.testobj, '2222222')
+              this.$message({
+                message: '请填写试题信息！!',
+                type: 'warning'
+              })
+            }
+          } else {
+            this.$message({
+              message: '请填写试题信息！！',
+              type: 'warning'
+            })
+          }
+        } else {
+          this.$message({
+            message: '请输入必要的试卷信息！',
+            type: 'warning'
+          })
+          return false
+        }
+      })
+    },
+    // 新增试题状态判断
+    addQuestionsState() {
+      if (this.questionsMode === '1') {
+        this.testPaperForm.diy = false
+        this.testPaperForm.testName = ''
+        this.testPaperForm.subjectId = ''
+        // this.testPaperForm.time = ''
+        // this.testPaperForm.codeName =
+        //   this.$route.query.systemcode + this.$route.query.systemname
+        this.testPaperForm.questions = []
+        this.testPaperAdd = true
+        this.addQuestions = false
+        this.selectArray = []
+      } else {
+        // this.testPaperForm.codeName =
+        //   this.$route.query.systemcode + this.$route.query.systemname
+        this.testPaperForm.diy = true
+        this.testPaperForm.testName = ''
+        this.testPaperForm.subjectId = ''
+        this.testPaperForm.questions = [
+          {
+            questionTitle: '',
+            type: '1',
+            answer: '',
+            singleScore: '', // 分数
+            option: [
+              {
+                name: ''
+              },
+              {
+                name: ''
+              },
+              {
+                name: ''
+              },
+              {
+                name: ''
+              }
+            ]
+          },
+          {
+            questionTitle: '',
+            answer: [],
+            type: '2',
+            singleScore: '', // 分数
+            option: [
+              {
+                name: ''
+              },
+              {
+                name: ''
+              },
+              {
+                name: ''
+              },
+              {
+                name: ''
+              }
+            ]
+          }
+          // {
+          //   questionTitle: "",
+          //   questionContent: "",
+          //   type: "3",
+          //   singleScore: "", // 分数
+          //   answer: "",
+          // },
+        ]
+        // this.testPaperForm.time = ''
+        this.testPaperAdd = true
+        this.testTitle = "新增试卷";
+        this.addQuestions = false
+      }
+    },
+    // 试题
+    addQuestionsTypes() {
+      if (this.questionsType === '1') {
+        console.log(this.testPaperForm.option)
+        this.testPaperForm.questions.push({
+          questionTitle: '',
+          type: '1',
+          answer: '',
+          singleScore: '', // 分数
+          option: [
+            {
+              name: ''
+            },
+            {
+              name: ''
+            },
+            {
+              name: ''
+            },
+            {
+              name: ''
+            }
+          ]
+        })
+        this.$message({
+          type: 'success',
+          message: '新增试题成功！'
+        })
+        this.addQuestionsType = false
+        console.log(this.testPaperForm.option)
+      }
+      if (this.questionsType === '2') {
+        this.testPaperForm.questions.push({
+          questionTitle: '',
+          type: '2',
+          answer: '',
+          singleScore: '', // 分数
+          option: [
+            {
+              name: ''
+            },
+            {
+              name: ''
+            },
+            {
+              name: ''
+            },
+            {
+              name: ''
+            }
+          ]
+        })
+        this.$message({
+          type: 'success',
+          message: '新增试题成功！'
+        })
+        this.addQuestionsType = false
+      }
+      if (this.questionsType === '3') {
+        this.testPaperForm.questions.push({
+          questionTitle: '',
+          questionContent: '',
+          type: '3',
+          answer: '',
+          singleScore: '' // 分数
+        })
+        this.$message({
+          type: 'success',
+          message: '新增试题成功！'
+        })
+        this.addQuestionsType = false
+      }
+    },
+    // 获取类型下的题目
+    queryQuestions() {
+      if (
+        this.testPaperForm.subjectId === undefined ||
+        this.testPaperForm.subjectId === ''
+      ) {
+        this.$message({
+          message: '请先选择考试类型！',
+          type: 'warning'
+        })
+        return false
+      }
+      queryQuestions(
+        this.testPaperForm.subjectId,
+        this.pagess.pageNum,
+        this.pagess.pageSize
+      ).then((res) => {
+        this.QuestionsList = res.list.map((item) => {
+          item.createTime = getFormateDate(
+            new Date(item.createTime),
+            'yyyy-MM-dd hh:mm:ss'
+          )
+          return item
+        })
+        this.pagess.total = res.total
+        this.queryQuestionsList = true
+      })
+    },
+    // 多选试题
+    handleSelectionChange(val) {
+      this.selectArray = []
+      console.log(val, 111)
+      // if (val.length > 1) {
+      //   val.splice(0, val.length - 1);
+      // }
+      val.map((item, index) => {
+        var subject = {
+          option: []
+        }
+        subject.id = item.id
+        subject.questionTitle = item.questionTitle
+        subject.singleScore = item.singleScore
+        subject.type = item.type + ''
+        if (subject.type === '1') {
+          subject.answer = item.answer
+          console.log(item.questionContent.split('|'), '111111')
+          item.questionContent.split('|').map((items) => {
+            subject.option.push({ name: items })
+          })
+        }
+        if (subject.type === '2') {
+          subject.answer = item.answer.split('|')
+          item.questionContent.split('|').map((items) => {
+            subject.option.push({ name: items })
+          })
+        }
+        if (subject.type === '3') {
+          subject.answer = item.answer
+          subject.questionContent = item.questionContent
+        }
+        // this.testPaperForm.questions.push(subject);
+        this.selectArray.push(subject)
+        console.log(this.testPaperForm.questions, '1111')
+      })
+    },
+    selectTest() {
+      this.testPaperForm.questions = this.selectArray
+      this.queryQuestionsList = false
+    },
+    // 修改试卷
+    updateTest(val) {
+      this.testPaperAdd = true;
+
+      this.testTitle = "修改试卷";
+      let arry = [];
+      getTestPapersDetailsInfo(val.id).then((res) => {
+        console.log(res);
+
+        this.testPaperForm.questions = [];
+        this.questionNum = res.questions.length;
+        res.questions.forEach((item) => {
+          var subject = {
+            option: [],
+          };
+          subject.id = item.id;
+          subject.questionTitle = item.questionTitle;
+          subject.singleScore = item.singleScore;
+          subject.type = item.type + "";
+          if (subject.type === "1") {
+            subject.answer = item.answer;
+            console.log(item.questionContent.split("|"), "111111");
+            item.questionContent.split("|").map((items) => {
+              subject.option.push({ name: items });
+            });
+          }
+          if (subject.type === "2") {
+            subject.answer = item.answer.split("|");
+            item.questionContent.split("|").map((items) => {
+              subject.option.push({ name: items });
+            });
+          }
+          if (subject.type === "3") {
+            subject.answer = item.answer;
+            subject.questionContent = item.questionContent;
+          }
+          arry.push(subject);
+          console.log(this.testPaperForm.questions, arry, 999);
+        });
+        this.testPaperForm = res;
+        this.testPaperForm.questions = arry;
+        this.questionsMode === "2";
+        this.testPaperForm.diy = true;
+        console.log(this.testPaperForm.questions, arry, 999);
+      });
+    },
+    editRole(val) {
+      this.questionsDetail = true
+      getTestPapersDetailsInfo(val.id).then((res) => {
+        console.log(res)
+        this.examInfo = res
+        this.questionNum = res.questions.length
+        // this.minutes = parseInt(res.times)
+        this.examInfo.questions = res.questions.map((item) => {
+          var subject = {
+            questionContent: []
+          }
+          subject.id = item.id
+          subject.type = item.type
+          subject.singleScore = item.singleScore
+          subject.questionTitle = item.questionTitle
+          subject.subjectId = item.subjectId
+          subject.answer = ''
+          if (item.type === 2) {
+            subject.answer = []
+          }
+          if (item.type !== 3) {
+            if (item.questionContent.indexOf('|') !== -1) {
+              item.questionContent.split('|').map((items) => {
+                console.log(items, '1111')
+                subject.questionContent.push({ name: items })
+              })
+            } else {
+              subject.questionContent = item.questionContent
+            }
+          } else {
+            subject.questionContent = ''
+          }
+          return subject
+        })
+        console.log(this.examInfo.questions, 999)
+      })
+    },
+    handleSizeChange(val) {
+      this.pages.pageSize = val
+      this.queryTestPapers()
+    },
+    handleSizeChanges(val) {
+      this.pagess.pageSize = val
+      this.queryQuestions()
+    },
+    handleCurrentChange(val) {
+      this.pages.pageNum = val
+      this.queryTestPapers()
+    },
+    handleCurrentChanges(val) {
+      this.pagess.pageNum = val
+      this.queryQuestions()
+    },
+    // 获取试卷
+    queryTestPapers() {
+      // const obj = {
+      //   startPage: this.pages.pageNum,
+      //   pageSize: this.pages.pageSize,
+      //   testId: '',
+      //   testName: this.testName
+      // }
+      const obj = {
+        attr: {},
+        orderby: '',
+        pageNum: this.pages.pageNum,
+        pageSize: this.pages.pageSize,
+        sort: 'desc',
+        logic: 'or',
+        filters: [
+          { key: 'testName', opt: 'LIKE', type: 'S', value: this.testName }
+          // {
+          //   key: 'createBy',
+          //   opt: 'LIKE',
+          //   type: 'S',
+          //   value: localStorage.getItem('portalCurrentUserInfo')
+          //     ? JSON.parse(localStorage.getItem('portalCurrentUserInfo')).empuid
+          //     : ''
+          // }
+          // { 'key': 'testName', 'opt': 'LIKE', 'type': 'S', 'value': this.searchForm.testName },
+          // { 'key': 'codeName', 'opt': 'LIKE', 'type': 'S', 'value': this.searchForm.codeName }
+        ]
+      }
+      queryTestPapers(obj).then((res) => {
+        this.roleList = res.list.map((item) => {
+          item.createTime = getFormateDate(
+            new Date(item.createTime),
+            'yyyy-MM-dd hh:mm:ss'
+          )
+          return item
+        })
+        this.pages.total = res.total
+      })
+    },
+    // 删除考试类型信息
+    deleteRow(item) {
+      this.$confirm('确认删除该试卷信息吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(() => {
+          deleteTestPapers(item.id).then((res) => {
+            this.$message({
+              type: 'success',
+              message: '删除试卷信息成功!'
+            })
+
+            this.queryTestPapers()
+          })
+        })
+        .catch(() => {
+          console.log('取消')
+        })
+    },
+    // 获取考试类型列表
+    getList() {
+      const obj = {
+        startPage: 1,
+        pageSize: 9999,
+        subjectName: ''
+      }
+
+      querySubject(obj).then((res) => {
+        this.SubjectList = res.list
+      })
+    }
+  }
+}
+</script>
+<style scoped lang="scss">
+.checkClass{
+  width: 100%;
+  display: inline-block;
+    height: auto;
+    line-height: 30px;
+    word-wrap:break-word;
+    word-break:break-all;
+    // overflow: hidden;
+}
+.flexbox {
+  // display: flex;
+  // flex-wrap: wrap;
+}
+.jqContent-title {
+  font-size: 24px !important;
+  font-weight: bold;
+  color: #19a8ee;
+  vertical-align: middle;
+  padding: 24px 0;
+  margin-top: 10px;
+  line-height: 30px;
+  text-align: center;
+}
+.jqContent-box {
+  width: 100%;
+  // overflow: auto;
+}
+.jqContent-ts {
+  color: #555555;
+  line-height: 24px;
+  text-align: left;
+  font-size: 16px;
+  padding-bottom: 15px;
+  border-bottom: 1px dashed #ccc;
+}
+.div_question {
+  border: 2px solid white;
+  padding: 4px;
+  clear: both;
+  margin: 2px auto 10px;
+  width: 96%;
+  height: auto;
+  .div_title_question_all {
+    padding-top: 2px;
+    font-size: 15px;
+    color: #444444;
+    font-weight: bold;
+    height: auto;
+    line-height: 20px;
+    position: relative;
+  }
+  .div_table_radio_question {
+    clear: both;
+    padding-top: 14px;
+    padding-left: 24px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #efefef;
+    font-size: 15px;
+    color: #333333;
+  }
+}
+</style>

@@ -1,0 +1,66 @@
+/* 改变主题色变量 */
+$--color-primary: $bc3;
+$--color-text-primary: $tc1 !default;
+/// color|1|FontColor|2
+$--color-text-regular: $tc2 !default;
+/// color|1|FontColor|2
+$--color-text-secondary: $tc3 !default;
+/// color|1|FontColor|2
+$--color-text-placeholder: #C0C4CC !default;
+
+/// color|1|SecondaryColor|1
+$--color-success: #46C37B !default;
+/// color|1|SecondaryColor|1
+$--color-warning: #E6A43A !default;
+/// color|1|SecondaryColor|1
+$--color-danger: #ea3c40 !default;
+/// color|1|SecondaryColor|1
+$--color-info: #909399 !default;
+
+$--border-radius-base: 1px !default;
+
+$--msgbox-border-radius: 1px !default;
+$--msgbox-padding-primary: 10px !default;
+
+$--button-primary-border-color: $bc6 !default;
+$--button-primary-background-color: $bc6 !default;
+
+$--button-mini-border-radius: 6px !default;
+$--button-small-border-radius: 3px !default;
+/// padding||Spacing|3
+$--button-mini-padding-vertical: 5px !default;
+/// padding||Spacing|3
+$--button-mini-padding-horizontal: 10px !default;
+$--button-mini-font-size: 12px !default;
+
+//$--table-border-color: $dc1;
+$--table-header-background-color: $bc2;
+$--table-header-color: $tc1 !default;
+$--table-header-font-color: $tc1  !default;
+
+$--card-border-radius: 1px !default;
+$--card-padding: 20px !default;
+
+$--dialog-padding-primary: 15px !default;
+
+$--checkbox-font-size: 13px !default;
+
+/// fontSize|1|FontSize|0
+$--font-size-extra-large: 18px !default;
+/// fontSize|1|FontSize|0
+$--font-size-large: 17px !default;
+/// fontSize|1|FontSize|0
+$--font-size-medium: 15px !default;
+/// fontSize|1|FontSize|0
+$--font-size-base: 13px !default;
+/// fontSize|1|FontSize|0
+$--font-size-small: 12px !default;
+/// fontSize|1|FontSize|0
+$--font-size-extra-small: 11px !default;
+
+$--tag-border-radius: 1px !default;
+
+/* 改变 icon 字体路径变量，必需 */
+$--font-path: '~element-ui/lib/theme-chalk/fonts';
+
+@import "~element-ui/packages/theme-chalk/src/index";

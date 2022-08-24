@@ -1278,7 +1278,7 @@ export default {
       // console.log(thisRouter);
       var tag = false;
       var query = thisRouter.query;
-      var keyArr = ['CMZ1','出门证','WJWZCMZ','外借物资出门证']
+      var keyArr = ['CMZ1','出门证','WJWZCMZ','外借物资出门证','3.0出门证','CMZ','4.0外借物资管理出门证','WJWZGLCMZ']
       if(typeof(query) != 'undefined'){
         var key = query.processName;
         var key2 = query.name;

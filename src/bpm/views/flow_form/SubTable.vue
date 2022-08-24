@@ -92,6 +92,7 @@
                 :is-sub-table="true"
                 :is-pop-up="item.isPopUp"
                 @externalFun="externalFun($event,index1)"
+                @customBtnClick="customBtnClick(index1,bizData2[index1],column)"
               />
               <p
                 v-if="errorsShow && !column.applyvalue && column.isrequired === 'required' && !isPrint"
@@ -326,6 +327,17 @@ export default {
     })
   },
   methods: {
+    // index: 索引值
+    // bizData : 本行数据
+    // column 按钮属性
+    customBtnClick(index,bizData,column){
+      var data = {
+        index:index,
+        bizData:bizData,
+        column:column,
+      }
+      this.$emit("customBtnClick",data);
+    },
     getFormDataIsNull(node, data) {
       if (node.nodeTabLists) {
         node.nodeTabLists.forEach(tab => {

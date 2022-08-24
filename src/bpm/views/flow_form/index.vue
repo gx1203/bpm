@@ -203,6 +203,7 @@
             :is-print="isPrint"
             :is-no-start="isNoStart"
             @externalFun="privatelyFun"
+            @customBtnClick="customBtnClick"
             v-show="item.editstate !== 'H'"
             v-if="item.istab === '0'"
           />
@@ -350,6 +351,11 @@
           </el-tooltip>
         </div>
       </div>
+      <div class="btn" @click="handlePrintCard($route)" v-if="showPrintCard($route)">
+        <el-tooltip :content="$t('printCard')" effect="dark" placement="top">
+          <i class="el-icon-bank-card" />
+        </el-tooltip>
+      </div>
       <div class="btn" @click="handlePrint">
         <el-tooltip :content="$t('print')" effect="dark" placement="top">
           <i class="el-icon-printer" />
@@ -437,7 +443,12 @@
 
     <risk-dialog v-model="riskDialogVisible" :riskData="riskData" />
     <system-dialog v-model="systemDialogVisible" :systemData="systemData" />
+    
+    <!-- 自定义弹出框组件 HuangXiaoxiao 2022.07.26 -->
+    <CustomDialogForm v-model="customDialogFormVisible" :itemColumn="customItemColumn"  @close="customDialogFormVisible = false"/>
 
+    <!-- 证件打印弹出框组件 HuangXiaoxiao 2022.08.22 -->
+    <CustomDialogPrintCard v-model="printCardVisible" :nodes="printCardNodes" :routers="printCardRouter" @close="printCardVisible = false"/>
   </div>
 </template>
 
@@ -449,6 +460,10 @@ import FlowCard from "./FlowCard";
 import FlowTabs from "./FlowTabs";
 import RiskDialog from "./RiskDialog";
 import SystemDialog from "./SystemDialog";
+
+import CustomDialogForm from '@/bpm/components/customDialogForm';
+import CustomDialogPrintCard from '@/bpm/components/customDialogPrintCard';
+
 import { on, off, scrollTop } from "@/bpm/utils/backtop";
 import processDialog from "@/bpm/components/processDialog";
 import {
@@ -487,10 +502,20 @@ export default {
     startInstanceImageDialog,
     FlowTabs,
     RiskDialog,
-    SystemDialog
+    SystemDialog,
+    CustomDialogForm,
+    CustomDialogPrintCard
   },
   data() {
     return {
+      // 自定义弹出框
+      customItemColumn:{},
+      customDialogFormVisible: false,
+      // 证件打印弹出框
+      printCardNodes:{},
+      printCardRouter:{},
+      printCardVisible:false,
+      //以下为原组件参数
       logo: logo,
       pageLoading: false,
       organieationShow: false,
@@ -675,6 +700,11 @@ export default {
   },
   methods: {
     ...mapMutations(["setErrorsShow", "setButtonDisabled", "setIsTest"]),
+    customBtnClick(data){
+      // console.error(JSON.stringify(data));
+      this.customItemColumn = data;
+      this.customDialogFormVisible = true;
+    },
     qrcode(val) {
       if (!this.qrcodeShow && val.instanceId) {
         this.positionIdInfo = val.applyUserDto.positionId;
@@ -1242,6 +1272,30 @@ export default {
     },
     systemClick() {
       this.systemDialogVisible = true;
+    },
+    // 判断是否展示[打印证件]功能按钮
+    showPrintCard(thisRouter){
+      // console.log(thisRouter);
+      var tag = false;
+      var query = thisRouter.query;
+      var keyArr = ['CMZ1','出门证','WJWZCMZ','外借物资出门证']
+      if(typeof(query) != 'undefined'){
+        var key = query.processName;
+        var key2 = query.name;
+
+        let flag = keyArr.findIndex(item => item == key);
+        let flag2 = keyArr.findIndex(item => item == key2);
+        if(flag > -1 || flag2 > -1){
+          tag = true;
+        }
+      }
+      return tag;
+    },
+    // 打印证件功能按钮
+    handlePrintCard(thisRouter){
+      this.printCardVisible = true;
+      this.printCardNodes = JSON.parse(JSON.stringify(this.node));
+      this.printCardRouter = JSON.parse(JSON.stringify(thisRouter.query));
     },
     handlePrint() {
       if (this.node.defaultPrint === "Y" && this.node.instanceId) {

@@ -383,6 +383,7 @@ module.exports = {
   routing: 'Routing',
   termination: 'Termination',
   terminated: 'Terminated',
+  printCard: 'Print Certificate',
   print: 'Print',
   viewFlowChart: 'View flowchart',
   previewApproval: 'Preview approval',

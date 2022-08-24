@@ -444,7 +444,16 @@
           :target="item.applyvalue ? '_blank' : ''"
         >
           查看
+          <!-- {{ item.applyvalue }} -->
         </el-link>
+        <el-button
+          v-else-if="item.inputType === 'customDialog'"
+          :id="item.relationType + '_' + item.fieldName + (index || '')"
+          type="text"
+          @click="customBtnClick()"
+        >
+          详情
+        </el-button>
         <el-radio-group
           v-else-if="item.inputType === 'radio'"
           v-show="item.editstate !== 'H'"
@@ -1252,6 +1261,9 @@ export default {
     }
   },
   methods: {
+    customBtnClick(){
+      this.$emit("customBtnClick");
+    },
     // 文件预览
     onPreviewAction(fileInfo) {
       console.log(item)

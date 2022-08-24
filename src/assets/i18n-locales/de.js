@@ -372,6 +372,7 @@ module.exports = {
 	"carbonCopyRecipients": "CC bis",
 	"immediateExecution": "Sofort!",
 	"uploadTime": "Zeit hochladen",
+	"printCard": "Zertifikaat Drucken",
 	"print": "Drucken",
 	"commonlyUsedProcess": "Gemeinsame Verfahren",
 	"addHelpDocument": "Neues Hilfedokument",

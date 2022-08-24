@@ -378,6 +378,7 @@ module.exports = {
   routing: '路由',
   termination: '终止',
   terminated: '已终止',
+  printCard: '打印证件',
   print: '打印',
   viewFlowChart: '查看流程图',
   previewApproval: '预览审批',

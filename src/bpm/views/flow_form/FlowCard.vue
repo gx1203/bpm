@@ -19,7 +19,7 @@
           <span>{{item.fieldShowName}}：</span>
         </div>
         <sub-table v-if="item.inputType === 'subtable'" :item="item" @externalFun="externalFun" :bizData="bizData"
-          :is-print="isPrint" :is-no-start="isNoStart" />
+          :is-print="isPrint" :is-no-start="isNoStart" @customBtnClick="customBtnClick"/>
         <file-list v-else-if="item.inputType === 'file'" :item="item" :bizData="bizData" :is-print="isPrint"
           :is-no-start="isNoStart" />
         <project v-else-if="item.inputType === 'project'" :item="item" :bizData="bizData" :is-print="isPrint" :is-no-start="isNoStart" />
@@ -44,7 +44,7 @@
         style="display:none">
         <file-list v-if="item.inputType === 'file'" :item="item" :bizData="bizData" />
         <sub-table v-else-if="item.inputType === 'subtable'" @externalFun="externalFun" :item="item" :bizData="bizData"
-          :is-print="isPrint" :is-no-start="isNoStart" />
+          :is-print="isPrint" :is-no-start="isNoStart" @customBtnClick="customBtnClick"/>
         <flow-item v-else-if="item.inputType!== 'subtable'" :pItem="data.nodeTableLists" :item="item"
           :is-print="isPrint" @externalFun="externalFun" />
       </span>
@@ -134,6 +134,12 @@ export default {
     }
   },
   methods: {
+    // index: 索引值
+    // bizData : 本行数据
+    // column 按钮属性
+    customBtnClick(data){
+      this.$emit("customBtnClick",data);
+    },
     externalFun (type) {
       this.$emit("externalFun", type);
     },

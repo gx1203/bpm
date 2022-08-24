@@ -42,6 +42,10 @@ import './utils/utils'
 import { fetch } from './bpm/utils/fetch'
 import Vue2OrgTree from 'vue-tree-color'
 
+// 注册vue-print-nb
+import Print from 'vue-print-nb'
+Vue.use(Print);
+
 Vue.use(Vue2OrgTree)
 Vue.prototype.$http = fetch
 Vue.prototype.$host =

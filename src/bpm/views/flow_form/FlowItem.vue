@@ -435,7 +435,19 @@
             <span style="float: left">{{ option.text }}</span>
           </el-option>
         </el-select>
-        <el-link
+        <!-- 修改通用link组件 HuangXiaoxiao 2022.08.31-->
+        <div v-else-if="item.inputType === 'link'">
+          <el-link
+            v-for="(imgItem, imgIndex) in item.applyvalue"
+            :underline="false"
+            :key="'imgLink_' + imgIndex"
+            :href="imgItem.DOWNURL"
+            type="primary"
+            target="_blank"
+            >{{ imgItem.FILENAME }}</el-link>
+        </div>
+        <!-- 九彩云link组件-->
+        <!-- <el-link
           v-else-if="item.inputType === 'link'"
           v-show="item.applyvalue"
           :id="item.relationType + '_' + item.fieldName + (index || '')"
@@ -444,8 +456,7 @@
           :target="item.applyvalue ? '_blank' : ''"
         >
           查看
-          <!-- {{ item.applyvalue }} -->
-        </el-link>
+        </el-link> -->
         <el-button
           v-else-if="item.inputType === 'customDialog'"
           :id="item.relationType + '_' + item.fieldName + (index || '')"
@@ -2516,6 +2527,14 @@ export default {
 </style>
 
 <style type="text/scss" lang="scss" scoped>
+.el-link {
+  margin-right: 15px;
+
+  .el-link--inner {
+    font-size: 16px !important;
+  }
+}
+
 .print-text {
   border: 1px solid $dc1;
   min-height: 28px;

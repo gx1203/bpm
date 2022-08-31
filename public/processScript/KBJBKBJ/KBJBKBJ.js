@@ -4,6 +4,12 @@ var node
 function readyP() {
   _this = arguments[0];
   node = arguments[1];
+
+  // var data = [{'DOWNURL':'https://www.baidu.com/','FILENAME':'百度'},{'DOWNURL':'http://10.77.101.135:19640/scm-edi/file/down/vKp5ZDWl','FILENAME':'1655860725948.jpg'},{'DOWNURL':'http://10.77.101.135:19640/scm-edi/file/down/vKp5ZDWl','FILENAME':'1655860725948.jpg'},{'DOWNURL':'http://10.77.101.135:19640/scm-edi/file/down/vKp5ZDWl','FILENAME':'1655860725948.jpg'},{'DOWNURL':'http://10.77.101.135:19640/scm-edi/file/down/vKp5ZDWl','FILENAME':'1655860725948.jpg'},{'DOWNURL':'http://10.77.101.135:19640/scm-edi/file/down/vKp5ZDWl','FILENAME':'1655860725948.jpg'},{'DOWNURL':'http://10.77.101.135:19640/scm-edi/file/down/vKp5ZDWl','FILENAME':'1655860725948.jpg'},{'DOWNURL':'http://10.77.101.135:19640/scm-edi/file/down/vKp5ZDWl','FILENAME':'1655860725948.jpg'}];
+  // node.nodeTabLists[0].nodeTableLists[4].applyvalue = data;
+  // node.nodeTabLists[0].nodeTableLists[4].showvalue = data;
+
+  // console.log(node.nodeTabLists[0].nodeTableLists[4]);
 }
 
 function selectChange() {

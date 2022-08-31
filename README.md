@@ -4,6 +4,10 @@
 cnpm install --registry=http://nexus.jiucaiyun.cn:8081/repository/npm-public/
 ```
 
+```next(证件打印组件)
+cnpm install vue-print-nb --save
+```
+
 ## 本地运行
 
 ```bash

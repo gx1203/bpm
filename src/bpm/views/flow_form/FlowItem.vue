@@ -437,7 +437,8 @@
         </el-select>
         <!-- 修改通用link组件 HuangXiaoxiao 2022.08.31-->
         <div v-else-if="item.inputType === 'link'">
-          <el-link
+          <div v-if="item.remark === 'link'">
+            <el-link
             v-for="(imgItem, imgIndex) in item.applyvalue"
             :underline="false"
             :key="'imgLink_' + imgIndex"
@@ -445,18 +446,20 @@
             type="primary"
             target="_blank"
             >{{ imgItem.FILENAME }}</el-link>
+          </div>
+          <div v-else>
+            <!-- 九彩云link组件-->
+          <el-link
+            v-show="item.applyvalue"
+            :id="item.relationType + '_' + item.fieldName + (index || '')"
+            type="primary"
+            :href="item.applyvalue ? item.applyvalue : 'javascript:;'"
+            :target="item.applyvalue ? '_blank' : ''"
+          >
+            查看
+          </el-link>
+          </div>
         </div>
-        <!-- 九彩云link组件-->
-        <!-- <el-link
-          v-else-if="item.inputType === 'link'"
-          v-show="item.applyvalue"
-          :id="item.relationType + '_' + item.fieldName + (index || '')"
-          type="primary"
-          :href="item.applyvalue ? item.applyvalue : 'javascript:;'"
-          :target="item.applyvalue ? '_blank' : ''"
-        >
-          查看
-        </el-link> -->
         <el-button
           v-else-if="item.inputType === 'customDialog'"
           :id="item.relationType + '_' + item.fieldName + (index || '')"

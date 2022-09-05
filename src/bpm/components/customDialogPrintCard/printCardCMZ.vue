@@ -1,10 +1,12 @@
 <!--  -->
 <template>
-  <div>
+  <div class="thisPrintCard">
     <div v-for="(item, index) in printCardLen" :key="index">
       <div class="cardTtile">
         <h2>出门证</h2>
-        <p v-if="printData.DOCUMENTNO != ''">单据编号: {{printData.DOCUMENTNO}}</p>
+        <p v-if="printData.DOCUMENTNO != ''">
+          单据编号: {{ printData.DOCUMENTNO }}
+        </p>
         <div
           class="qrcode"
           :id="`qrCodeUrl${index}`"
@@ -23,11 +25,11 @@
           <th colspan="2">出门原因:{{ printData.OUT_REASON }}</th>
         </tr>
         <tr class="tag">
-          <th class="no th1" width="180">序号</th>
+          <th class="th1">序号</th>
           <th class="th2">物料编码</th>
           <th class="th3">物料名称</th>
-          <th class="no th4">单位</th>
-          <th class="no th5" width="180">数量</th>
+          <th class="th4">单位</th>
+          <th class="th5">数量</th>
           <th class="th6">备注</th>
         </tr>
         <tr v-for="(item, index) in printData.ZBQY" :key="index">
@@ -72,9 +74,9 @@ export default {
         OUT_REASON: '',
         PLATE_NUMBER: '',
         ZBQY: [],
-        CREATE_USER:'',
-        APPROVAL_USER:'',
-        DOCUMENTNO:''
+        CREATE_USER: '',
+        APPROVAL_USER: '',
+        DOCUMENTNO: '',
       },
     }
   },
@@ -105,27 +107,34 @@ export default {
   },
   methods: {
     setPrintCardDatas(obj) {
-      var nodeData = this.$store.state.app.nodeData;
-      // console.error(nodeData);
-      // console.error(obj);
+      var nodeData = this.$store.state.app.nodeData
+      // console.error(nodeData)
+      // console.error(obj)
       // console.error(JSON.stringify(obj))
 
       // 申请人
-      this.printData.CREATE_USER = nodeData.applyUserDto.cnname;
+      this.printData.CREATE_USER = nodeData.applyUserDto.cnname
 
       // 审批、经办人
-      var approvalRecordList = nodeData.approvalRecordList;
-      if(typeof(nodeData.approvalRecordList) != 'undefined'){
-        if(approvalRecordList.length > 1){
-          this.printData.APPROVAL_USER = nodeData.approvalRecordList[1].username;
+      var approvalRecordList = nodeData.approvalRecordList
+      if (typeof nodeData.approvalRecordList != 'undefined') {
+        if (approvalRecordList.length > 1) {
+          this.printData.APPROVAL_USER = nodeData.approvalRecordList[1].username
         }
       }
 
-      this.printData.DOCUMENTNO = nodeData.nodeTabLists[2].nodeTableLists[0].showValue;
-
-      if(this.printData.DOCUMENTNO != null && this.printData.DOCUMENTNO != ''){
-        this.doCreateQrCode();
-      }
+      nodeData.nodeTabLists.forEach((item) => {
+        if (item.tabname == '隐藏域') {
+          this.printData.DOCUMENTNO =
+            nodeData.nodeTabLists[2].nodeTableLists[0].showValue
+          if (
+            this.printData.DOCUMENTNO != null &&
+            this.printData.DOCUMENTNO != ''
+          ) {
+            this.doCreateQrCode()
+          }
+        }
+      })
 
       //数据检索
       this.keys.forEach((item, index) => {
@@ -136,49 +145,47 @@ export default {
               var rowsLen = rows.length
               var diffNum = 5 - rowsLen
 
-              if(rowsLen > 0){
+              if (rowsLen > 0) {
                 rows.forEach((rowItem, rowIndex) => {
-                var thisRowData = rowItem.nodeTableLists
-                var thisItem = {
-                  MATERIAL_NO: thisRowData[0].showValue,
-                  MATERIAL_NAME: thisRowData[1].showValue,
-                  UNITS: thisRowData[2].showValue,
-                  QTY: thisRowData[3].showValue,
-                  DETAILS_COMMENTS: thisRowData[4].showValue,
-                }
-                this.printData[item].push(thisItem)
+                  var thisRowData = rowItem.nodeTableLists
+                  var thisItem = {
+                    MATERIAL_NO: thisRowData[0].showValue,
+                    MATERIAL_NAME: thisRowData[1].showValue,
+                    UNITS: thisRowData[2].showValue,
+                    QTY: thisRowData[3].showValue,
+                    DETAILS_COMMENTS: thisRowData[4].showValue,
+                  }
+                  this.printData[item].push(thisItem)
 
-                if (rowIndex == rows.length - 1 && diffNum > 0) {
-                  for (let i = 0; i < diffNum; i++) {
-                    this.printData[item].push({
-                      MATERIAL_NO: '',
-                      MATERIAL_NAME: '',
-                      UNITS: '',
-                      QTY: '',
-                      DETAILS_COMMENTS: '',
-                    })
+                  if (rowIndex == rows.length - 1 && diffNum > 0) {
+                    for (let i = 0; i < diffNum; i++) {
+                      this.printData[item].push({
+                        MATERIAL_NO: '',
+                        MATERIAL_NAME: '',
+                        UNITS: '',
+                        QTY: '',
+                        DETAILS_COMMENTS: '',
+                      })
+                    }
                   }
-                }
-              })
-              }else{
+                })
+              } else {
                 for (let i = 0; i < diffNum; i++) {
-                    this.printData[item].push({
-                      MATERIAL_NO: '',
-                      MATERIAL_NAME: '',
-                      UNITS: '',
-                      QTY: '',
-                      DETAILS_COMMENTS: '',
-                    })
-                  }
+                  this.printData[item].push({
+                    MATERIAL_NO: '',
+                    MATERIAL_NAME: '',
+                    UNITS: '',
+                    QTY: '',
+                    DETAILS_COMMENTS: '',
+                  })
+                }
               }
-              
             } else {
               this.printData[item] = objItem.showValue
             }
           }
         })
       })
-      
     },
     doCreateQrCode() {
       for (let index = 0; index < this.printCardLen; index++) {
@@ -200,12 +207,14 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+* {
+  -webkit-print-color-adjust: exact;
+}
 .cardTtile {
-  // background-color: #d7d7d7;
   height: 110px;
   background-image: url(./beiqi_logo.png);
   background-repeat: no-repeat;
-  background-position: 5px 5px;
+  background-position: 15px 0px;
   position: relative;
   -webkit-print-color-adjust: exact;
 
@@ -229,20 +238,22 @@ export default {
   .qrcode {
     display: block;
     position: absolute;
-    right: 0;
+    right: 0px;
     top: 0;
   }
 }
 table {
-  border: 0.5px solid #d7d7d7;
+  border: 1px solid #000;
   width: 100%;
   text-align: left;
+  color: #000;
+  font-size: 16px;
 }
 
 table tr,
 table th,
 table td {
-  border: 0.5px solid #d7d7d7;
+  border: 1px solid #000;
   height: 40px;
   margin: 0;
   padding: 0px 10px;
@@ -253,7 +264,7 @@ table td {
 }
 
 .tag {
-  background-color: #eaeaea;
+  background-color: #afafaf;
   -webkit-print-color-adjust: exact;
 
   .th1 {
@@ -290,7 +301,7 @@ table td {
 <style media="print">
 @page {
   size: auto;
-  margin: 3mm;
+  margin: 1mm;
 }
 @media print {
   html {
@@ -303,36 +314,75 @@ table td {
     border: solid 1px #ffffff;
     /* margin: 10mm 15mm 10mm 15mm; */
   }
+
+  .thisPrintCard {
+    margin-top: 40px;
+  }
+
+  .cardTtile {
+    height: 110px;
+    background-image: url(./beiqi_logo.png);
+    background-repeat: no-repeat;
+    background-position: 50px 0px !important;
+    position: relative;
+  }
+
+  .cardTtile h2 {
+    text-align: center;
+    font-size: 40px;
+    line-height: 60px;
+    color: #000;
+    font-weight: bold;
+    letter-spacing: 0.5em;
+  }
+
+  .cardTtile p {
+    text-align: right;
+    padding-right: 180px !important;
+    color: #000;
+    font-size: 18px;
+    margin-top: 20px !important;
+  }
+
+  .cardTtile .qrcode {
+    display: block;
+    position: absolute;
+    right: 60px !important;
+    top: 0;
+  }
+
   #printArea table {
     table-layout: auto !important;
     width: 100% !important;
-    border: solid 1px #f2f2f2;
+    border: solid 1px #000;
     table-layout: fixed !important;
+    color: #000;
+    font-size: 16px;
+    padding: 10px 50px;
   }
 
   .th1 {
-    width: 7% !important;
+    width: 7vw !important;
   }
 
   .th2 {
-    width: 23% !important;
+    width: 23vw !important;
   }
 
   .th3 {
-    width: 30% !important;
+    width: 30vw !important;
   }
 
   .th4 {
-    width: 10% !important;
+    width: 10vw !important;
   }
 
   .th5 {
-    width: 10% !important;
+    width: 10vw !important;
   }
 
   .th6 {
-    width: 20% !important;
+    width: 20vw !important;
   }
-
 }
 </style>

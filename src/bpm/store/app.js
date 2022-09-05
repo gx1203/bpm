@@ -50,7 +50,8 @@ const app = {
     userAuthority: [],
     carouselShow: true,
     loginExpiredShow: false,
-    approveCount: null // 待办数量
+    approveCount: null, // 待办数量
+    printCardKeyArray: ['CMZ1','出门证','WJWZCMZ','外借物资出门证','3.2出门证','CMZ','4.0外借物资管理出门证','WJWZGLCMZ']
   },
   getters: {
     language: state => state.language,
@@ -88,7 +89,8 @@ const app = {
     getUserAuthor: state => state.userAuthority,
     carouselShow: state => state.carouselShow,
     loginExpiredShow: state => state.loginExpiredShow,
-    approveCount: state => state.approveCount
+    approveCount: state => state.approveCount,
+    printCardKeyArray: state => state.printCardKeyArray,
   },
   mutations: {
     setLanguage: (state, language) => {

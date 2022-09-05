@@ -8,7 +8,7 @@
       width="50%"
       :before-close="onClose"
     >
-      <div>
+      <div class="myPrint">
         <!-- 出入证 -->
         <PrintCardCMZ
           v-if="showCard == 1"
@@ -100,7 +100,7 @@ export default {
     },
     routers(newVal) {
       var name = newVal.name;
-      if (name == '出门证') {
+      if (name == '3.2出门证') {
         this.showCard = 1
       } else if (name == '外借物资出门证') {
         this.showCard = 2
@@ -135,14 +135,14 @@ export default {
 <style media="print">
 @page {
   size: auto;
-  margin: 3mm;
+  margin: 1mm;
 }
 @media print {
   html {
     background-color: #ffffff;
     height: auto;
     margin: 0px;
-    zoom: 88%;
+    zoom: 80%;
   }
   body {
     border: solid 1px #ffffff;

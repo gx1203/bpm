@@ -1280,12 +1280,10 @@ export default {
       var query = thisRouter.query;
       var keyArr = this.$router.app.$store.state.app.printCardKeyArray;
       if(typeof(query) != 'undefined'){
-        var key = query.processName;
-        var key2 = query.name;
+        var key = query.name;
 
         let flag = keyArr.findIndex(item => item == key);
-        let flag2 = keyArr.findIndex(item => item == key2);
-        if(flag > -1 || flag2 > -1){
+        if(flag > -1){
           tag = true;
         }
       }

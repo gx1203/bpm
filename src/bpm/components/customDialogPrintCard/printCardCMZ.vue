@@ -43,7 +43,7 @@
         <tr>
           <th colspan="2">创建人:{{ printData.CREATE_USER }}</th>
           <th colspan="2">负责人:{{ printData.APPROVAL_USER }}</th>
-          <th colspan="2">经办人:{{ printData.APPROVAL_USER }}</th>
+          <th colspan="2">经办人:{{ printData.CHARGE_USER }}</th>
         </tr>
       </table>
       <p v-if="index != 1" class="fg"></p>
@@ -64,6 +64,7 @@ export default {
         'CORPORATION',
         'OUT_REASON',
         'PLATE_NUMBER',
+        'CHARGE_USER',
         'ZBQY',
       ],
       printData: {
@@ -74,6 +75,7 @@ export default {
         OUT_REASON: '',
         PLATE_NUMBER: '',
         ZBQY: [],
+        CHARGE_USER:'',
         CREATE_USER: '',
         APPROVAL_USER: '',
         DOCUMENTNO: '',

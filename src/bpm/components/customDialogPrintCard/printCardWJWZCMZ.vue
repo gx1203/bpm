@@ -42,7 +42,7 @@
         </tr>
         <tr>
           <th colspan="2">创建人:{{ printData.CREATE_USER }}</th>
-          <th colspan="2">经办人:{{ printData.APPROVAL_USER }}</th>
+          <th colspan="2">经办人:{{ printData.CHARGE_USER }}</th>
           <th colspan="2">负责人:{{ printData.APPROVAL_USER }}</th>
         </tr>
         <tr>
@@ -70,6 +70,7 @@ export default {
         'CORPORATION',
         'OUT_REASON',
         'PLATE_NUMBER',
+        'CHARGE_USER',
         'ZBQY',
       ],
       printData: {
@@ -80,6 +81,7 @@ export default {
         OUT_REASON: '',
         PLATE_NUMBER: '',
         ZBQY: [],
+        CHARGE_USER:'',
         CREATE_USER: '',
         APPLY_DATE: '',
         APPROVAL_USER: '',
@@ -355,7 +357,6 @@ table td {
       line-height: 60px;
       color: #000;
       font-weight: bold;
-      letter-spacing: 0.5em;
     }
   
     .cardTtile p {

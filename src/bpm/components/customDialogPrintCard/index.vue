@@ -42,11 +42,11 @@ export default {
     return {
       pageTitle: '证件打印预览',
       isVisible: false,
-      //展示哪个证件信息。1：出入证；2：外借物料出入证
+      //展示哪个证件信息。1：出门证；2：外借物料出门证
       showCard: null,
       print: {
         id: 'printArea',
-        popTitle: '出入证打印', // 打印配置页上方标题
+        popTitle: '出门证打印', // 打印配置页上方标题
         extraHead:
           '<meta http-equiv="Content-Language" content="zh-cn"/>,<style>  #printArea {  width: 100% !important; .th1 {width: 7% !important;} .th2 {width: 23% !important;} } <style>', //最上方的头部文字，附加在head标签上的额外标签,使用逗号分隔
         preview: false, // 是否启动预览模式，默认是false（开启预览模式，可以先预览后打印）
@@ -100,7 +100,7 @@ export default {
     },
     routers(newVal) {
       var name = newVal.name;
-      if (name == '3.2出门证') {
+      if (name == '出门证') {
         this.showCard = 1
       } else if (name == '外借物资出门证') {
         this.showCard = 2
@@ -110,7 +110,7 @@ export default {
     },
   },
   mounted() {
-    console.log('证件打印初始化....')
+    console.log('出门证打印初始化....')
   },
   methods: {
     getKey() {

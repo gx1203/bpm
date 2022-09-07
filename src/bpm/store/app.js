@@ -51,7 +51,7 @@ const app = {
     carouselShow: true,
     loginExpiredShow: false,
     approveCount: null, // 待办数量
-    printCardKeyArray: ['CMZ1','出门证','WJWZCMZ','外借物资出门证','3.2出门证','CMZ','4.0外借物资管理出门证','WJWZGLCMZ']
+    printCardKeyArray: ['出门证','外借物资出门证']
   },
   getters: {
     language: state => state.language,

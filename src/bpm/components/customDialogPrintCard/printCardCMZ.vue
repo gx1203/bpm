@@ -21,7 +21,7 @@
         </tr>
         <tr>
           <th colspan="2">出门单位:{{ printData.CORPORATION }}</th>
-          <th colspan="2">出门时间:{{ printData.OUT_TIME }}</th>
+          <th colspan="2">出门时间:{{ formatDateTime(printData.OUT_TIME) }}</th>
           <th colspan="2">出门原因:{{ printData.OUT_REASON }}</th>
         </tr>
         <tr class="tag">
@@ -52,6 +52,7 @@
 </template>
 
 <script>
+import moment from 'moment-mini'
 import QRCode from 'qrcodejs2'
 export default {
   data() {
@@ -204,6 +205,11 @@ export default {
         colorLight: '#ffffff',
         correctLevel: QRCode.CorrectLevel.H,
       })
+    },
+    formatDateTime(val) {
+      if (val) {
+        return moment(val).format('YYYY-MM-DD')
+      }
     },
   },
 }

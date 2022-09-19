@@ -399,40 +399,57 @@ export default {
       // this.$refs.WebmapDialog.open()
     },
     logout() {
-      this.$confirm(
-        this.$t('hintText.areYouSureYouWantToCancel'),
-        this.$t('hintText.hint'),
-        {
-          confirmButtonText: this.$t('confirm'),
-          cancelButtonText: this.$t('cancel'),
-          type: 'warning'
-        }
-      )
-        .then(async () => {
-          if (process.env.NODE_ENV === 'production') {
-            logout().then(rt => {
+    //新修改的开始
+       logout().then(rt => {
               this.$store.dispatch('basuser/saveUser', {})
               const language = localStorage.getItem('language')
               localStorage.clear()
               sessionStorage.clear()
               clearCookies()
               localStorage.setItem('language', language)
-              this.$router.replace(this.host + '/logout').catch(e => e)
+            
+              window.location.href = 'https://sso.beijingtrucks.com/logout?service=https://bpm.beijingtrucks.com/baicbpm&ignoreCross=true';
               this.setCarouselShow(true)
             })
-          } else {
-            await this.$store.dispatch('basuser/saveUser', {})
-            const language = localStorage.getItem('language')
-            localStorage.clear()
-            sessionStorage.clear()
-            clearCookies()
-            localStorage.setItem('language', language)
-            this.$router.replace('/login')
-          }
-        })
-        .catch(e => {
-          console.log(e)
-        })
+             //新修改的结束
+              //之前的
+      // this.$confirm(
+      //   this.$t('hintText.areYouSureYouWantToCancel'),
+      //   this.$t('hintText.hint'),
+      //   {
+      //     confirmButtonText: this.$t('confirm'),
+      //     cancelButtonText: this.$t('cancel'),
+      //     type: 'warning'
+      //   }
+      // )
+      //   .then(async () => {
+      //     if (process.env.NODE_ENV === 'production') {
+      //       logout().then(rt => {
+      //         this.$store.dispatch('basuser/saveUser', {})
+      //         const language = localStorage.getItem('language')
+      //         localStorage.clear()
+      //         sessionStorage.clear()
+      //         clearCookies()
+      //         localStorage.setItem('language', language)
+      //         window.location.href = 'https://sso.beijingtrucks.com/logout?service=https://bpm.beijingtrucks.com/baicbpm&ignoreCross=true';
+      //         //this.$router.replace(this.host + '/logout').catch(e => e)
+      //         this.setCarouselShow(true)
+      //       })
+      //     } else {
+      //       await this.$store.dispatch('basuser/saveUser', {})
+      //       const language = localStorage.getItem('language')
+      //       localStorage.clear()
+      //       sessionStorage.clear()
+      //       clearCookies()
+      //       localStorage.setItem('language', language)
+      //       window.location.href = 'https://sso.beijingtrucks.com/logout?service=https://bpm.beijingtrucks.com/baicbpm&ignoreCross=true';
+      //       //this.$router.replace('/login')
+      //     }
+      //   })
+      //   .catch(e => {
+      //     console.log(e)
+      //   })
+        //之前的结束
     },
     moveMenu(type) {
       const allWidth = parseFloat($('.mainnav-content').css('width'))

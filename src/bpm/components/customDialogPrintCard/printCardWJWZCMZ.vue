@@ -46,7 +46,7 @@
           <th colspan="2">负责人:{{ printData.APPROVAL_USER }}</th>
         </tr>
         <tr>
-          <th colspan="2">出门时间:{{ printData.APPLY_DATE }}</th>
+          <th colspan="2">出门时间:{{ formatDateTime(printData.OUT_TIME) }}</th>
           <th colspan="2">日期:{{ printData.APPROVAL_DATE }}</th>
           <th colspan="2">日期:{{ printData.APPROVAL_DATE }}</th>
         </tr>
@@ -71,6 +71,7 @@ export default {
         'OUT_REASON',
         'PLATE_NUMBER',
         'CHARGE_USER',
+        'OUT_TIME',
         'ZBQY',
       ],
       printData: {
@@ -86,6 +87,7 @@ export default {
         APPLY_DATE: '',
         APPROVAL_USER: '',
         APPROVAL_DATE: '',
+        OUT_TIME:'',
         DOCUMENTNO: '',
       },
     }

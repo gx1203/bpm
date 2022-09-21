@@ -195,7 +195,7 @@
             <!-- <span>申请时间:{{node.applyUserDto.applyDate | formatDateTime}}</!-->
           </div>
         </div>
-        <div>
+        <div class="myFormStyleDiv">
           <flow-card
             v-for="(item, index) in node.nodeTabLists"
             :data="item"
@@ -404,11 +404,11 @@
           <i @click="handleHelp" class="el-icon-question" />
         </el-tooltip>
       </div>
-      <div class="btn" @click="handleTop">
+      <!-- <div class="btn" @click="handleTop">
         <el-tooltip content="top" effect="dark" placement="top">
           <i class="el-icon-top" />
         </el-tooltip>
-      </div>
+      </div> -->
     </div>
     <process-dialog
       :process="previewApprovers"

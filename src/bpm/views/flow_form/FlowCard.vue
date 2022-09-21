@@ -7,7 +7,7 @@
         <i :class="expand ? 'el-icon-arrow-up' : 'el-icon-arrow-down'"></i> {{expand ? $t('putAway') : $t('unfold')}}</el-button>
     </div>
     <slot name="card" v-if="isMoreCard"></slot>
-    <el-row class="form" v-if="!isMoreCard">
+    <el-row class="form myFormStyle" v-if="!isMoreCard">
       <el-col v-for="(item, index) in data.nodeTableLists" :key="index" v-if="item.editstate !== 'H'" class="form-item"
         v-show="(item.inputType !== 'hidden' && !isSubTableDetail) || (item.inputType !== 'hidden' && isSubTableDetail && item.inputType !== 'subtable')"
         :span="(item.inputType !== 'subtable' && item.inputType !== 'file' && item.inputType !== 'project' && 

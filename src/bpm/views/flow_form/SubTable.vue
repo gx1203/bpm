@@ -66,7 +66,10 @@
             <i v-if="item.editstate === 'W'" class="el-icon-circle-plus" title="添加" @click="addSubTableItem" />
           </th>
         </tr>
-        <tbody v-for="(child, index1) in item.rows" :key="index1">
+        <tbody class="myTbody" v-for="(child, index1) in item.rows" :key="index1">
+          <tr class="myTbodyP" v-if="setShow(item.rows,index1)">
+            <td  :colspan="(child.nodeTableLists.length + 2)" > --------- 分隔符 ---------</td>
+          </tr>
           <tr>
             <td>{{ (index1 + 1) * 1 }}</td>
             <td
@@ -327,6 +330,19 @@ export default {
     })
   },
   methods: {
+    // 控制subtable表格之前的间距 Huang Xiaoxiao 2022.09.23
+    setShow(obj,objIndex){
+      if(objIndex == 0) return false;
+      var subNodes = obj[0].nodeTableLists;
+      var isReturn = false;
+      subNodes.forEach((item,index) => {
+        if(item.inputType === 'subtable' && item.nodeTableLists.length > 0) {
+          isReturn = true;
+        }
+      });
+
+      return isReturn;
+    },
     // index: 索引值
     // bizData : 本行数据
     // column 按钮属性
@@ -722,6 +738,12 @@ export default {
 </script>
 
 <style type="text/scss" lang="scss" scoped>
+
+.myTbodyP{
+  height: 63px;
+  width: 100%;
+  background-color: #f5f5f5;
+}
 .sub-table {
   /*display: table-cell;*/
   vertical-align: middle;

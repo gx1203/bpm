@@ -90,8 +90,9 @@
           >
         </p>
         <!-- <editor :item='item'></editor> -->
+        <!-- input 输入框增加[申请人]选择 Huang Xiaoxiao 2022.09.21 -->
         <el-input
-          v-if="item.inputType === 'text' || item.inputType === 'textarea'"
+          v-if="item.inputType === 'text' || item.inputType === 'textarea' || item.inputType === 'applicant'"
           v-show="item.editstate !== 'H'"
           :id="item.relationType + '_' + item.fieldName + (index || '')"
           :ref="item.id"
@@ -104,7 +105,7 @@
           :type="item.inputType"
           :autosize="{minRows:4,maxRows:8}"
           :maxlength="item.inputType === 'textarea' ? item.length : ''"
-          :disabled="item.editstate === 'R'"
+          :disabled="item.editstate === 'R' ||  item.inputType === 'applicant'"
           @click.native="
             item.eventtype &&
               item.eventtype.split(',').indexOf('click') !== -1 &&
@@ -1200,6 +1201,13 @@ export default {
             this.$set(val, 'selectMoreData', [])
           }
         }
+        //处理申请人自动填入表单申请人id HuangXiaoxiao  2022.09.21
+        if(val.inputType === 'applicant'){
+          var userId = this.$store.state.app.nodeData.applyUserDto.id;
+          this.$set(val, 'applyvalue', userId)
+          this.$set(val, 'showValue', userId)
+        }
+        
         if (this.bizData2) {
           this.shiftData(val, this.bizData2)
         } else {

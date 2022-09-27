@@ -29,11 +29,11 @@ export default {
   data() {
     return {
       butList: [
-        {
-          name: '流程设计',
-          url: '/doorCenter/TheProcessIsv?theProcessIs=true',
-          imgUrl: processDesign
-        },
+        // {
+        //   name: '流程设计',
+        //   url: '/doorCenter/TheProcessIsv?theProcessIs=true',
+        //   imgUrl: processDesign
+        // },
         {
           name: '流程审批',
           url: '/staging/personal/approveList',

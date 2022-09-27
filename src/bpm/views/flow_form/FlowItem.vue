@@ -436,20 +436,19 @@
             <span style="float: left">{{ option.text }}</span>
           </el-option>
         </el-select>
-        <!-- 修改通用link组件 HuangXiaoxiao 2022.08.31-->
-        <div v-else-if="item.inputType === 'link'">
-          <div v-if="item.remark === 'link'">
+        <!-- link(JSON)组件 HuangXiaoxiao 2022.09.27-->
+        <div v-else-if="item.inputType === 'customLink'">
             <el-link
             v-for="(imgItem, imgIndex) in item.applyvalue"
             :underline="false"
-            :key="'imgLink_' + imgIndex"
+            :key="'customLink_' + imgIndex"
             :href="imgItem.DOWNURL"
             type="primary"
             target="_blank"
             >{{ imgItem.FILENAME }}</el-link>
           </div>
-          <div v-else>
-            <!-- 九彩云link组件-->
+        <!-- 九彩云link组件-->
+        <div v-else-if="item.inputType === 'link'">
           <el-link
             v-show="item.applyvalue"
             :id="item.relationType + '_' + item.fieldName + (index || '')"
@@ -459,8 +458,8 @@
           >
             查看
           </el-link>
-          </div>
         </div>
+
         <el-button
           v-else-if="item.inputType === 'customDialog'"
           :id="item.relationType + '_' + item.fieldName + (index || '')"

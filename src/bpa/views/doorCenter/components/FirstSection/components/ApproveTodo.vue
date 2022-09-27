@@ -72,7 +72,7 @@ export default {
           platform: 'PC'
         },
         pageNum: 1,
-        pageSize: 5
+        pageSize: 6
       }).then(rt => {
         if (rt.status === '200') {
           this.content = rt.data

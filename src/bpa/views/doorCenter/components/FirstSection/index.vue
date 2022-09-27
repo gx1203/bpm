@@ -74,8 +74,28 @@
           </el-col>
         </el-row>
         <!-- 审批待办 -->
-        <el-card shadow="never" class="card-padding0 form-card approve-card">
-          <approve-todo></approve-todo>
+        <el-card shadow="never" class="card-padding0 form-card approve-card myElTabs">
+          <!-- <p>13312</p> -->
+          <el-tabs v-model="tabPaneActiveName">
+            <el-tab-pane label="审批待办" name="first">
+              <approve-todo></approve-todo>
+            </el-tab-pane>
+            <el-tab-pane label="我的申请" name="second">
+              <apply
+                tableStyle="bpmnew"
+                :host="tabPane_host"
+                :VUE_APP_BPA_URL="tabPane_VUE_APP_BPA_URL"
+              ></apply>
+            </el-tab-pane>
+            <el-tab-pane label="我经办的" name="third">
+              <process-trace
+                tableStyle="bpmnew"
+                :host="tabPane_host"
+                :VUE_APP_BPA_URL="tabPane_VUE_APP_BPA_URL"
+              ></process-trace>
+            </el-tab-pane>
+          </el-tabs>
+          
         </el-card>
       </el-col>
       <el-col :span="7">
@@ -90,7 +110,7 @@
           </div>
           <el-carousel
             trigger="click"
-            height="240px"
+            height="325px"
             indicator-position="none"
             :autoplay="false"
           >
@@ -118,7 +138,7 @@
             </el-carousel-item>
           </el-carousel>
         </el-card>
-        <el-card shadow="never" class="card-padding0 form-card">
+        <el-card shadow="never" class="card-padding0 form-card" style="height: 392px;">
           <apply-create></apply-create>
         </el-card>
       </el-col>
@@ -156,6 +176,9 @@
 
 <script>
 
+import Apply from '@/bpm/views/staging/personal/apply/apply.vue'
+import ProcessTrace from '@/bpm/views/staging/personal/processTrace/processTrace.vue'
+
 // 数据初始化
 import { findUserMainOrg } from "@/bpa/api/overView";
 import {
@@ -181,16 +204,20 @@ window.addEventListener("storage", function(e) {
     window.getData();
   }
 });
+
 export default {
   components: {
     InstanceImageDialog,
     ApplyCreate,
     Avatar,
-    ApproveTodo
+    ApproveTodo,
+    Apply,
+    ProcessTrace
   },
   data() {
     return {
-
+      tabPosition: 'left',
+      tabPaneActiveName:"first",
       moreNavigation: false,
       // 导航应用
       navigationList: [],
@@ -219,6 +246,12 @@ export default {
     };
   },
   computed: {
+    tabPane_host() {
+      return process.env.VUE_APP_HOST_URL + process.env.VUE_APP_BASE_URL
+    },
+    tabPane_VUE_APP_BPA_URL() {
+      return process.env.VUE_APP_BPA_URL
+    },
     ShortcutIconsList() {
       let size = 6;
       let arrs = [];
@@ -469,6 +502,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.myElTabs{
+  padding: 10px;
+}
 /deep/ .el-carousel__arrow--right {
   right: 0;
   color: #fff;
@@ -572,7 +609,7 @@ export default {
   }
 }
 .approve-card {
-  height: 505px;
+  height: 640px;
 }
 
 .application-content {

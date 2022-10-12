@@ -439,7 +439,7 @@
         <!-- link(JSON)组件 HuangXiaoxiao 2022.09.27-->
         <div v-else-if="item.inputType === 'customLink'">
             <el-link
-            v-for="(imgItem, imgIndex) in item.applyvalue"
+            v-for="(imgItem, imgIndex) in setCustomLinkData(item.applyvalue)"
             :underline="false"
             :key="'customLink_' + imgIndex"
             :href="imgItem.DOWNURL"
@@ -1284,6 +1284,37 @@ export default {
   methods: {
     customBtnClick(){
       this.$emit("customBtnClick");
+    },
+    // 处理自定义Link 数据问题
+    setCustomLinkData(obj){
+
+      if(typeof(obj) == 'object'){
+        return obj;
+      }else if(typeof(obj) == 'string'){
+        console.log(obj);
+
+        var thisStr = obj;
+        thisStr = thisStr.replace(/ /g,'');
+        thisStr = thisStr.replace(/{/g,'{"');
+        thisStr = thisStr.replace(/}/g,'"}');
+        thisStr = thisStr.replace(/,/g,'","');
+        thisStr = thisStr.replace(/=/g,'":"');
+        thisStr = thisStr.replace(/=/g,'":"');
+        thisStr = thisStr.replace(/}","{/g,'},{');
+
+        console.log(thisStr);
+
+        thisStr = JSON.parse(thisStr);
+
+        if(typeof(thisStr) == 'object'){
+          return thisStr;
+        }else{
+          return [];
+        }
+      }else {
+        return [];
+      }
+      
     },
     // 文件预览
     onPreviewAction(fileInfo) {

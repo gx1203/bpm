@@ -41,7 +41,10 @@ export default {
       this.$store.commit('app/setTabList', [])
       this.$store.commit('app/setLoginExpiredShow', false)
       this.$store.commit('app/setCarouselShow', true)
+      //不用单点登录使用
       window.location.replace('#/login')
+      //单点登录使用
+      //window.location.href = 'https://sso.beijingtrucks.com/logout?service=https://bpm.beijingtrucks.com/baicbpm&ignoreCross=true';
     }
   }
 };

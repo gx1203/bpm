@@ -670,7 +670,7 @@ export default {
         }
       )
         .then(() => {
-          let canshu = `${data.brtreeid}?userId=${this.$store.state.basuser.user.id}&type=3`;
+          let canshu = `${data.brtreeid}?userId=${this.$store.state.basuser.user.id}&type=2`;
           deleteControl(canshu).then((rt) => {
             if (rt.status === "200") {
               this.$emit("confirm", (this.isRef = !this.isRef));

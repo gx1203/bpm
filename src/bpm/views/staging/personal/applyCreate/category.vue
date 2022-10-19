@@ -403,11 +403,44 @@ export default {
         url: `/bpm/createnav/applyForCreation`,
         method: "GET"
       }).then((res) => {
-        this.categoryList = res.data;
-        if(this.categoryList.length) {
-          this.defaultExpandedKeys = [this.categoryList[0].id]
-        }
-        console.log('🍓categoryList', this.categoryList)
+        
+        // HuangXiaxiao 2022.10.19 业务办理平台--申请创建--根据账号角色权限，显示/隐藏部分流程
+        
+        // 查询用户的角色 
+        this.$http({
+          url: `/userModel/get/` + this.$store.state.basuser.user.id,
+          method: "GET"
+        }).then((rt) => {
+          // 管理员 角色代码
+          var adminCode = "637476";
+          if(rt.status == "200") {
+            var checkedRoleIds = rt.data.checkedRoleIds || [];
+            var indexOffset = checkedRoleIds.indexOf(adminCode);
+            if(indexOffset < 0){
+              //不是管理员 ，隐藏部分流程操作
+              var hideName = "外部流程发起";
+              res.data.forEach((obj,objIndex) => {
+                if(obj.name != hideName) {
+                  this.categoryList.push(obj);
+                }
+              });
+              if(this.categoryList.length) {
+                this.defaultExpandedKeys = [this.categoryList[0].id]
+              }
+              // console.log('🍓categoryList', this.categoryList)
+            }else{
+              this.categoryList = res.data;
+              if(this.categoryList.length) {
+                this.defaultExpandedKeys = [this.categoryList[0].id]
+              }
+              // console.log('🍓categoryList', this.categoryList)
+            }
+
+            
+
+          }
+        });
+
       });
       this.$http({
         url: `/bpm/createnav/initiate-list`,

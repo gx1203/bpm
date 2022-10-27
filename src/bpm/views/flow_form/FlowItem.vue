@@ -1298,8 +1298,8 @@ export default {
         thisStr = thisStr.replace(/{/g,'{"');
         thisStr = thisStr.replace(/}/g,'"}');
         thisStr = thisStr.replace(/,/g,'","');
-        thisStr = thisStr.replace(/=/g,'":"');
-        thisStr = thisStr.replace(/=/g,'":"');
+        thisStr = thisStr.replace(/DOWNURL=/g,'DOWNURL":"');
+        thisStr = thisStr.replace(/FILENAME=/g,'FILENAME":"');
         thisStr = thisStr.replace(/}","{/g,'},{');
 
         console.log(thisStr);

@@ -116,7 +116,7 @@ export default {
       this.$confirm(this.$t('hintText.areYouSureDelete'), this.$t('hintText.hint'), {
         type: 'warning'
       }).then(() => {
-        let canshu = `${data.id}?userId=${this.$store.state.basuser.user.id}&type=${data.type}`
+        let canshu = `${data.id}?userId=${this.$store.state.basuser.user.id}&type=3`
         deleteControl(canshu).then((rt) => {
           if (rt.status === '200') {
             this.$message.success(this.$t('hintText.operateSuccessfully'))

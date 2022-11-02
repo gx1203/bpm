@@ -142,7 +142,7 @@ export default {
             const link = document.createElement("a");
             link.style.display = "none";
             link.href = url;
-            link.setAttribute("download", '九彩云BPM岗位节点匹配');
+            link.setAttribute("download", '北汽重卡BPM岗位节点匹配');
             document.body.appendChild(link);
             link.click();
             window.URL.revokeObjectURL(link.href);

@@ -278,7 +278,7 @@ export default {
             const link = document.createElement('a')
             link.style.display = 'none'
             link.href = url
-            link.setAttribute('download', '九彩云BPM-风险矩阵.xls')
+            link.setAttribute('download', '北汽重卡BPM-风险矩阵.xls')
             document.body.appendChild(link)
             link.click()
             window.URL.revokeObjectURL(link.href)

@@ -16,7 +16,7 @@
     ss.length = ss.length - 1;
     href = ss.join("/");
 
-    if (path.indexOf("http:") == -1 && path.indexOf("file:") == -1) {
+    if (path.indexOf("https:") == -1 && path.indexOf("file:") == -1) {
         path = href + "/" + path;
     }
     return path;

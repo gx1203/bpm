@@ -68,7 +68,7 @@ function getQueryVariable(variable)
 
 // 全局前置路由守卫，可做登录验证
 router.beforeEach((to, form, next) => {
-  document.title = '九彩云BPM极速版'
+  document.title = '北汽重卡BPM极速版'
   // 登录验证
   let  isLogin = cookie.get('isLogin')
   //单点登录验证开始

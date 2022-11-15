@@ -447,7 +447,7 @@
             target="_blank"
             >{{ imgItem.FILENAME }}</el-link>
           </div>
-        <!-- 九彩云link组件-->
+        <!-- 北汽重卡link组件-->
         <div v-else-if="item.inputType === 'link'">
           <el-link
             v-show="item.applyvalue"

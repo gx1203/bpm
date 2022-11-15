@@ -437,7 +437,7 @@ export default {
             const link = document.createElement('a')
             link.style.display = 'none'
             link.href = url
-            link.setAttribute('download', '九彩云BPM组织机构导入导出模板.xls')
+            link.setAttribute('download', '北汽重卡BPM组织机构导入导出模板.xls')
             document.body.appendChild(link)
             link.click()
             window.URL.revokeObjectURL(link.href)

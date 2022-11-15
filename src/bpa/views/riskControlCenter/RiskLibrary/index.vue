@@ -642,7 +642,7 @@ export default {
             link.href = url
             link.setAttribute(
               'download',
-              '九彩云BPM-' + this.type + '风险库.xls'
+              '北汽重卡BPM-' + this.type + '风险库.xls'
             )
             document.body.appendChild(link)
             link.click()

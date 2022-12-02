@@ -113,7 +113,17 @@
               </span>
             </el-col>
             <el-col :span="6" align="right">
-              <div id="qrcode"></div>
+              <div id="qrcode" class="excel" v-if="ifShow">
+                <el-upload
+                  ref="upload"
+                  accept=".xls,.xlsx"
+                  action=""
+                  :auto-upload="false"
+                  :on-change="handleUpload"
+                  :show-file-list="false">
+                  <el-button type="info">数据导入</el-button>
+                </el-upload>
+              </div>
             </el-col>
           </el-row>
         </div>
@@ -443,7 +453,7 @@
 
     <risk-dialog v-model="riskDialogVisible" :riskData="riskData" />
     <system-dialog v-model="systemDialogVisible" :systemData="systemData" />
-    
+
     <!-- 自定义弹出框组件 HuangXiaoxiao 2022.07.26 -->
     <CustomDialogForm v-model="customDialogFormVisible" :itemColumn="customItemColumn"  @close="customDialogFormVisible = false"/>
 
@@ -490,6 +500,7 @@ import "bas-component/lib/BasComponent.css";
 import { createNamespacedHelpers } from "vuex";
 import { fetch } from "@/bpm/utils";
 import moment from "moment-mini";
+import XLSX from "xlsx";
 
 const { mapGetters, mapMutations } = createNamespacedHelpers("app");
 
@@ -554,7 +565,8 @@ export default {
       riskDialogVisible: false,
       systemDialogVisible: false,
       riskData: [],
-      systemData: []
+      systemData: [],
+      ifShow:false
     };
   },
   props: {
@@ -696,6 +708,14 @@ export default {
     });
     on(window, "scroll", this.handleScroll);
     on(window, "resize", this.handleScroll);
+
+    if(this.$route.path == '/processForm/start'){
+      this.ifShow = true
+      console.log('判断成功',this.ifShow)
+    }else{
+      this.ifShow = false
+      console.log('判断失败',this.ifShow)
+    }
 
   },
   methods: {
@@ -1570,6 +1590,52 @@ export default {
           50 +
           "px"
       };
+    },
+  //  上传Excel文件
+    excel(excel){
+      excelS(excel)
+    },
+    //数据导入
+    handleUpload (file) {
+      this.readExcel(file)
+    },
+    readExcel (file) {
+      const type = file.name.split('.')[1]
+      if (!['xlsx', 'xls'].includes(type)) {
+        this.$message({ type: 'warning', message: '文件格式错误！请重新选择' })
+        return
+      }
+
+      const reader = new FileReader()
+      const result = [] // 保存转化成功的 json格式
+      reader.onload = e => {
+        const data = e.target.result
+        const wb = XLSX.read(data, {
+          type: 'binary'
+        })
+        // 这里需要遍历，因为 excel 左下角有多张 sheet 表，如果只需要第一张表就不用遍历
+        wb.SheetNames.forEach((sheetName) => {
+          result.push({
+            sheetName: sheetName,
+            sheet: XLSX.utils.sheet_to_json(wb.Sheets[sheetName]) // 生成JSON表格内容
+          })
+        })
+
+        // 处理 json 格式数据
+        // const test = []
+        // for (let item of result) {
+        //   let time = null
+        //   // excel导出json格式数据中有关时间的转换（因为导出json的时间格式为数字了，所以需要转换）
+        //   if (typeof item['时间'] === 'number') {
+        //     time = new Date(1900, 0, item['时间'] - 1).toLocaleDateString()
+        //   }
+        // }
+        // console.log(result[0].sheet)
+        // this.excel(result[0].sheet)
+        excelS(result[0].sheet)
+      }
+      reader.readAsBinaryString(file.raw)
+      console.log(reader)
     }
   },
   beforeDestroy() {
@@ -1840,5 +1906,9 @@ export default {
       border-bottom: 1px solid $bc3;
     }
   }
+}
+.excel{
+  margin-top: 55px;
+  margin-right: 20px;
 }
 </style>

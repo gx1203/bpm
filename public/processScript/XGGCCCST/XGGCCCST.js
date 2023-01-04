@@ -28,8 +28,16 @@ function excelS(e) {
         value: item.物料描述
       },
       LGORT: {
-        showValue: item.库存地点,
-        value: item.库存地点
+        showValue:String(
+          item[
+            '库存地点（中心库：5000）'
+          ]
+        ),
+        value:String( 
+          item[
+            '库存地点（中心库：5000）'
+        ]
+        )
       },
       PRCTR: {
         showValue: String(

@@ -80,8 +80,16 @@ function excelS(e) {
         value: item.可用性检查
       },
       PRCTR: {
-        showValue: item.利润中心,
-        value: item.利润中心
+        showValue: String(
+          item[
+            '利润中心（100001：HC1利润中心;200001：MC1利润中心;300001：新能源利润中心;400001：海外利润中心;999999：北汽重卡公共利润中心）'
+          ]
+        ),
+        value: String(
+          item[
+            '利润中心（100001：HC1利润中心;200001：MC1利润中心;300001：新能源利润中心;400001：海外利润中心;999999：北汽重卡公共利润中心）'
+          ]
+        )
       },
       SERNP: {
         showValue: item.序列号参数文件,

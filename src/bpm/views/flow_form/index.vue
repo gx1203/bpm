@@ -746,20 +746,16 @@ export default {
     })
     on(window, 'scroll', this.handleScroll)
     on(window, 'resize', this.handleScroll)
-    if (this.$route.path == '/processForm/start') {
-      this.ifShow = true
-      console.log('判断成功', this.ifShow)
-    } else {
-      this.ifShow = false
-      console.log('判断失败', this.ifShow)
-    }
+
     const type = this.$route.query.processName
     if (
-      type == 'WLCGST' ||
-      type == 'WLXSST' ||
-      type == 'MRPST' ||
-      type == 'GCCCST'
+      type == 'XGWLCGST' ||
+      type == 'XGWLXSST' ||
+      type == 'XGGCCCST' ||
+      type == 'XGWLCWST'
     ) {
+      this.ifShow = true
+    } else {
       this.ifShow = false
     }
   },

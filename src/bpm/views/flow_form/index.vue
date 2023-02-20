@@ -226,8 +226,19 @@
               </el-form-item>
             </el-col>
           </el-form>
-          <div class="card-info">
-            <!-- <span>申请时间:{{node.applyUserDto.applyDate | formatDateTime}}</!-->
+           <div  class="card-info">
+                  <!-- <span>申请时间:{{node.applyUserDto.applyDate | formatDateTime}}</!-->
+           </div>
+          <div  v-if="isWjSearch && node.processNodeName === 'Start'" class="cards-info">
+            <span style="margin-left: 1%;width: 26%;">单据编号:</span>
+            <el-input v-model="searchCode"  placeholder="请输入查询编码" style="width: 60%;margin-right: 10%;"></el-input>
+            <el-button
+              type="primary"
+              class="submit-btn"
+              style="margin-top: 0%;margin-right: 63%;"
+              @click="searchWjdata"
+              >查询
+            </el-button>
           </div>
         </div>
         <div class="myFormStyleDiv">
@@ -498,6 +509,12 @@
       :routers="printCardRouter"
       @close="printCardVisible = false"
     />
+   <!-- 出门证弹框 2023.02.17 -->
+    <OutDoorDialog
+      v-model="outDoorDialogVisible"
+      :itemColumn="outDoorItemColumn"
+      @submitData="submitData"
+    /> 
   </div>
 </template>
 
@@ -515,6 +532,8 @@ import CustomDialogPrintCard from '@/bpm/components/customDialogPrintCard'
 
 import { on, off, scrollTop } from '@/bpm/utils/backtop'
 import processDialog from '@/bpm/components/processDialog'
+
+import OutDoorDialog from '@/bpm/components/outDoorDialog'
 import {
   deleteCollection,
   saveCollection,
@@ -522,7 +541,8 @@ import {
   getSystemJson,
   getRiskJson,
   getMyJsonCopyForStart,
-  getMyJsonCopyForApprove
+  getMyJsonCopyForApprove,
+  searchWjdata
 } from '../../api/flow'
 import {
   cancelinstance,
@@ -554,7 +574,8 @@ export default {
     RiskDialog,
     SystemDialog,
     CustomDialogForm,
-    CustomDialogPrintCard
+    CustomDialogPrintCard,
+    OutDoorDialog
   },
   data() {
     return {
@@ -565,6 +586,7 @@ export default {
       printCardNodes: {},
       printCardRouter: {},
       printCardVisible: false,
+      
       //以下为原组件参数
       logo: logo,
       pageLoading: false,
@@ -605,7 +627,12 @@ export default {
       systemDialogVisible: false,
       riskData: [],
       systemData: [],
-      ifShow: false
+      ifShow: false,
+      isWjSearch:false,
+      searchCode:'',
+      //出门证查询结果
+      outDoorDialogVisible: false,
+      outDoorItemColumn:{}
     }
   },
   props: {
@@ -644,7 +671,7 @@ export default {
     collectionaData: {
       type: Object,
       default: () => ({})
-    }
+    },
   },
   computed: {
     ...mapGetters(['buttonDisabled', 'bizData', 'isTest', 'customError'])
@@ -757,6 +784,13 @@ export default {
       this.ifShow = true
     } else {
       this.ifShow = false
+    }
+    if(type == 'WJWZGH' || 
+        type=='WJWZYQGH'
+      ){
+      this.isWjSearch=true
+    }else{
+      this.isWjSearch=false
     }
   },
   methods: {
@@ -1669,8 +1703,58 @@ export default {
       }
       reader.readAsBinaryString(file.raw)
       console.log(reader)
+    },
+   //出门证相关流程查询操作
+    searchWjdata(data) {
+      searchWjdata({
+        //createUser: this.node.applyUserDto.empuid,
+        createUser: '',
+        materialNo:'',
+        materialName:'',
+        lendNo: this.searchCode,
+        pageNo:1,
+        pageSize:2147483646,
+        statusOne:5,
+        statusTwo:6
+      }).then(rt => {
+        let outTableData=[];
+        if (rt.status === 200) {
+          //console.log(rt)
+          rt.data.forEach(item => {
+            if(item.code==200 && item.result!=null){
+              item.result.records.forEach(outdata=>{
+                outTableData.push(outdata)
+              })
+            }
+          })
+           //console.log(outTableData)
+          // console.log("-------------------")
+           outTableData.sort(function(a,b){
+            var value1 = a.lendNo,
+                value2 = b.lendNo;
+            if(value1 !== value2){
+                return value1.localeCompare(value2);
+            }
+
+        })
+          this.outDoorItemColumn.data=outTableData;
+          console.log(this.outDoorItemColumn.data)
+          this.outDoorDialogVisible=true;
+        }else{
+          this.outDoorItemColumn={};
+          this.$message.error("获取数据失败")
+        }
+      })
+    },
+    submitData(data){
+       console.log("收到数据-----");
+       console.log(data);
+       //将数据添加入子表区域
+       insertWjwz(data);
     }
+
   },
+  
   beforeDestroy() {
     off(window, 'scroll', this.handleScroll)
     off(window, 'resize', this.handleScroll)
@@ -1781,6 +1865,18 @@ export default {
     }
 
     .card-info {
+      display: flex;
+      justify-content: space-between;
+      padding-right: 10px;
+      padding-left: 15px;
+      // .space {
+      //   flex-grow: 1;
+      // }
+      // span {
+      //   padding: 5px;
+      // }
+    }
+    .cards-info {
       display: flex;
       justify-content: space-between;
       padding-right: 10px;

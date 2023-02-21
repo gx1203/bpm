@@ -76,8 +76,8 @@ function insertWjwz(e) {
         value: item.delayComments
       },
       CORPORATION: {
-        showValue: item.prepaymentTime,
-        value: item.prepaymentTime
+        showValue: item.corporation,
+        value: item.corporation
       },
       OUTREASON: {
         showValue: item.outReason,
@@ -140,5 +140,5 @@ function insertWjwz(e) {
   })
   bizData.ZBQY = list
   _this.$store.commit('app/setBizData', bizData)
-  console.log(list, '外借物资导入的数据')
+  console.log(list, '外借物资延期导入的数据')
 }

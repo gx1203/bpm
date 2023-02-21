@@ -76,8 +76,8 @@ function insertWjwz(e) {
         value: item.delayComments
       },
       CORPORATION: {
-        showValue: item.prepaymentTime,
-        value: item.prepaymentTime
+        showValue: item.corporation,
+        value: item.corporation
       },
       OUTREASON: {
         showValue: item.outReason,

@@ -6,7 +6,7 @@
       :visible.sync="outDoorDialogVisible" 
       :before-close="handleClose"
       append-to-body
-      width="80%"
+      width="62%"
     > 
     <el-table
       ref="multipleTable"
@@ -18,59 +18,71 @@
       style="width: 100%">
       <el-table-column
         type="selection"
-        width="55">
+        width="60">
       </el-table-column>
       <el-table-column
         prop="lendNo"
         label="单据编号"
-        width="120">
+        width="150">
       </el-table-column>
-      <el-table-column
+      <!-- <el-table-column
         prop="materialNo"
         label="物料编号"
         width="120">
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column
         prop="materialName"
         label="物料名称"
-        width="120">
-      </el-table-column>
-      <el-table-column
-        prop="plateNumber"
-        label="车牌号码">
-      </el-table-column>
-      <el-table-column
-        prop="status_dictText"
-        label="状态">
-      </el-table-column>
-      <el-table-column
-        prop="factoryNo"
-        label="工厂">
-      </el-table-column>
-      <el-table-column
-        prop="lendMaterialType"
-        label="外借物资类型">
+        width="160">
       </el-table-column>
       <el-table-column
         prop="units"
-        label="物料单位">
+        label="物料单位"
+        width="100">
       </el-table-column>
       <el-table-column
         prop="qty"
-        label="数量">
+        label="数量"
+        width="80">
+      </el-table-column>
+      <!-- <el-table-column
+        prop="plateNumber"
+        label="车牌号码"
+        width="80">
+      </el-table-column> -->
+      <el-table-column
+        prop="status_dictText"
+        label="单据状态"
+        width="100">
       </el-table-column>
       <el-table-column
-        prop="operateUser"
-        label="操作人">
-      </el-table-column>
-      <el-table-column
-        prop="outTime"
-        label="外借时间">
+        prop="permitUnits"
+        label="出门单位"
+        width="100">
       </el-table-column>
       <el-table-column
         prop="prepaymentTime"
-        label="预计归还时间">
+        label="预计归还时间"
+        width="150">
       </el-table-column>
+      <!-- <el-table-column
+        prop="factoryNo"
+        label="工厂">
+      </el-table-column> -->
+      <!-- <el-table-column
+        prop="lendMaterialType"
+        label="外借物资类型">
+      </el-table-column> -->
+      
+      <!-- <el-table-column
+        prop="operateUser"
+        label="操作人">
+      </el-table-column> -->
+      <!-- <el-table-column
+        prop="outTime"
+        label="外借时间">
+      </el-table-column> -->
+      <!-- 
       <el-table-column
         prop="corporation"
         label="部门">
@@ -78,7 +90,7 @@
       <el-table-column
         prop="createDate"
         label="创建时间">
-      </el-table-column>
+      </el-table-column> -->
     </el-table>
     <span slot="footer" class="dialog-footer">
     <el-button @click="handleClose">取 消</el-button>

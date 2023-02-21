@@ -1707,8 +1707,8 @@ export default {
    //出门证相关流程查询操作
     searchWjdata(data) {
       searchWjdata({
-        //createUser: this.node.applyUserDto.empuid,
-        createUser: '',
+        createUser: this.node.applyUserDto.empuid,
+        //createUser: '',
         materialNo:'',
         materialName:'',
         lendNo: this.searchCode,
@@ -1747,8 +1747,8 @@ export default {
       })
     },
     submitData(data){
-       console.log("收到数据-----");
-       console.log(data);
+       //console.log("收到数据-----");
+       //console.log(data);
        //将数据添加入子表区域
        insertWjwz(data);
     }

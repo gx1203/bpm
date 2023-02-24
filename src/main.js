@@ -41,9 +41,12 @@ import itLocale from 'element-ui/lib/locale/lang/it' // 意大利语
 import './utils/utils'
 import { fetch } from './bpm/utils/fetch'
 import Vue2OrgTree from 'vue-tree-color'
-
+import $ from 'jquery'
 // 注册vue-print-nb
 import Print from 'vue-print-nb'
+
+window.$ = $;
+
 Vue.use(Print);
 
 Vue.use(Vue2OrgTree)

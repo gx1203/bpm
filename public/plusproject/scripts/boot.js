@@ -34,7 +34,7 @@ document.write('<link href="' + bootPATH + 'miniui/themes/icons.css" rel="styles
 document.write('<link href="' + bootPATH + 'miniui/themes/default/miniui.css" rel="stylesheet" type="text/css" />');
 document.write('<link href="' + bootPATH + 'miniui/themes/blue/skin.css" rel="stylesheet" type="text/css" />');
 
-//project
+//project 
 document.write('<script src="' + bootPATH + 'plusproject/js/CalendarWindow.js" type="text/javascript"></script>');
 document.write('<script src="' + bootPATH + 'plusproject/js/ProjectMenu.js" type="text/javascript"></script>');
 document.write('<script src="' + bootPATH + 'plusproject/js/StatusColumn.js" type="text/javascript"></script>');

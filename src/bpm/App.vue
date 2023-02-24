@@ -48,11 +48,11 @@ html,
 body {
   width: 100%;
   min-height: 100vh;
-  background: $bc2;
+  // background: $bc2;
 }
 #app {
   width: 100%;
-  height: 100%;
+  height: 100vh;
   overflow-x: hidden;
   min-width: 1200px;
 }

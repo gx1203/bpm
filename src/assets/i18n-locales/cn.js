@@ -2,7 +2,7 @@ module.exports = {
   updateUser: '修改人',
   createDate: '创建时间',
   createUser: '创建人',
-  comments: '备注',
+  comment: '备注',
   operateDate: '操作时间',
   operateUser: '操作人',
   permitQty: '出门数量',

@@ -1,4 +1,8 @@
 module.exports = {
+  materialNo: '物料编号',
+  materialName: '物料名称',
+  lendNo: '单据编号',
+  statusOne: '单据状态',
   commonProcess: '常用流程',
   pleaseEnterFileName: '请输入文件名',
   handlingTime: '办理时间',
@@ -736,8 +740,8 @@ module.exports = {
   selectProcessRole: '选择流程角色',
   contain: '包含',
   contained: '被包含',
-  equal: "等于",
-  noequal: "不等于",
+  equal: '等于',
+  noequal: '不等于',
   selectPersonnel: '选择人员',
   chooseASpecificPerson: '选择具体人',
   chooseAnOrganization: '选择组织机构',
@@ -2042,7 +2046,8 @@ module.exports = {
     areYouSureDeleteDataPleaseChooseCarefully: '是否确定删除数据!请谨慎选择?',
     cannotEnterChineseCharactersAndSomeSpecialSymbols:
       '不能输入汉字及一些特殊符号',
-    fieldNameCannotChineseOrSpecialSymbols: '字段名不能输入中文和特殊符号，点击确定时可以自动生成',
+    fieldNameCannotChineseOrSpecialSymbols:
+      '字段名不能输入中文和特殊符号，点击确定时可以自动生成',
     theFieldIsNamedKeywordPleaseReRnter: '该字段名为关键字，请重新输入',
     displayNameCannotBeEmpty: '显示名称不能为空',
     fieldNameCannotBeEmpty: '字段名不能为空',

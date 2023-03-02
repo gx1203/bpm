@@ -1,5 +1,4 @@
 module.exports = {
-  updateDate: '修改时间',
   updateUser: '修改人',
   createDate: '创建时间',
   createUser: '创建人',
@@ -51,8 +50,6 @@ module.exports = {
   permitUnits: '出门单位',
   permitQty: '出门数量',
   validity: '有效期',
-  createUser: '创建人',
-  updateUser: '修改人',
   updateDate: '修改时间',
 
   commonProcess: '常用流程',
@@ -407,7 +404,6 @@ module.exports = {
   applicationDate: '申请时间',
   receiptTime: '接收时间',
   createTime: '创建时间',
-  createDate: '创建日期',
   receiver: '接收人',
   processName: '流程名',
   processName2: '流程名称',

@@ -134,23 +134,16 @@
     </bas-table>
     <!-- <el-pagination style="margin-top: 15px" :page-size="page.pageSize" :current-page.sync="page.pageNum" background
       @current-change="searchType === 'power' ? getData() : quickQueryData()" :total="content.total"></el-pagination> -->
-    <!-- <AdminLogDialog v-model="dialogVisible" @closeDiaLog="closeFun" :title="linkTitle" :item="logDetail">
-    </AdminLogDialog> -->
   </el-card>
 </template>
 <script>
-import {
-  getAdminslogList,
-  quickAdminsLogList,
-  getAdminLogItem
-} from '@/bpm/api/process/administrativeTool/adminLog.js'
-// import AdminLogDialog from './adminLogDialog.vue'
+import { postLendMaterialDetails } from '@/bpm/api/dataOverview/exitPermit.js'
+
 import QuickQuery from '@/bpm/components/quickquery/QuickQuery'
 import SearchListMixin from '@/bpm/mixins/search_list_mixin'
 export default {
   components: {
     QuickQuery
-    // AdminLogDialog
   },
   mixins: [SearchListMixin],
   data() {
@@ -168,48 +161,10 @@ export default {
       ],
       dialogVisible: false,
       loading: false,
-      typeList: [
-        {
-          value: '流程处理',
-          label: '流程处理'
-        },
-        {
-          value: '外出授权',
-          label: '外出授权'
-        }
-      ],
       isPowerSearch: false,
       searchForm: {},
       editItem: {},
-      linkTitle: '日志详情',
       logDetail: {},
-      headers: [
-        {
-          key: 'userName',
-          name: this.$t('operator'),
-          span: 3
-        },
-        {
-          key: 'status',
-          name: this.$t('state'),
-          span: 3
-        },
-        {
-          key: 'module',
-          name: this.$t('module'),
-          span: 4
-        },
-        {
-          key: 'module',
-          name: this.$t('operationTime'),
-          span: 4
-        },
-        {
-          key: 'description',
-          name: this.$t('operationalContext'),
-          span: 10
-        }
-      ],
       content: {
         list: [{}]
       },
@@ -218,32 +173,174 @@ export default {
         pageNum: 1,
         total: 0
       },
-      checkAll: '',
-      showDialog: false,
       // 表头字段
       headerList: [
         {
-          label: this.$t('creator'), // 创建人
-          prop: 'userName',
-          slotName: 'userName',
+          label: this.$t('permitNo'), // 出门证编号
+          prop: 'permitNo',
+          slotName: 'permitNo',
           sortable: true
         },
         {
-          label: this.$t('state'), // 状态
+          label: this.$t('factoryNo'), // 工厂编号
+          prop: 'factoryNo',
+          slotName: 'factoryNo',
+          sortable: true
+        },
+        {
+          label: this.$t('plateNumber'), // 车牌号
+          prop: 'plateNumber',
+          slotName: 'plateNumber',
+          sortable: false
+        },
+        {
+          label: this.$t('orderType'), // 单据类型
+          prop: 'orderType',
+          slotName: 'orderType',
+          sortable: true
+        },
+        {
+          label: this.$t('originNo'), // 源单号
+          prop: 'originNo',
+          slotName: 'originNo',
+          sortable: true
+        },
+        {
+          label: this.$t('originType'), // 源单类型
+          prop: 'originType',
+          slotName: 'originType',
+          sortable: true
+        },
+        {
+          label: this.$t('outTime'), // 出门时间
+          prop: 'outTime',
+          slotName: 'outTime',
+          sortable: true
+        },
+        {
+          label: this.$t('corporation'), // 出门单位
+          prop: 'corporation',
+          slotName: 'corporation',
+          sortable: true
+        },
+        {
+          label: this.$t('outReason'), // 出门原因
+          prop: 'outReason',
+          slotName: 'outReason',
+          sortable: true
+        },
+        {
+          label: this.$t('status'), // 单据状态
           prop: 'status',
           slotName: 'status',
           sortable: true
         },
         {
-          label: this.$t('operationTime'), // 操作时间
-          prop: 'occurTime',
-          slotName: 'occurTime',
-          sortable: false
+          label: this.$t('chargeUser'), // 经办人
+          prop: 'chargeUser',
+          slotName: 'chargeUser',
+          sortable: true
         },
         {
-          label: this.$t('module'), // 模块
-          prop: 'module',
-          slotName: 'module',
+          label: this.$t('examineUser'), // 审核人
+          prop: 'examineUser',
+          slotName: 'examineUser',
+          sortable: true
+        },
+        {
+          label: this.$t('examineDate'), // 审核时间
+          prop: 'examineDate',
+          slotName: 'examineDate',
+          sortable: true
+        },
+        {
+          label: this.$t('examineCorporation'), // 审核单位
+          prop: 'examineCorporation',
+          slotName: 'examineCorporation',
+          sortable: true
+        },
+        {
+          label: this.$t('operator'), // 出门操作人
+          prop: 'operator',
+          slotName: 'operator',
+          sortable: true
+        },
+        {
+          label: this.$t('actualOutTime'), // 实际出门时间
+          prop: 'actualOutTime',
+          slotName: 'actualOutTime',
+          sortable: true
+        },
+        {
+          label: this.$t('rejectReason'), // 驳回原因
+          prop: 'rejectReason',
+          slotName: 'rejectReason',
+          sortable: true
+        },
+        {
+          label: this.$t('rejectReason'), // 驳回原因
+          prop: 'rejectReason',
+          slotName: 'rejectReason',
+          sortable: true
+        },
+        {
+          label: this.$t('rejectRemarks'), // 驳回备注
+          prop: 'rejectRemarks',
+          slotName: 'rejectRemarks',
+          sortable: true
+        },
+        {
+          label: this.$t('units'), // 物料单位
+          prop: 'units',
+          slotName: 'units',
+          sortable: true
+        },
+        {
+          label: this.$t('qty'), // 数量
+          prop: 'qty',
+          slotName: 'qty',
+          sortable: true
+        },
+        {
+          label: this.$t('permitUnits'), // 出门单位
+          prop: 'permitUnits',
+          slotName: 'permitUnits',
+          sortable: true
+        },
+        {
+          label: this.$t('permitQty'), // 出门数量
+          prop: 'permitQty',
+          slotName: 'permitQty',
+          sortable: true
+        },
+        {
+          label: this.$t('validity'), // 有效期
+          prop: 'validity',
+          slotName: 'validity',
+          sortable: true
+        },
+        {
+          label: this.$t('createUser'), // 创建人
+          prop: 'createUser',
+          slotName: 'createUser',
+          sortable: true
+        },
+        {
+          label: this.$t('createDate'), // 创建时间
+          prop: 'createDate',
+          slotName: 'createDate',
+          sortable: true
+        },
+        {
+          label: this.$t('updateUser'), // 修改人
+          prop: 'updateUser',
+          slotName: 'updateUser',
+          sortable: true
+        },
+        {
+          label: this.$t('updateDate'), // 修改时间
+          prop: 'updateDate',
+          slotName: 'updateDate',
           sortable: true
         },
         {
@@ -263,7 +360,7 @@ export default {
     currentChange(newPageNum) {
       console.log('newPage', newPageNum)
       this.page.pageNum = newPageNum
-      this.searchType === 'power' ? this.getData() : this.quickQueryData()
+      this.getData()
     },
     // 复选框勾选事件
     handleSelectionChange(data) {
@@ -332,12 +429,12 @@ export default {
     },
     getData() {
       this.loading = true
-      getAdminslogList({
-        logic: 'and',
-        orderby: 'occurTime',
-        sort: 'desc',
-        filters: this.filters,
-        ...this.sort,
+      postLendMaterialDetails({
+        // logic: 'and',
+        // orderby: 'occurTime',
+        // sort: 'desc',
+        // filters: this.filters,
+        // ...this.sort,
         ...this.page
       })
         .then(rt => {

@@ -1,4 +1,12 @@
 module.exports = {
+  updateDate: '修改时间',
+  updateUser: '修改人',
+  createDate: '创建时间',
+  createUser: '创建人',
+  comments: '备注',
+  operateDate: '操作时间',
+  operateUser: '操作人',
+  permitQty: '出门数量',
   qty: '数量',
   plateNumber: '车牌号',
   outTime: '出门时间',

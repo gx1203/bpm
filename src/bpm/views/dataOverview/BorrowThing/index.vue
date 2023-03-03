@@ -7,30 +7,33 @@
       :headerList="headerList"
       :pages="page"
       :headerCellStyle="{ background: '#E1EAFD !important' }"
-      @selectionChange="handleSelectionChange"
       @currentChange="currentChange"
     >
       <!-- 搜索和高级搜索 -->
       <template #search>
         <div>
           <div class="tool-common-wrap">
-            <div class="search-wrap">
+            <!-- <div class="search-wrap">
               <quick-query
                 style=""
                 :isDate="false"
                 ref="quick"
                 :placeholder="
-                  $t('operator') +
+                  $t('createUser') +
                     '、' +
-                    $t('module') +
+                    $t('materialNo') +
                     '、' +
-                    $t('operationalContext')
+                    $t('materialName') +
+                    '、' +
+                    $t('lendNo') +
+                    '、' +
+                    $t('statusOne')
                 "
                 @quickSearch="quickSearch"
               />
-            </div>
+            </div> -->
             <div class="btn-wrap">
-              <el-button type="primary" @click="isPowerSearch = !isPowerSearch">
+              <!-- <el-button type="primary" @click="isPowerSearch = !isPowerSearch">
                 {{ $t('advancedQuery') }}
                 <i
                   :class="
@@ -40,9 +43,11 @@
               </el-button>
               <el-button type="primary" @click="getData">
                 {{ $t('refresh') }}
-              </el-button>
+              </el-button> -->
             </div>
           </div>
+          <!--  v-if="isPowerSearch" -->
+          <!--  搜索框 -->
           <el-form
             class="power-search"
             :model="searchForm"
@@ -50,9 +55,17 @@
             ref="searchForm"
             label-width="120px"
             size="mini"
-            v-if="isPowerSearch"
           >
             <el-row>
+              <el-col :span="8">
+                <el-form-item :label="$t('createUser')">
+                  <el-input
+                    type="text"
+                    v-model="searchForm.createUser"
+                    :disabled="createUserDisabled ? true : false"
+                  ></el-input>
+                </el-form-item>
+              </el-col>
               <el-col :span="8">
                 <el-form-item :label="$t('materialNo')">
                   <el-input
@@ -89,6 +102,7 @@
                 </el-form-item>
               </el-col>
             </el-row>
+            <!--    查询重置按钮 -->
             <el-row>
               <el-col :span="24" class="text-r">
                 <el-button type="primary" @click="search">{{
@@ -102,49 +116,131 @@
           </el-form>
         </div>
       </template>
-      <!-- 操作人 -->
-      <template #userName="{ row }">
-        <span class="link" @click="toFlow(row)">{{
-          row.userName || row.userid
-        }}</span>
+      <!-- 单据编号 -->
+      <template #lendNo="{ row }">
+        <div>{{ row.lendNo }}</div>
       </template>
-      <!-- 状态 -->
-      <template #status="{ row }">
-        <div>{{ row.status }}</div>
+      <!-- 工厂编码 -->
+      <template #factoryNo="{ row }">
+        <div>{{ row.factoryNo }}</div>
+      </template>
+      <!-- 外借物资类型 -->
+      <template #lendMaterialType="{ row }">
+        <div>{{ row.lendMaterialType }}</div>
+      </template>
+      <!-- 源单号 -->
+      <template #originNo="{ row }">
+        <div>{{ row.originNo }}</div>
+      </template>
+      <!-- 源单类型 -->
+      <template #originType="{ row }">
+        <div>{{ row.originType }}</div>
+      </template>
+      <!-- 车牌号 -->
+      <template #plateNumber="{ row }">
+        <div>{{ row.plateNumber }}</div>
+      </template>
+      <!-- 出门时间 -->
+      <template #outTime="{ row }">
+        <div>{{ row.outTime }}</div>
+      </template>
+      <!-- 出门单位 -->
+      <template #corporation="{ row }">
+        <div>{{ row.corporation }}</div>
+      </template>
+      <!-- 出门原因 -->
+      <template #outReason="{ row }">
+        <div>{{ row.outReason }}</div>
+      </template>
+      <!-- 审核人 -->
+      <template #examineUser="{ row }">
+        <div>{{ row.examineUser }}</div>
+      </template>
+      <!-- 审核单位 -->
+      <template #examineCorporation="{ row }">
+        <div>{{ row.examineCorporation }}</div>
+      </template>
+      <!-- 审核时间 -->
+      <template #examineDate="{ row }">
+        <div>{{ row.examineDate }}</div>
+      </template>
+      <!-- 预计归还时间 -->
+      <template #prepaymentTime="{ row }">
+        <div>{{ row.prepaymentTime }}</div>
+      </template>
+      <!-- 延期时间 -->
+      <template #delayTime="{ row }">
+        <div>{{ row.delayTime }}</div> </template
+      ><!-- 延期原因 -->
+      <template #delayReason="{ row }">
+        <div>{{ row.delayReason }}</div>
+      </template>
+      <!-- 延期备注 -->
+      <template #delayComments="{ row }">
+        <div>{{ row.delayComments }}</div>
+      </template>
+      <!-- 单据状态 -->
+      <template #statusOne="{ row }">
+        <div>{{ row.statusOne }}</div>
+      </template>
+      <!-- 物料编码 -->
+      <template #materialNo="{ row }">
+        <div>{{ row.materialNo }}</div>
+      </template>
+      <!-- 编码名称 -->
+      <template #materialName="{ row }">
+        <div>{{ row.materialName }}</div>
+      </template>
+      <!-- 物料单位 -->
+      <template #units="{ row }">
+        <div>{{ row.units }}</div>
+      </template>
+      <!-- 数量 -->
+      <template #qty="{ row }">
+        <div>{{ row.qty }}</div>
+      </template>
+      <!-- 出门数量 -->
+      <template #permitQty="{ row }">
+        <div>{{ row.permitQty }}</div>
+      </template>
+      <!-- 操作人 -->
+      <template #operateUser="{ row }">
+        <div>{{ row.operateUser }}</div>
       </template>
       <!-- 操作时间 -->
-      <template #occurTime="{ row }">
-        <div>{{ row.occurTime | formatDateTime }}</div>
+      <template #operateDate="{ row }">
+        <div>{{ row.operateDate }}</div>
       </template>
-      <!-- 模块 -->
-      <template #module="{ row }">
-        <div>{{ row.module }}</div>
+      <!-- 备注 -->
+      <template #comment="{ row }">
+        <div>{{ row.comment }}</div>
       </template>
-      <!-- 操作内容 -->
-      <template #description="{ row }">
-        <span class="link" @click="toFlow(row)">{{ row.description }}</span>
+      <!-- 创建人 -->
+      <template #createUser="{ row }">
+        <div>{{ row.createUser }}</div>
+      </template>
+      <!-- 创建时间 -->
+      <template #createDate="{ row }">
+        <div>{{ row.createDate }}</div>
+      </template>
+      <!-- 修改人 -->
+      <template #updateUser="{ row }">
+        <div>{{ row.updateUser }}</div>
+      </template>
+      <!-- 修改时间 -->
+      <template #updateDate="{ row }">
+        <div>{{ row.updateDate }}</div>
       </template>
     </bas-table>
-    <!-- <el-pagination style="margin-top: 15px" :page-size="page.pageSize" :current-page.sync="page.pageNum" background
-      @current-change="searchType === 'power' ? getData() : quickQueryData()" :total="content.total"></el-pagination> -->
-    <!-- <AdminLogDialog v-model="dialogVisible" @closeDiaLog="closeFun" :title="linkTitle" :item="logDetail">
-    </AdminLogDialog> -->
   </el-card>
 </template>
 <script>
 import { postloaddragform } from '@/bpm/api/dataOverview/borrowThing.js'
-import {
-  getAdminslogList,
-  quickAdminsLogList,
-  getAdminLogItem
-} from '@/bpm/api/process/administrativeTool/adminLog.js'
-// import AdminLogDialog from './adminLogDialog.vue'
 import QuickQuery from '@/bpm/components/quickquery/QuickQuery'
 import SearchListMixin from '@/bpm/mixins/search_list_mixin'
 export default {
   components: {
     QuickQuery
-    // AdminLogDialog
   },
   mixins: [SearchListMixin],
   data() {
@@ -163,48 +259,15 @@ export default {
       ],
       dialogVisible: false,
       loading: false,
-      typeList: [
-        {
-          value: '流程处理',
-          label: '流程处理'
-        },
-        {
-          value: '外出授权',
-          label: '外出授权'
-        }
-      ],
       isPowerSearch: false,
-      searchForm: {},
-      editItem: {},
-      linkTitle: '日志详情',
-      logDetail: {},
-      headers: [
-        {
-          key: 'userName',
-          name: this.$t('operator'),
-          span: 3
-        },
-        {
-          key: 'status',
-          name: this.$t('state'),
-          span: 3
-        },
-        {
-          key: 'module',
-          name: this.$t('module'),
-          span: 4
-        },
-        {
-          key: 'module',
-          name: this.$t('operationTime'),
-          span: 4
-        },
-        {
-          key: 'description',
-          name: this.$t('operationalContext'),
-          span: 10
-        }
-      ],
+      createUserDisabled: true,
+      searchForm: {
+        createUser: '',
+        materialNo: '',
+        materialName: '',
+        lendNo: '',
+        statusOne: ''
+      },
       content: {
         list: [{}]
       },
@@ -213,8 +276,6 @@ export default {
         pageNo: 1,
         total: 0
       },
-      checkAll: '',
-      showDialog: false,
       // 表头字段
       headerList: [
         {
@@ -421,6 +482,23 @@ export default {
       ]
     }
   },
+  created() {
+    const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+    this.searchForm.createUser = userInfo.id
+    this.$http({
+      url: '/userModel/get/' + userInfo.empuid,
+      method: 'GET',
+      data: {}
+    }).then(rt => {
+      for (var i = 0; i < rt.data.checkedRoleIds.length; i++) {
+        if (rt.data.checkedRoleIds[i] == '947682181210460160') {
+          this.createUserDisabled = false
+          this.searchForm.createUser = ''
+          return
+        }
+      }
+    })
+  },
   mounted() {
     this.getData()
   },
@@ -429,108 +507,44 @@ export default {
     currentChange(newPageNum) {
       console.log('newPage', newPageNum)
       this.page.pageNo = newPageNum
-      this.searchType === 'power' ? this.getData() : this.quickQueryData()
+      this.getData()
     },
-    // 复选框勾选事件
-    handleSelectionChange(data) {
-      console.log(data)
-      /*    this.selections = data */
-    },
-    closeFun() {
-      this.dialogVisible = false
-    },
-    toFlow(item) {
-      console.log(item)
-      getAdminLogItem(item.id)
-        .then(rt => {
-          if (rt.status === '200') {
-            this.logDetail = rt.data
-            this.dialogVisible = true
-            console.log(this.logDetail)
-          }
-          this.loading = false
-        })
-        .catch(() => {
-          this.loading = false
-        })
-    },
+
     // 快速获取数据
     quickQueryData() {
       this.loading = true
-      quickAdminsLogList({
-        logic: 'or',
-        orderby: 'occurTime',
-        sort: 'desc',
-        filters: [
-          {
-            key: 'user_name',
-            opt: 'LIKE',
-            type: 'S',
-            value: this.quickData.searchData
-          },
-          {
-            key: 'module',
-            opt: 'LIKE',
-            type: 'S',
-            value: this.quickData.searchData
-          },
-          {
-            key: 'description',
-            opt: 'LIKE',
-            type: 'S',
-            value: this.quickData.searchData
-          }
-        ],
-        ...this.sort,
+      postloaddragform({
+        ...this.searchForm,
         ...this.page
       })
         .then(rt => {
-          rt.data.list.forEach(element => {
-            element.status = element.status === '0' ? '成功' : '失败'
-          })
-          this.content = rt.data
-          this.page.total = rt.data.total
+          this.content.list = rt.data[0].result.records
+          this.page.total = Number(rt.data[0].result.total)
           this.loading = false
         })
         .catch(() => {
           this.loading = false
         })
     },
+
     getData() {
       this.loading = true
       postloaddragform({
-        /*  logic: 'and',
-        orderby: 'occurTime',
-        sort: 'desc',
-        filters: this.filters,
-        ...this.sort, */
-        createUser: '',
-        materialNo: '',
-        materialName: '',
-        lendNo: '',
-        statusOne: '',
+        ...this.searchForm,
         ...this.page
       })
         .then(rt => {
-          if (rt.status === '200') {
-            /* rt.data.list.forEach(item => {
-              item.status = item.status === '0' ? '成功' : '失败'
-              item.checked = false
-            }) */
-            console.log(rt)
-            this.content = rt.data[0].result.records
-            this.page.total = rt.data.total
-          }
+          this.content.list = rt.data[0].result.records
+          this.page.total = Number(rt.data[0].result.total)
           this.loading = false
         })
         .catch(() => {
           this.loading = false
         })
     },
-    handleSort(val) {
-      this.sort = val
-      this.getData()
-    },
+    /*    quickSearch() {
+      console.log(this.$refs.quick.quickSearch.searchKey)
+    }, */
     search() {
       this.filters = []
       Object.keys(this.searchForm).forEach(key => {
@@ -551,9 +565,16 @@ export default {
       })
       this.getData()
     },
+
     reset() {
-      this.searchForm = {}
-      this.search()
+      this.searchForm = {
+        createUser: '',
+        materialNo: '',
+        materialName: '',
+        lendNo: '',
+        statusOne: ''
+      }
+      this.getData()
     }
   }
 }

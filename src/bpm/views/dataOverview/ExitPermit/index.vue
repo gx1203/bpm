@@ -13,7 +13,7 @@
       <template #search>
         <div>
           <div class="tool-common-wrap">
-            <div class="search-wrap">
+            <!-- <div class="search-wrap">
               <quick-query
                 style=""
                 :isDate="false"
@@ -27,19 +27,19 @@
                 "
                 @quickSearch="quickSearch"
               />
-            </div>
+            </div> -->
             <div class="btn-wrap">
-              <el-button type="primary" @click="isPowerSearch = !isPowerSearch">
+              <!-- <el-button type="primary" @click="isPowerSearch = !isPowerSearch">
                 {{ $t('advancedQuery') }}
                 <i
                   :class="
                     isPowerSearch ? 'el-icon-caret-top' : 'el-icon-caret-bottom'
                   "
                 />
-              </el-button>
-              <el-button type="primary" @click="getData">
+              </el-button> -->
+              <!-- <el-button type="primary" @click="getData">
                 {{ $t('refresh') }}
-              </el-button>
+              </el-button> -->
             </div>
           </div>
           <el-form
@@ -49,14 +49,14 @@
             ref="searchForm"
             label-width="120px"
             size="mini"
-            v-if="isPowerSearch"
           >
             <el-row>
               <el-col :span="8">
-                <el-form-item :label="$t('creator')">
+                <el-form-item :label="$t('createUser')">
                   <el-input
                     type="text"
-                    v-model="searchForm.user_name"
+                    v-model="searchForm.createUser"
+                    :disabled="createUserDisabled"
                   ></el-input>
                 </el-form-item>
               </el-col>
@@ -110,30 +110,127 @@
         </div>
       </template>
       <!-- 操作人 -->
-      <template #userName="{ row }">
-        <span class="link" @click="toFlow(row)">{{
-          row.userName || row.userid
-        }}</span>
+      <!-- <template #permitNo="{ row }">
+        <span class="link" @click="toFlow(row)">{{ row.permitNo }}</span>
+      </template> -->
+      <!-- 出门证编号 -->
+      <template #permitNo="{ row }">
+        <div>{{ row.permitNo }}</div>
       </template>
-      <!-- 状态 -->
-      <template #status="{ row }">
-        <div>{{ row.status }}</div>
+      <!-- 工厂编号 -->
+      <template #factoryNo="{ row }">
+        <div>{{ row.factoryNo }}</div>
       </template>
+      <!-- 车牌号 -->
+      <template #plateNumber="{ row }">
+        <div>{{ row.plateNumber }}</div>
+      </template>
+      <!-- 单据类型 -->
+      <template #orderType="{ row }">
+        <div>{{ row.orderType }}</div>
+      </template>
+      <!-- 源单号 -->
+      <template #originNo="{ row }">
+        <div>{{ row.originNo }}</div>
+      </template>
+      <!-- 源单类型 -->
+      <template #originType="{ row }">
+        <div>{{ row.originType }}</div>
+      </template>
+      <!-- 出门时间 -->
+      <template #outTime="{ row }">
+        <div>{{ row.outTime }}</div>
+      </template>
+      <!-- 出门单位 -->
+      <template #corporation="{ row }">
+        <div>{{ row.corporation }}</div>
+      </template>
+      <!-- 出门原因 -->
+      <template #outReason="{ row }">
+        <div>{{ row.outReason }}</div>
+      </template>
+      <!-- 单据状态 -->
+      <template #status_dictText="{ row }">
+        <div>{{ row.status_dictText }}</div>
+      </template>
+      <!-- 经办人 -->
+      <template #chargeUser="{ row }">
+        <div>{{ row.chargeUser }}</div>
+      </template>
+      <!-- 审核人 -->
+      <template #examineUser="{ row }">
+        <div>{{ row.examineUser }}</div>
+      </template>
+      <!-- 审核时间 -->
+      <template #examineDate="{ row }">
+        <div>{{ row.examineDate }}</div>
+      </template>
+      <!-- 审核单位 -->
+      <template #examineCorporation="{ row }">
+        <div>{{ row.examineCorporation }}</div>
+      </template>
+      <!-- 出门操作人 -->
+      <template #operator="{ row }">
+        <div>{{ row.operator }}</div>
+      </template>
+      <!-- 实际出门时间 -->
+      <template #actualOutTime="{ row }">
+        <div>{{ row.actualOutTime }}</div>
+      </template>
+      <!-- 驳回原因 -->
+      <template #rejectReason="{ row }">
+        <div>{{ row.rejectReason }}</div>
+      </template>
+      <!-- 驳回备注 -->
+      <template #rejectRemarks="{ row }">
+        <div>{{ row.rejectRemarks }}</div>
+      </template>
+      <!-- 物料单位 -->
+      <template #units="{ row }">
+        <div>{{ row.units }}</div>
+      </template>
+      <!-- 数量 -->
+      <template #qty="{ row }">
+        <div>{{ row.qty }}</div>
+      </template>
+      <!-- 出门单位 -->
+      <template #permitUnits="{ row }">
+        <div>{{ row.permitUnits }}</div>
+      </template>
+      <!-- 出门数量 -->
+      <template #permitQty="{ row }">
+        <div>{{ row.permitQty }}</div>
+      </template>
+      <!-- 出门原因 -->
+      <template #validity="{ row }">
+        <div>{{ row.validity }}</div>
+      </template>
+      <!-- 创建人 -->
+      <template #createUser="{ row }">
+        <div>{{ row.createUser }}</div>
+      </template>
+      <!-- 创建时间 -->
+      <template #createDate="{ row }">
+        <div>{{ row.createDate }}</div>
+      </template>
+      <!-- 修改人 -->
+      <template #updateUser="{ row }">
+        <div>{{ row.updateUser }}</div>
+      </template>
+      <!-- 修改时间 -->
+      <template #updateDate="{ row }">
+        <div>{{ row.updateDate }}</div>
+      </template>
+
       <!-- 操作时间 -->
-      <template #occurTime="{ row }">
+      <!-- <template #occurTime="{ row }">
         <div>{{ row.occurTime | formatDateTime }}</div>
-      </template>
-      <!-- 模块 -->
-      <template #module="{ row }">
-        <div>{{ row.module }}</div>
-      </template>
+      </template> -->
       <!-- 操作内容 -->
-      <template #description="{ row }">
+      <!-- <template #description="{ row }">
         <span class="link" @click="toFlow(row)">{{ row.description }}</span>
-      </template>
+      </template> -->
     </bas-table>
-    <!-- <el-pagination style="margin-top: 15px" :page-size="page.pageSize" :current-page.sync="page.pageNum" background
-      @current-change="searchType === 'power' ? getData() : quickQueryData()" :total="content.total"></el-pagination> -->
   </el-card>
 </template>
 <script>
@@ -148,6 +245,7 @@ export default {
   mixins: [SearchListMixin],
   data() {
     return {
+      createUserDisabled: 'false',
       options: [
         { value: '1', label: '制单' },
         { value: '2', label: '已确认' },
@@ -162,7 +260,13 @@ export default {
       dialogVisible: false,
       loading: false,
       isPowerSearch: false,
-      searchForm: {},
+      searchForm: {
+        createUser: '',
+        materialNo: '',
+        materialName: '',
+        lendNo: '',
+        statusOne: ''
+      },
       editItem: {},
       logDetail: {},
       content: {
@@ -170,7 +274,7 @@ export default {
       },
       page: {
         pageSize: 10,
-        pageNum: 1,
+        pageNo: 1,
         total: 0
       },
       // 表头字段
@@ -197,7 +301,8 @@ export default {
           label: this.$t('orderType'), // 单据类型
           prop: 'orderType',
           slotName: 'orderType',
-          sortable: true
+          sortable: true,
+          width: 100
         },
         {
           label: this.$t('originNo'), // 源单号
@@ -221,7 +326,8 @@ export default {
           label: this.$t('corporation'), // 出门单位
           prop: 'corporation',
           slotName: 'corporation',
-          sortable: true
+          sortable: true,
+          width: 150
         },
         {
           label: this.$t('outReason'), // 出门原因
@@ -231,9 +337,10 @@ export default {
         },
         {
           label: this.$t('status'), // 单据状态
-          prop: 'status',
-          slotName: 'status',
-          sortable: true
+          prop: 'status_dictText',
+          slotName: 'status_dictText',
+          sortable: true,
+          width: 100
         },
         {
           label: this.$t('chargeUser'), // 经办人
@@ -269,12 +376,6 @@ export default {
           label: this.$t('actualOutTime'), // 实际出门时间
           prop: 'actualOutTime',
           slotName: 'actualOutTime',
-          sortable: true
-        },
-        {
-          label: this.$t('rejectReason'), // 驳回原因
-          prop: 'rejectReason',
-          slotName: 'rejectReason',
           sortable: true
         },
         {
@@ -342,24 +443,40 @@ export default {
           prop: 'updateDate',
           slotName: 'updateDate',
           sortable: true
-        },
-        {
-          label: this.$t('operationalContext'), // 操作内容
-          prop: 'description',
-          slotName: 'description',
-          sortable: true
         }
       ]
     }
   },
+
+  created() {
+    const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+    this.$http({
+      url: '/userModel/get/' + userInfo.empuid,
+      method: 'GET',
+      data: {}
+    }).then(rt => {
+      rt.data.checkedRoleIds.forEach(val => {
+        if (val == '947682181210460160') {
+          //是LES报表管理员则可以输入
+          this.createUserDisabled = 'false'
+        } else {
+          //不是LES报表管理员不可编辑
+          this.createUserDisabled = 'true'
+          this.searchForm.createUser = userInfo.id
+        }
+      })
+    })
+  },
+
   mounted() {
     this.getData()
   },
+
   methods: {
     // 页码改变事件
     currentChange(newPageNum) {
       console.log('newPage', newPageNum)
-      this.page.pageNum = newPageNum
+      this.page.pageNo = newPageNum
       this.getData()
     },
     // 复选框勾选事件
@@ -388,6 +505,8 @@ export default {
     // 快速获取数据
     quickQueryData() {
       this.loading = true
+      this.getData()
+      return false
       quickAdminsLogList({
         logic: 'or',
         orderby: 'occurTime',
@@ -430,22 +549,12 @@ export default {
     getData() {
       this.loading = true
       postLendMaterialDetails({
-        // logic: 'and',
-        // orderby: 'occurTime',
-        // sort: 'desc',
-        // filters: this.filters,
-        // ...this.sort,
-        ...this.page
+        ...this.page,
+        ...this.searchForm
       })
         .then(rt => {
-          if (rt.status === '200') {
-            rt.data.list.forEach(item => {
-              item.status = item.status === '0' ? '成功' : '失败'
-              item.checked = false
-            })
-            this.content = rt.data
-            this.page.total = rt.data.total
-          }
+          this.content.list = rt.data[0].result.records
+          this.page.total = Number(rt.data[0].result.total)
           this.loading = false
         })
         .catch(() => {

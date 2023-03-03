@@ -460,6 +460,7 @@ export default {
         if (rt.data.checkedRoleIds[i] == '947682181210460160') {
           this.createUserDisabled = false
           this.searchForm.createUser = ''
+          this.getData()
           return
         }
       }
@@ -504,45 +505,6 @@ export default {
     quickQueryData() {
       this.loading = true
       this.getData()
-      return false
-      quickAdminsLogList({
-        logic: 'or',
-        orderby: 'occurTime',
-        sort: 'desc',
-        filters: [
-          {
-            key: 'user_name',
-            opt: 'LIKE',
-            type: 'S',
-            value: this.quickData.searchData
-          },
-          {
-            key: 'module',
-            opt: 'LIKE',
-            type: 'S',
-            value: this.quickData.searchData
-          },
-          {
-            key: 'description',
-            opt: 'LIKE',
-            type: 'S',
-            value: this.quickData.searchData
-          }
-        ],
-        ...this.sort,
-        ...this.page
-      })
-        .then(rt => {
-          rt.data.list.forEach(element => {
-            element.status = element.status === '0' ? '成功' : '失败'
-          })
-          this.content = rt.data
-          this.page.total = rt.data.total
-          this.loading = false
-        })
-        .catch(() => {
-          this.loading = false
-        })
     },
     getData() {
       this.loading = true
@@ -551,8 +513,8 @@ export default {
         ...this.searchForm
       })
         .then(rt => {
-          this.content.list = rt.data[0].result.records
-          this.page.total = Number(rt.data[0].result.total)
+          this.content.list = rt.result.records
+          this.page.total = Number(rt.result.total)
           this.loading = false
         })
         .catch(() => {

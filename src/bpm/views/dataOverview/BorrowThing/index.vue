@@ -494,6 +494,7 @@ export default {
         if (rt.data.checkedRoleIds[i] == '947682181210460160') {
           this.createUserDisabled = false
           this.searchForm.createUser = ''
+          this.getData()
           return
         }
       }

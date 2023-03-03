@@ -584,7 +584,13 @@ export default {
       this.getData()
     },
     reset() {
-      this.searchForm = {}
+      this.searchForm = {
+        createUser: '',
+        materialNo: '',
+        materialName: '',
+        lendNo: '',
+        statusOne: ''
+      }
       this.search()
     }
   }

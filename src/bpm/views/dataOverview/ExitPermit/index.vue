@@ -56,7 +56,7 @@
                   <el-input
                     type="text"
                     v-model="searchForm.createUser"
-                    :disabled="createUserDisabled"
+                    :disabled="createUserDisabled ? true : false"
                   ></el-input>
                 </el-form-item>
               </el-col>
@@ -245,7 +245,7 @@ export default {
   mixins: [SearchListMixin],
   data() {
     return {
-      createUserDisabled: 'false',
+      createUserDisabled: true,
       options: [
         { value: '1', label: '制单' },
         { value: '2', label: '已确认' },
@@ -450,21 +450,19 @@ export default {
 
   created() {
     const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+    this.searchForm.createUser = userInfo.id
     this.$http({
       url: '/userModel/get/' + userInfo.empuid,
       method: 'GET',
       data: {}
     }).then(rt => {
-      rt.data.checkedRoleIds.forEach(val => {
-        if (val == '947682181210460160') {
-          //是LES报表管理员则可以输入
-          this.createUserDisabled = 'false'
-        } else {
-          //不是LES报表管理员不可编辑
-          this.createUserDisabled = 'true'
-          this.searchForm.createUser = userInfo.id
+      for (var i = 0; i < rt.data.checkedRoleIds.length; i++) {
+        if (rt.data.checkedRoleIds[i] == '947682181210460160') {
+          this.createUserDisabled = false
+          this.searchForm.createUser = ''
+          return
         }
-      })
+      }
     })
   },
 

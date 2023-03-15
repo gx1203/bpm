@@ -14,11 +14,13 @@ import VueRouter from 'vue-router'
 import bpmHomeRouter from './bpmHome'
 // import settingsRoutes from './settings'// 管理中心
 import store from '../store'
+import dataOverview from './dataOverview'
+
 // 解决ie拒绝访问问题
-const originalPush = VueRouter.prototype.push;
-VueRouter.prototype.push = function push (location) {
-  return originalPush.call(this, location).catch(err => err);
-};
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
 const businessRoutes = [
   stagingRoute,
   processRoute,
@@ -27,21 +29,24 @@ const businessRoutes = [
   helpRoute,
   bpmHomeRouter,
   processCenter,
-  managementElements
+  managementElements,
+  dataOverview
 ]
 
-const bpmRoutes = [{
-  path: '/bpmhome',
-  name: 'bpmhome',
-  component: () => import('@/bpm/App.vue'),
-  children: [
-    ...businessRoutes,
-    ...disparkRoutes,
-    ...printPage,
-    ...aloneProcessRoutes,
-    ...analyseWatchCenter,
-    ...appRoutes
-  ]
-}]
+const bpmRoutes = [
+  {
+    path: '/bpmhome',
+    name: 'bpmhome',
+    component: () => import('@/bpm/App.vue'),
+    children: [
+      ...businessRoutes,
+      ...disparkRoutes,
+      ...printPage,
+      ...aloneProcessRoutes,
+      ...analyseWatchCenter,
+      ...appRoutes
+    ]
+  }
+]
 
 export default bpmRoutes

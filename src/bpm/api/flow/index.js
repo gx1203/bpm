@@ -344,3 +344,13 @@ export function getMyJsonCopyForApprove(id, name) {
     method: 'POST'
   })
 }
+
+
+// 出门证查询恕
+export function searchWjdata(data) {
+  return fetch({
+    url: `/wbprocess/lendMaterialDetails`,
+    method: 'post',
+    data
+  })
+}

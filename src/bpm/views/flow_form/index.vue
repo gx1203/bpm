@@ -14,7 +14,7 @@
     <div
       :style="{
         minWidth: isPrint ? '940px' : '1080px',
-        width: isPrint ? '940px' : '56vw',
+        width: isPrint ? '940px' : '56vw'
       }"
       class="info"
       ref="companyStyle"
@@ -49,8 +49,15 @@
                       :placeholder="$t('placeholderText.pleaseEnterSubject')"
                     >
                     </el-input>
-                    <el-checkbox style="margin-left: 30px;" :false-label="0" :true-label="1" v-model="node.priority">
-                      <span style="color: red; font-size: 16px;">{{ $t("urgent") }}</span>
+                    <el-checkbox
+                      style="margin-left: 30px;"
+                      :false-label="0"
+                      :true-label="1"
+                      v-model="node.priority"
+                    >
+                      <span style="color: red; font-size: 16px;">{{
+                        $t('urgent')
+                      }}</span>
                     </el-checkbox>
                   </div>
                 </span>
@@ -68,10 +75,16 @@
                       :placeholder="$t('placeholderText.pleaseEnterSubject')"
                     >
                     </el-input>
-                    <el-checkbox disabled style="margin-left: 30px;" :false-label="0" :true-label="1"
-                                 v-model="node.priority"
+                    <el-checkbox
+                      disabled
+                      style="margin-left: 30px;"
+                      :false-label="0"
+                      :true-label="1"
+                      v-model="node.priority"
                     >
-                      <span style="color: red; font-size: 16px;">{{ $t("urgent") }}</span>
+                      <span style="color: red; font-size: 16px;">{{
+                        $t('urgent')
+                      }}</span>
                     </el-checkbox>
                   </div>
                 </span>
@@ -88,10 +101,16 @@
                       :placeholder="$t('placeholderText.pleaseEnterSubject')"
                     >
                     </el-input>
-                    <el-checkbox disabled style="margin-left: 30px;" :false-label="0" :true-label="1"
-                                 v-model="node.priority"
+                    <el-checkbox
+                      disabled
+                      style="margin-left: 30px;"
+                      :false-label="0"
+                      :true-label="1"
+                      v-model="node.priority"
                     >
-                      <span style="color: red; font-size: 16px;">{{ $t("urgent") }}</span>
+                      <span style="color: red; font-size: 16px;">{{
+                        $t('urgent')
+                      }}</span>
                     </el-checkbox>
                   </div>
                 </span>
@@ -103,10 +122,16 @@
                       :placeholder="$t('placeholderText.pleaseEnterSubject')"
                     >
                     </el-input>
-                    <el-checkbox disabled style="margin-left: 30px;" :false-label="0" :true-label="1"
-                                 v-model="node.priority"
+                    <el-checkbox
+                      disabled
+                      style="margin-left: 30px;"
+                      :false-label="0"
+                      :true-label="1"
+                      v-model="node.priority"
                     >
-                      <span style="color: red; font-size: 16px;">{{ $t("urgent") }}</span>
+                      <span style="color: red; font-size: 16px;">{{
+                        $t('urgent')
+                      }}</span>
                     </el-checkbox>
                   </div>
                 </span>
@@ -120,7 +145,8 @@
                   action=""
                   :auto-upload="false"
                   :on-change="handleUpload"
-                  :show-file-list="false">
+                  :show-file-list="false"
+                >
                   <el-button type="info">数据导入</el-button>
                 </el-upload>
               </div>
@@ -131,13 +157,13 @@
       <div class="content" id="form">
         <div class="card1" ref="card1">
           <div class="header">
-            <span class="title"> {{ $t("applicantInformation") }}</span>
+            <span class="title"> {{ $t('applicantInformation') }}</span>
             <div class="space"></div>
             <el-button v-if="!isPrint" type="text" @click="expand = !expand"
-            ><i
-              :class="expand ? 'el-icon-arrow-up' : 'el-icon-arrow-down'"
-            ></i>
-              {{ expand ? $t("putAway") : $t("unfold") }}
+              ><i
+                :class="expand ? 'el-icon-arrow-up' : 'el-icon-arrow-down'"
+              ></i>
+              {{ expand ? $t('putAway') : $t('unfold') }}
             </el-button>
           </div>
           <el-form ref="form" label-width="80px">
@@ -159,9 +185,8 @@
                   :placeholder="$t('placeholderText.pleaseSelectApplicant')"
                   readonly
                 >
-                  <el-button slot="append" @click="orgHandle">{{
-                      $t("placeholderText.select")
-                    }}
+                  <el-button slot="append" @click="orgHandle"
+                    >{{ $t('placeholderText.select') }}
                   </el-button>
                 </el-input>
               </el-form-item>
@@ -201,8 +226,19 @@
               </el-form-item>
             </el-col>
           </el-form>
-          <div class="card-info">
-            <!-- <span>申请时间:{{node.applyUserDto.applyDate | formatDateTime}}</!-->
+           <div  class="card-info">
+                  <!-- <span>申请时间:{{node.applyUserDto.applyDate | formatDateTime}}</!-->
+           </div>
+          <div  v-if="isWjSearch && node.processNodeName === 'Start'" class="cards-info">
+            <span style="margin-left: 1%;width: 26%;">单据编号:</span>
+            <el-input v-model="searchCode"  placeholder="请输入查询编码" style="width: 60%;margin-right: 10%;"></el-input>
+            <el-button
+              type="primary"
+              class="submit-btn"
+              style="margin-top: 0%;margin-right: 63%;"
+              @click="searchWjdata"
+              >查询
+            </el-button>
           </div>
         </div>
         <div class="myFormStyleDiv">
@@ -234,9 +270,8 @@
             @click="cancel"
             :disabled="buttonDisabled"
           >
-            {{ $t("cancelAction") }}
-          </el-button
-          >
+            {{ $t('cancelAction') }}
+          </el-button>
           <el-button
             type="success"
             class="save-btn"
@@ -244,9 +279,8 @@
             v-if="!isView"
             v-show="!isTest"
             :disabled="buttonDisabled"
-          >{{ $t("apply") }}
-          </el-button
-          >
+            >{{ $t('apply') }}
+          </el-button>
           <el-button
             type="primary"
             class="submit-btn"
@@ -254,9 +288,8 @@
             @click="handleSubmit"
             v-if="!isView"
             :disabled="buttonDisabled"
-          >{{ !isTest ? $t("submitForm") : $t("startTesting") }}
-          </el-button
-          >
+            >{{ !isTest ? $t('submitForm') : $t('startTesting') }}
+          </el-button>
           <el-button
             style="margin-left: 10px"
             type="primary"
@@ -264,9 +297,8 @@
             :class="!isTest ? '' : 'margin-l10'"
             @click="handleSave"
             v-if="$route.query.productRelease === 'edit'"
-          >{{ !isTest ? $t("submitForm") : $t("startTesting") }}
-          </el-button
-          >
+            >{{ !isTest ? $t('submitForm') : $t('startTesting') }}
+          </el-button>
         </div>
       </div>
     </div>
@@ -277,7 +309,7 @@
           @click="handleRoute('暂停')"
           v-if="
             node.processInstanceInfo &&
-            node.processInstanceInfo.status === '审批中'
+              node.processInstanceInfo.status === '审批中'
           "
         >
           <el-tooltip :content="$t('pause')" effect="dark" placement="top">
@@ -289,7 +321,7 @@
           @click="handleRoute('启用')"
           v-if="
             node.processInstanceInfo &&
-            node.processInstanceInfo.status === '暂停'
+              node.processInstanceInfo.status === '暂停'
           "
         >
           <el-tooltip :content="$t('enable')" effect="dark" placement="top">
@@ -299,9 +331,9 @@
         <div
           v-if="
             node.processInstanceInfo &&
-            node.processInstanceInfo.status !== '已完成' &&
-            node.processInstanceInfo.status !== '终止' &&
-            node.processInstanceInfo.status !== '暂停'
+              node.processInstanceInfo.status !== '已完成' &&
+              node.processInstanceInfo.status !== '终止' &&
+              node.processInstanceInfo.status !== '暂停'
           "
         >
           <div class="btn" @click="handleRoute('路由')">
@@ -331,9 +363,9 @@
       <div
         v-if="
           isNoStart &&
-          node.instanceId &&
-          this.$route.query.type !== 'edit' &&
-          this.$route.query.type !== 'collection'
+            node.instanceId &&
+            this.$route.query.type !== 'edit' &&
+            this.$route.query.type !== 'collection'
         "
         class="btn"
         @click="collection"
@@ -344,7 +376,12 @@
           />
         </el-tooltip>
       </div>
-      <div v-if="$route.path == '/processForm/start' || $route.path == '/processForm/approve'">
+      <div
+        v-if="
+          $route.path == '/processForm/start' ||
+            $route.path == '/processForm/approve'
+        "
+      >
         <div v-if="riskData.length" class="risk" @click="riskClick">
           <el-tooltip :content="$t('risk')" effect="dark" placement="top">
             <i class="el-icon-warning-outline" />
@@ -361,7 +398,11 @@
           </el-tooltip>
         </div>
       </div>
-      <div class="btn" @click="handlePrintCard($route)" v-if="showPrintCard($route)">
+      <div
+        class="btn"
+        @click="handlePrintCard($route)"
+        v-if="showPrintCard($route)"
+      >
         <el-tooltip :content="$t('printCard')" effect="dark" placement="top">
           <i class="el-icon-bank-card" />
         </el-tooltip>
@@ -455,27 +496,44 @@
     <system-dialog v-model="systemDialogVisible" :systemData="systemData" />
 
     <!-- 自定义弹出框组件 HuangXiaoxiao 2022.07.26 -->
-    <CustomDialogForm v-model="customDialogFormVisible" :itemColumn="customItemColumn"  @close="customDialogFormVisible = false"/>
+    <CustomDialogForm
+      v-model="customDialogFormVisible"
+      :itemColumn="customItemColumn"
+      @close="customDialogFormVisible = false"
+    />
 
     <!-- 证件打印弹出框组件 HuangXiaoxiao 2022.08.22 -->
-    <CustomDialogPrintCard v-model="printCardVisible" :nodes="printCardNodes" :routers="printCardRouter" @close="printCardVisible = false"/>
+    <CustomDialogPrintCard
+      v-model="printCardVisible"
+      :nodes="printCardNodes"
+      :routers="printCardRouter"
+      @close="printCardVisible = false"
+    />
+   <!-- 出门证弹框 2023.02.17 -->
+    <OutDoorDialog
+      v-model="outDoorDialogVisible"
+      :itemColumn="outDoorItemColumn"
+      @submitData="submitData"
+    /> 
   </div>
 </template>
 
 <script>
-import $ from "jquery";
-import QRCode from "qrcodejs2"; // 引入qrcode
-import logo from "@/bpm/assets/img/common/logo-blue.png";
-import FlowCard from "./FlowCard";
-import FlowTabs from "./FlowTabs";
-import RiskDialog from "./RiskDialog";
-import SystemDialog from "./SystemDialog";
+import $ from 'jquery'
+import QRCode from 'qrcodejs2' // 引入qrcode
+import logo from '@/bpm/assets/img/common/logo-blue.png'
+import FlowCard from './FlowCard'
+import FlowTabs from './FlowTabs'
+import RiskDialog from './RiskDialog'
+import SystemDialog from './SystemDialog'
 
-import CustomDialogForm from '@/bpm/components/customDialogForm';
-import CustomDialogPrintCard from '@/bpm/components/customDialogPrintCard';
+import CustomDialogForm from '@/bpm/components/customDialogForm'
+import CustomDialogPrintCard from '@/bpm/components/customDialogPrintCard'
 
-import { on, off, scrollTop } from "@/bpm/utils/backtop";
-import processDialog from "@/bpm/components/processDialog";
+import { on, off, scrollTop } from '@/bpm/utils/backtop'
+import processDialog from '@/bpm/components/processDialog'
+
+import OutDoorDialog from '@/bpm/components/outDoorDialog'
 import {
   deleteCollection,
   saveCollection,
@@ -483,26 +541,27 @@ import {
   getSystemJson,
   getRiskJson,
   getMyJsonCopyForStart,
-  getMyJsonCopyForApprove
-} from "../../api/flow";
+  getMyJsonCopyForApprove,
+  searchWjdata
+} from '../../api/flow'
 import {
   cancelinstance,
   executeProcessInstance
-} from "@/bpm/api/process/administrativeTool/flowManagement.js";
-import InstanceImageDialog from "@/bpm/components/instanceimage/InstanceImageDialog";
-import { getPostById } from "@/bpm/api/process/administrativeTool/agents_change";
-import collectionDialog from "@/bpm/components/collectionDialog";
-import startInstanceImageDialog from "@/bpm/components/startInstanceImage/InstanceImageDialog";
-import BasComponent from "bas-component";
+} from '@/bpm/api/process/administrativeTool/flowManagement.js'
+import InstanceImageDialog from '@/bpm/components/instanceimage/InstanceImageDialog'
+import { getPostById } from '@/bpm/api/process/administrativeTool/agents_change'
+import collectionDialog from '@/bpm/components/collectionDialog'
+import startInstanceImageDialog from '@/bpm/components/startInstanceImage/InstanceImageDialog'
+import BasComponent from 'bas-component'
 
-Vue.use(BasComponent);
-import "bas-component/lib/BasComponent.css";
-import { createNamespacedHelpers } from "vuex";
-import { fetch } from "@/bpm/utils";
-import moment from "moment-mini";
-import XLSX from "xlsx";
+Vue.use(BasComponent)
+import 'bas-component/lib/BasComponent.css'
+import { createNamespacedHelpers } from 'vuex'
+import { fetch } from '@/bpm/utils'
+import moment from 'moment-mini'
+import XLSX from 'xlsx'
 
-const { mapGetters, mapMutations } = createNamespacedHelpers("app");
+const { mapGetters, mapMutations } = createNamespacedHelpers('app')
 
 export default {
   components: {
@@ -515,25 +574,27 @@ export default {
     RiskDialog,
     SystemDialog,
     CustomDialogForm,
-    CustomDialogPrintCard
+    CustomDialogPrintCard,
+    OutDoorDialog
   },
   data() {
     return {
       // 自定义弹出框
-      customItemColumn:{},
+      customItemColumn: {},
       customDialogFormVisible: false,
       // 证件打印弹出框
-      printCardNodes:{},
-      printCardRouter:{},
-      printCardVisible:false,
+      printCardNodes: {},
+      printCardRouter: {},
+      printCardVisible: false,
+      
       //以下为原组件参数
       logo: logo,
       pageLoading: false,
       organieationShow: false,
       selectedElement: {},
       showElement: [],
-      selectElement: ["9"],
-      orgtitle: this.$t("selectApplicant"),
+      selectElement: ['9'],
+      orgtitle: this.$t('selectApplicant'),
       testData: {
         list: []
       },
@@ -542,7 +603,7 @@ export default {
       startDialogVisible: false,
       collectionDialogVisible: false,
       floatBannerRight: {},
-      subject_error: "",
+      subject_error: '',
       isBut: false,
       dialogVisible: false,
       data: {},
@@ -551,23 +612,28 @@ export default {
       isShowHelp: false,
       isPrint: false,
       expand: true,
-      scriptPublic: "",
-      scriptPrivatc: "",
+      scriptPublic: '',
+      scriptPrivatc: '',
       previewApproversVisible: false,
       previewApprovers: {},
       // tabsList: [],
-      isLoadData: "",
-      isLoad: "",
-      isPublicLoad: "",
+      isLoadData: '',
+      isLoad: '',
+      isPublicLoad: '',
       qrcodeShow: false,
-      positionIdInfo: "",
-      userIdInfo: "",
+      positionIdInfo: '',
+      userIdInfo: '',
       riskDialogVisible: false,
       systemDialogVisible: false,
       riskData: [],
       systemData: [],
-      ifShow:false
-    };
+      ifShow: false,
+      isWjSearch:false,
+      searchCode:'',
+      //出门证查询结果
+      outDoorDialogVisible: false,
+      outDoorItemColumn:{}
+    }
   },
   props: {
     node: {
@@ -592,39 +658,39 @@ export default {
     },
     submitaction: {
       type: String,
-      default: ""
+      default: ''
     },
     returnToNode: {
       type: String,
-      default: ""
+      default: ''
     },
     comment: {
       type: String,
-      default: ""
+      default: ''
     },
     collectionaData: {
       type: Object,
       default: () => ({})
-    }
+    },
   },
   computed: {
-    ...mapGetters(["buttonDisabled", "bizData", "isTest", "customError"])
+    ...mapGetters(['buttonDisabled', 'bizData', 'isTest', 'customError'])
   },
   watch: {
     expand(val) {
-      this.slideToggle(val);
+      this.slideToggle(val)
     },
     node: {
       handler(val) {
         if (val) {
-          this.qrcode(val);
+          this.qrcode(val)
           val.applyUserDto.applyDate = this.$options.filters.formatDateTime(
             val.applyUserDto.applyDate
-          );
-          this.isLoadData = true;
+          )
+          this.isLoadData = true
           if (val.bpaprocessid && val.processNodeName) {
-            if (this.$route.path == "/processForm/approve") {
-              this.getMyJsonCopyForApprove();
+            if (this.$route.path == '/processForm/approve') {
+              this.getMyJsonCopyForApprove()
             }
           }
         }
@@ -632,26 +698,26 @@ export default {
       deep: true,
       immediate: true
     },
-    "node.processName": {
+    'node.processName': {
       handler(val) {
         this.$nextTick(function() {
-          this.importScript();
-        });
+          this.importScript()
+        })
       },
       deep: true,
       immediate: true
     },
-    "node.bpaprocessid": {
+    'node.bpaprocessid': {
       handler(val) {
         if (val) {
           this.$nextTick(function() {
-            if (this.$route.path == "/processForm/start") {
-              this.getMyJsonCopyForStart();
-              this.getSystemJson();
-            } else if (this.$route.path == "/processForm/approve") {
-              this.getSystemJson();
+            if (this.$route.path == '/processForm/start') {
+              this.getMyJsonCopyForStart()
+              this.getSystemJson()
+            } else if (this.$route.path == '/processForm/approve') {
+              this.getSystemJson()
             }
-          });
+          })
         }
       },
       deep: true,
@@ -659,271 +725,280 @@ export default {
     },
     isLoadData: {
       handler(val) {
-        this.externalFun();
+        this.externalFun()
       },
       deep: true,
       immediate: true
     },
     isLoad: {
       handler(val) {
-        this.externalFun();
+        this.externalFun()
       },
       deep: true,
       immediate: true
     },
     isPublicLoad: {
       handler(val) {
-        this.externalPFun();
+        this.externalPFun()
       },
       deep: true,
       immediate: true
     },
-    "node.helpinfo": {
+    'node.helpinfo': {
       handler(val) {
         if (val) {
-          if (val.indexOf("http") === -1) {
+          if (val.indexOf('http') === -1) {
             this.$nextTick(function() {
               this.$notify({
-                title: this.$t("tips"),
+                title: this.$t('tips'),
                 dangerouslyUseHTMLString: true,
                 message: `<span style="white-space: pre-line;">${val}</span>`,
                 duration: 0
-              });
-            });
+              })
+            })
           }
         }
       }
     }
   },
   mounted() {
-
-    window.myAjax = fetch;
-    let _this = this;
-    _this.setErrorsShow(false);
+    window.myAjax = fetch
+    let _this = this
+    _this.setErrorsShow(false)
     _this.$nextTick(function() {
       window.onresize = () => {
-        _this.companyStyle();
-      };
-      _this.companyStyle();
-    });
-    on(window, "scroll", this.handleScroll);
-    on(window, "resize", this.handleScroll);
+        _this.companyStyle()
+      }
+      _this.companyStyle()
+    })
+    on(window, 'scroll', this.handleScroll)
+    on(window, 'resize', this.handleScroll)
 
-    if(this.$route.path == '/processForm/start'){
+    const type = this.$route.query.processName
+    if (
+      type == 'XGWLCGST' ||
+      type == 'XGWLXSST' ||
+      type == 'XGGCCCST' ||
+      type == 'XGWLCWST'
+    ) {
       this.ifShow = true
-      console.log('判断成功',this.ifShow)
-    }else{
+    } else {
       this.ifShow = false
-      console.log('判断失败',this.ifShow)
     }
-
+    if(type == 'WJWZGH' || 
+        type=='WJWZYQGH'
+      ){
+      this.isWjSearch=true
+    }else{
+      this.isWjSearch=false
+    }
   },
   methods: {
-    ...mapMutations(["setErrorsShow", "setButtonDisabled", "setIsTest"]),
-    customBtnClick(data){
+    ...mapMutations(['setErrorsShow', 'setButtonDisabled', 'setIsTest']),
+    customBtnClick(data) {
       // console.error(JSON.stringify(data));
-      this.customItemColumn = data;
-      this.customDialogFormVisible = true;
+      this.customItemColumn = data
+      this.customDialogFormVisible = true
     },
     qrcode(val) {
       if (!this.qrcodeShow && val.instanceId) {
-        this.positionIdInfo = val.applyUserDto.positionId;
-        this.userIdInfo = val.applyUserDto.id;
-        this.qrcodeShow = true;
+        this.positionIdInfo = val.applyUserDto.positionId
+        this.userIdInfo = val.applyUserDto.id
+        this.qrcodeShow = true
         this.$nextTick(() => {
-          let qrcode = new QRCode("qrcode", {
+          let qrcode = new QRCode('qrcode', {
             width: 80,
             height: 80,
             text: val.instanceId, // 二维码地址
-            colorDark: "#000",
-            colorLight: "#fff"
-          });
-        });
+            colorDark: '#000',
+            colorLight: '#fff'
+          })
+        })
       }
     },
     privatelyFun(type) {
-      this.getFormDataIsNull(this.node, this.data);
-      window[type](this, this.data, this.node);
+      this.getFormDataIsNull(this.node, this.data)
+      window[type](this, this.data, this.node)
     },
     fnBasOrganieationCallBack(data) {
-      this.$set(this.testData, "name", data.name.split("&").join(","));
-      this.$set(this.testData, "id", data.id);
-      this.$set(this.testData, "idType", data.idType);
-      this.organieationShow = false;
-      this.$set(this.testData, 'list', "");
-      this.$set(this.testData, 'org', "");
-      getPostById(data.id).then((rt) => {
-        if (rt.status === "200") {
+      this.$set(this.testData, 'name', data.name.split('&').join(','))
+      this.$set(this.testData, 'id', data.id)
+      this.$set(this.testData, 'idType', data.idType)
+      this.organieationShow = false
+      this.$set(this.testData, 'list', '')
+      this.$set(this.testData, 'org', '')
+      getPostById(data.id).then(rt => {
+        if (rt.status === '200') {
           if (rt.data && rt.data.length > 0) {
-            this.testData.list = rt.data;
-            this.testData.org = rt.data[0].id;
+            this.testData.list = rt.data
+            this.testData.org = rt.data[0].id
           } else {
             this.$message.error(
-              this.$t("hintText.postMissingContactAdministrator")
-            );
+              this.$t('hintText.postMissingContactAdministrator')
+            )
           }
         }
-      });
+      })
     },
     orgHandle() {
-      this.selectedElement = {};
+      this.selectedElement = {}
       if (this.testData.id) {
-        let list = this.testData.name.split(",").join("&");
+        let list = this.testData.name.split(',').join('&')
         this.selectedElement = {
-          id: this.testData.id.split(","),
+          id: this.testData.id.split(','),
           name: list,
           idType: this.testData.idType
-        };
+        }
       }
-      this.organieationShow = true;
+      this.organieationShow = true
     },
     handleHelp() {
-      let a = document.createElement("a");
+      let a = document.createElement('a')
       // 给创建好的a标签赋值
-      a.setAttribute("href", this.node.helpinfo);
+      a.setAttribute('href', this.node.helpinfo)
       // 设置css 隐藏属性
-      a.setAttribute("style", "display:none");
+      a.setAttribute('style', 'display:none')
       // 设置 a标签为新窗口打开
-      a.setAttribute("target", "_blank");
+      a.setAttribute('target', '_blank')
       // 将设置好的a标签，添加到 body 内
-      document.body.appendChild(a);
+      document.body.appendChild(a)
       // 模拟点击
-      a.click();
+      a.click()
       // 移除a标签
-      a.parentNode.removeChild(a);
+      a.parentNode.removeChild(a)
     },
     handleRouteSave(data) {
-      this.$loading();
+      this.$loading()
       saveProcess({
         bizData: this.data,
         instanceId: this.node.instanceId,
         subject: this.node.subject,
         priority: this.node.priority,
-        type: "edit",
+        type: 'edit',
         userId: this.node.userId,
         targetActivityName: this.node.targetActivityName,
         taskId: this.node.taskId
       })
-        .then((rt) => {
+        .then(rt => {
           this.$message({
-            message: this.$t("hintText.saveSuccessfully"),
-            type: "success"
-          });
-          localStorage.setItem("isReloadDrafts", true);
-          window.opener = null;
-          window.open("", "_self");
-          window.close();
-          this.$loading().close();
+            message: this.$t('hintText.saveSuccessfully'),
+            type: 'success'
+          })
+          localStorage.setItem('isReloadDrafts', true)
+          window.opener = null
+          window.open('', '_self')
+          window.close()
+          this.$loading().close()
         })
         .catch(() => {
-          this.$loading().close();
-        });
+          this.$loading().close()
+        })
     },
     handleRoute(type) {
-      if (type === "保存") {
-        this.data = {};
-        this.errors = [];
-        this.errorsShow = false;
-        this.getFormData(this.node, this.data);
-        if (this.node.subjectRequired === "Y" && !this.node.subject) {
-          this.subject_error = this.$t("hintText.subjectCannotEmpty");
-          this.$message.error(this.$t("hintText.subjectCannotEmpty"));
-          return;
+      if (type === '保存') {
+        this.data = {}
+        this.errors = []
+        this.errorsShow = false
+        this.getFormData(this.node, this.data)
+        if (this.node.subjectRequired === 'Y' && !this.node.subject) {
+          this.subject_error = this.$t('hintText.subjectCannotEmpty')
+          this.$message.error(this.$t('hintText.subjectCannotEmpty'))
+          return
         } else if (
-          this.node.subjectRequired === "Y" &&
+          this.node.subjectRequired === 'Y' &&
           this.node.subject.length > 200
         ) {
-          this.subject_error = "主题长度不能超过200个字符！";
-          this.$message.error("主题长度不能超过200个字符！");
-          return;
+          this.subject_error = '主题长度不能超过200个字符！'
+          this.$message.error('主题长度不能超过200个字符！')
+          return
         }
-        this.subject_error = "";
-        if (this.isLoad && typeof eval(window["submit"]) === "function") {
-          window["submit"](this, this.data, true).then((rt) => {
-            if (!rt) return;
-            this.handleRouteSave();
-          });
+        this.subject_error = ''
+        if (this.isLoad && typeof eval(window['submit']) === 'function') {
+          window['submit'](this, this.data, true).then(rt => {
+            if (!rt) return
+            this.handleRouteSave()
+          })
         } else {
-          this.handleRouteSave();
+          this.handleRouteSave()
         }
-      } else if (type === "终止") {
-        this.$loading();
+      } else if (type === '终止') {
+        this.$loading()
         cancelinstance(this.node.instanceId)
-          .then((rt) => {
-            this.$loading().close();
-            if (rt.status === "200") {
-              localStorage.setItem("isReload", true);
-              window.opener = null;
-              window.open("", "_self");
-              window.close();
+          .then(rt => {
+            this.$loading().close()
+            if (rt.status === '200') {
+              localStorage.setItem('isReload', true)
+              window.opener = null
+              window.open('', '_self')
+              window.close()
             }
           })
-          .catch((er) => {
-            this.$loading().close();
-          });
-      } else if (type === "暂停") {
-        this.$loading();
+          .catch(er => {
+            this.$loading().close()
+          })
+      } else if (type === '暂停') {
+        this.$loading()
         executeProcessInstance({
-          handleType: "EHM-001",
+          handleType: 'EHM-001',
           instanceId: this.node.instanceId
         })
-          .then((rt) => {
-            this.$loading().close();
-            if (rt.status === "200") {
-              localStorage.setItem("isReload", true);
-              window.opener = null;
-              window.open("", "_self");
-              window.close();
+          .then(rt => {
+            this.$loading().close()
+            if (rt.status === '200') {
+              localStorage.setItem('isReload', true)
+              window.opener = null
+              window.open('', '_self')
+              window.close()
             }
           })
-          .catch((er) => {
-            this.$loading().close();
-          });
-      } else if (type === "启用") {
-        this.$loading();
+          .catch(er => {
+            this.$loading().close()
+          })
+      } else if (type === '启用') {
+        this.$loading()
         executeProcessInstance({
-          handleType: "EHM-002",
+          handleType: 'EHM-002',
           instanceId: this.node.instanceId
         })
-          .then((rt) => {
-            this.$loading().close();
-            if (rt.status === "200") {
-              localStorage.setItem("isReload", true);
-              window.opener = null;
-              window.open("", "_self");
-              window.close();
+          .then(rt => {
+            this.$loading().close()
+            if (rt.status === '200') {
+              localStorage.setItem('isReload', true)
+              window.opener = null
+              window.open('', '_self')
+              window.close()
             }
           })
-          .catch((er) => {
-            this.$loading().close();
-          });
-      } else if (type === "路由") {
+          .catch(er => {
+            this.$loading().close()
+          })
+      } else if (type === '路由') {
         let routeData = this.$router.resolve({
-          name: "processRouting",
+          name: 'processRouting',
           query: {
             instanceId: this.node.instanceId
           }
-        });
-        let a = document.createElement("a");
+        })
+        let a = document.createElement('a')
         // 给创建好的a标签赋值
-        a.setAttribute("href", routeData.href);
+        a.setAttribute('href', routeData.href)
         // 设置css 隐藏属性
-        a.setAttribute("style", "display:none");
+        a.setAttribute('style', 'display:none')
         // 设置 a标签为新窗口打开
-        a.setAttribute("target", "_blank");
+        a.setAttribute('target', '_blank')
         // 将设置好的a标签，添加到 body 内
-        document.body.appendChild(a);
+        document.body.appendChild(a)
         // 模拟点击
-        a.click();
+        a.click()
         // 移除a标签
-        a.parentNode.removeChild(a);
+        a.parentNode.removeChild(a)
         // window.open(routeData.href, "_blank");
       }
     },
     saveCollection(data) {
       if (!data.id) {
-        this.$message.error(this.$t("hintText.pleaseSelectFavoriteNode"));
-        return false;
+        this.$message.error(this.$t('hintText.pleaseSelectFavoriteNode'))
+        return false
       }
       saveCollection({
         drafter: this.node.drafter,
@@ -936,262 +1011,260 @@ export default {
         status: this.node.status,
         subject: this.node.subject,
         priority: this.node.priority,
-        leveltype: "3",
+        leveltype: '3',
         pid: data.id,
         userId: this.node.userId
-      }).then((rt) => {
-        if (rt.status === "200") {
-          this.$message.success(this.$t("hintText.collectionSuccess"));
-          this.$set(this.collectionaData, "id", rt.data.id);
-          this.collectionDialogVisible = false;
+      }).then(rt => {
+        if (rt.status === '200') {
+          this.$message.success(this.$t('hintText.collectionSuccess'))
+          this.$set(this.collectionaData, 'id', rt.data.id)
+          this.collectionDialogVisible = false
         }
-      });
+      })
     },
     collection() {
       if (this.collectionaData.id) {
-        deleteCollection(this.collectionaData.id).then((rt) => {
-          if (rt.status === "200") {
-            this.$message.success(this.$t("hintText.cancelSuccess"));
-            this.collectionaData = {};
+        deleteCollection(this.collectionaData.id).then(rt => {
+          if (rt.status === '200') {
+            this.$message.success(this.$t('hintText.cancelSuccess'))
+            this.collectionaData = {}
           }
-        });
+        })
       } else {
-        this.collectionDialogVisible = true;
+        this.collectionDialogVisible = true
       }
     },
     getInstanceImage() {
       if (this.node.instanceId) {
-        this.dialogVisible = true;
+        this.dialogVisible = true
       } else {
-        this.startDialogVisible = true;
+        this.startDialogVisible = true
       }
     },
     cancel() {
-      window.opener = null;
-      window.open("", "_self");
-      window.close();
+      window.opener = null
+      window.open('', '_self')
+      window.close()
     },
     externalFun() {
       if (this.isLoad && this.isLoadData) {
-        window["ready"](
+        window['ready'](
           this,
           this.node,
           process.env.HOST_URL + process.env.BASE_URL,
           $
-        );
+        )
       }
     },
     externalPFun() {
       // 公共的加载方法
       if (this.isPublicLoad && this.isLoadData) {
-        window["readyP"](
+        window['readyP'](
           this,
           this.node,
           process.env.HOST_URL + process.env.BASE_URL,
           $
-        );
+        )
       }
     },
     PublicLoad() {
-      this.isPublicLoad = true;
+      this.isPublicLoad = true
     },
     load() {
-      this.isLoad = true;
+      this.isLoad = true
     },
     handleSave() {
-      this.data = {};
-      this.errors = [];
-      this.errorsShow = false;
-      this.getFormData(this.node, this.data);
-      if (this.node.subjectRequired === "Y" && !this.node.subject) {
-        this.subject_error = this.$t("hintText.subjectCannotEmpty");
-        this.$message.error(this.$t("hintText.subjectCannotEmpty"));
-        return;
+      this.data = {}
+      this.errors = []
+      this.errorsShow = false
+      this.getFormData(this.node, this.data)
+      if (this.node.subjectRequired === 'Y' && !this.node.subject) {
+        this.subject_error = this.$t('hintText.subjectCannotEmpty')
+        this.$message.error(this.$t('hintText.subjectCannotEmpty'))
+        return
       } else if (
-        this.node.subjectRequired === "Y" &&
+        this.node.subjectRequired === 'Y' &&
         this.node.subject.length > 200
       ) {
-        this.subject_error = "主题长度不能超过200个字符！";
-        this.$message.error("主题长度不能超过200个字符！");
-        return;
+        this.subject_error = '主题长度不能超过200个字符！'
+        this.$message.error('主题长度不能超过200个字符！')
+        return
       }
-      this.subject_error = "";
-      let savelenerrors = this.errors.filter((item) => item.applyvalue);
-      console.log("🍓this.data", this.data);
+      this.subject_error = ''
+      let savelenerrors = this.errors.filter(item => item.applyvalue)
+      console.log('🍓this.data', this.data)
       if (savelenerrors.length > 0) {
         this.$message({
           showClose: true,
           message: `${savelenerrors[0].fieldShowName}不能超过${savelenerrors[0].length}个字符`,
-          type: "error"
-        });
+          type: 'error'
+        })
       } else {
         if (this.customError.length > 0) {
           this.$message({
             showClose: true,
             message: `${this.customError[0].fieldShowName}：${this.customError[0].errorHint}`,
-            type: "error"
-          });
-          return;
+            type: 'error'
+          })
+          return
         }
-        if (this.isLoad && typeof eval(window["submit"]) === "function") {
-          window["submit"](this, this.data, true).then((rt) => {
-            if (!rt) return;
-            this.$emit("handleSave", this.data);
-          });
+        if (this.isLoad && typeof eval(window['submit']) === 'function') {
+          window['submit'](this, this.data, true).then(rt => {
+            if (!rt) return
+            this.$emit('handleSave', this.data)
+          })
         } else {
-          this.$emit("handleSave", this.data);
+          this.$emit('handleSave', this.data)
         }
       }
     },
     handleSubmit() {
-      this.data = {};
-      this.errors = [];
-      this.getFormData(this.node, this.data);
-      if (this.node.subjectRequired === "Y" && !this.node.subject) {
-        this.$message.error(this.$t("hintText.subjectCannotEmpty"));
-        this.subject_error = this.$t("hintText.subjectCannotEmpty");
-        return;
+      this.data = {}
+      this.errors = []
+      this.getFormData(this.node, this.data)
+      if (this.node.subjectRequired === 'Y' && !this.node.subject) {
+        this.$message.error(this.$t('hintText.subjectCannotEmpty'))
+        this.subject_error = this.$t('hintText.subjectCannotEmpty')
+        return
       } else if (
-        this.node.subjectRequired === "Y" &&
+        this.node.subjectRequired === 'Y' &&
         this.node.subject.length > 200
       ) {
-        this.subject_error = "主题长度不能超过200个字符！";
-        this.$message.error("主题长度不能超过200个字符！");
-        return;
+        this.subject_error = '主题长度不能超过200个字符！'
+        this.$message.error('主题长度不能超过200个字符！')
+        return
       }
-      this.subject_error = "";
+      this.subject_error = ''
       if (
         this.errors.length === 0 ||
-        this.submitaction === "noAgreed" ||
-        this.submitaction === "anyActivityBtn" ||
-        this.submitaction === "reApplyBtn" ||
-        this.submitaction === "cancelBtn" ||
-        this.submitaction === "transferPackage" ||
-        this.submitaction === "returnToBtn"
+        this.submitaction === 'noAgreed' ||
+        this.submitaction === 'anyActivityBtn' ||
+        this.submitaction === 'reApplyBtn' ||
+        this.submitaction === 'cancelBtn' ||
+        this.submitaction === 'transferPackage' ||
+        this.submitaction === 'returnToBtn'
       ) {
         if (this.customError.length > 0) {
           this.$message({
             showClose: true,
             message: `${this.customError[0].fieldShowName}：${this.customError[0].errorHint}`,
-            type: "error"
-          });
-          return;
+            type: 'error'
+          })
+          return
         }
-        this.submitForm();
+        this.submitForm()
       } else {
         if (this.errors[0].applyvalue) {
           this.$message({
             showClose: true,
             message: `${this.errors[0].fieldShowName}超长`,
-            type: "error"
-          });
+            type: 'error'
+          })
         } else {
           this.$message({
             showClose: true,
             message:
               `${this.errors[0].fieldShowName}` +
-              this.$t("hintText.cannotBeEmpty"),
-            type: "error"
-          });
+              this.$t('hintText.cannotBeEmpty'),
+            type: 'error'
+          })
         }
-        this.setErrorsShow(true);
+        this.setErrorsShow(true)
       }
     },
     handlePreview() {
       this.previewApprovers = {
         instanceId: this.node.instanceId
-      };
-      this.isBut = false;
-      this.previewApproversVisible = true;
+      }
+      this.isBut = false
+      this.previewApproversVisible = true
     },
     submitForm() {
       if (this.$route.query.taskId) {
         if (!this.submitaction) {
-          this.$message(this.$t("hintText.pleaseSelectApprovalComments"));
-          return;
+          this.$message(this.$t('hintText.pleaseSelectApprovalComments'))
+          return
         }
-        if (this.submitaction === "returnToBtn") {
+        if (this.submitaction === 'returnToBtn') {
           if (this.node.returnToList) {
-            if (this.returnToNode !== "") {
+            if (this.returnToNode !== '') {
               this.$confirm(
-                this.$t("hintText.confirmToSubmit"),
-                this.$t("hintText.hint"),
+                this.$t('hintText.confirmToSubmit'),
+                this.$t('hintText.hint'),
                 {
-                  confirmButtonText: this.$t("confirm"),
-                  cancelButtonText: this.$t("cancel")
+                  confirmButtonText: this.$t('confirm'),
+                  cancelButtonText: this.$t('cancel')
                 }
               )
                 .then(() => {
-                  this.saveAjax();
+                  this.saveAjax()
                 })
                 .catch(() => {
-                  this.setButtonDisabled(false);
+                  this.setButtonDisabled(false)
                   this.$message({
-                    type: "info",
-                    message: this.$t("hintText.unSubmitted")
-                  });
-                });
+                    type: 'info',
+                    message: this.$t('hintText.unSubmitted')
+                  })
+                })
             } else {
-              this.$message.error(
-                this.$t("hintText.pleaseSelectNodeForReview")
-              );
-              return;
+              this.$message.error(this.$t('hintText.pleaseSelectNodeForReview'))
+              return
             }
           } else {
             this.$message.error(
-              this.$t("hintText.pleaseAssignCurrentReturnNode")
-            );
+              this.$t('hintText.pleaseAssignCurrentReturnNode')
+            )
           }
-          return;
+          return
         }
         if (
-          this.submitaction === "noAgreed" ||
-          this.submitaction === "anyActivityBtn" ||
-          this.submitaction === "reApplyBtn" ||
-          this.submitaction === "cancelBtn" ||
-          this.submitaction === "returnSpecifiedNode"
+          this.submitaction === 'noAgreed' ||
+          this.submitaction === 'anyActivityBtn' ||
+          this.submitaction === 'reApplyBtn' ||
+          this.submitaction === 'cancelBtn' ||
+          this.submitaction === 'returnSpecifiedNode'
         ) {
           if (!this.comment) {
-            this.$message(this.$t("hintText.pleaseFillApprovalRecord"));
-            return;
+            this.$message(this.$t('hintText.pleaseFillApprovalRecord'))
+            return
           }
         }
       }
-      if (this.node.processNodeName === "Start") {
-        if (typeof eval(window["submit"]) === "function") {
-          window["submit"](this, this.data, false).then((rt) => {
-            if (!rt) return;
-            this.data = {};
-            this.errors = [];
-            this.errorsShow = false;
-            this.getFormData(this.node, this.data);
+      if (this.node.processNodeName === 'Start') {
+        if (typeof eval(window['submit']) === 'function') {
+          window['submit'](this, this.data, false).then(rt => {
+            if (!rt) return
+            this.data = {}
+            this.errors = []
+            this.errorsShow = false
+            this.getFormData(this.node, this.data)
             this.previewApprovers = {
               instanceId: this.node.instanceId,
               processName: this.node.processName,
               positionId: this.node.positionId,
               userId: this.$store.state.basuser.user.id,
               bizData: this.data
-            };
-            this.isBut = true;
+            }
+            this.isBut = true
             if (this.isTest) {
               if (!this.testData.id) {
                 this.$message.error(
-                  this.$t("placeholderText.pleaseSelectApplicant")
-                );
-                return;
+                  this.$t('placeholderText.pleaseSelectApplicant')
+                )
+                return
               }
               if (!this.testData.org) {
                 this.$message.error(
-                  this.$t("hintText.pleaseSelectApplicationDepartment")
-                );
-                return;
+                  this.$t('hintText.pleaseSelectApplicationDepartment')
+                )
+                return
               }
-              this.previewApprovers.positionId = this.testData.org;
-              this.previewApprovers.userId = this.testData.id;
-              this.isBut = false;
+              this.previewApprovers.positionId = this.testData.org
+              this.previewApprovers.userId = this.testData.id
+              this.isBut = false
             }
-            this.previewApproversVisible = true;
-          });
+            this.previewApproversVisible = true
+          })
         } else {
           this.previewApprovers = {
             instanceId: this.node.instanceId,
@@ -1199,29 +1272,29 @@ export default {
             positionId: this.node.positionId,
             userId: this.$store.state.basuser.user.id,
             bizData: this.data
-          };
-          this.isBut = true;
+          }
+          this.isBut = true
           if (this.isTest) {
             if (!this.testData.id) {
               this.$message.error(
-                this.$t("placeholderText.pleaseSelectApplicant")
-              );
-              return;
+                this.$t('placeholderText.pleaseSelectApplicant')
+              )
+              return
             }
             if (!this.testData.org) {
               this.$message.error(
-                this.$t("hintText.pleaseSelectApplicationDepartment")
-              );
-              return;
+                this.$t('hintText.pleaseSelectApplicationDepartment')
+              )
+              return
             }
-            this.previewApprovers.positionId = this.testData.org;
-            this.previewApprovers.userId = this.testData.id;
-            this.isBut = false;
+            this.previewApprovers.positionId = this.testData.org
+            this.previewApprovers.userId = this.testData.id
+            this.isBut = false
           }
-          this.previewApproversVisible = true;
+          this.previewApproversVisible = true
         }
       } else {
-        this.previewApproversVisible = true;
+        this.previewApproversVisible = true
         this.previewApprovers = {
           instanceId: this.node.instanceId,
           positionId: this.positionIdInfo,
@@ -1229,23 +1302,23 @@ export default {
           // userId: this.$store.state.basuser.user.id,
           userId: this.userIdInfo,
           bizData: this.data
-        };
-        this.isBut = true;
+        }
+        this.isBut = true
       }
     },
     confirm(isSave, selectUser) {
-      this.node.selectUser = selectUser;
+      this.node.selectUser = selectUser
       if (isSave) {
-        this.saveAjax();
+        this.saveAjax()
       }
     },
     checkSpecifyNode(node) {
-      this.node.targetActivityName = node;
-      this.saveAjax();
+      this.node.targetActivityName = node
+      this.saveAjax()
     },
     saveAjax() {
-      this.setButtonDisabled(true);
-      this.$emit("handleSubmit", this.data);
+      this.setButtonDisabled(true)
+      this.$emit('handleSubmit', this.data)
     },
     getMyJsonCopyForStart() {
       getMyJsonCopyForStart(this.node.bpaprocessid)
@@ -1255,12 +1328,11 @@ export default {
               return {
                 ...item,
                 nodeName: rt.data.name
-              };
-            });
+              }
+            })
           }
         })
-        .catch(er => {
-        });
+        .catch(er => {})
     },
     getMyJsonCopyForApprove() {
       getMyJsonCopyForApprove(this.node.bpaprocessid, this.node.processNodeName)
@@ -1270,315 +1342,310 @@ export default {
               return {
                 ...item,
                 nodeName: rt.data.name
-              };
-            });
+              }
+            })
           }
         })
-        .catch(er => {
-        });
+        .catch(er => {})
     },
     riskClick() {
-      this.riskDialogVisible = true;
+      this.riskDialogVisible = true
     },
     getSystemJson() {
       getSystemJson(this.node.bpaprocessid)
         .then(rt => {
           if (rt.code === 200) {
-            this.systemData = rt.data.bpmDto.zhiduList;
+            this.systemData = rt.data.bpmDto.zhiduList
           }
         })
-        .catch(er => {
-        });
+        .catch(er => {})
     },
     systemClick() {
-      this.systemDialogVisible = true;
+      this.systemDialogVisible = true
     },
     // 判断是否展示[打印证件]功能按钮
-    showPrintCard(thisRouter){
+    showPrintCard(thisRouter) {
       // console.log(thisRouter);
-      var tag = false;
-      var query = thisRouter.query;
-      var keyArr = this.$router.app.$store.state.app.printCardKeyArray;
-      if(typeof(query) != 'undefined'){
-        var key = query.name;
+      var tag = false
+      var query = thisRouter.query
+      var keyArr = this.$router.app.$store.state.app.printCardKeyArray
+      if (typeof query != 'undefined') {
+        var key = query.name
 
-        let flag = keyArr.findIndex(item => item == key);
-        if(flag > -1){
-          tag = true;
+        let flag = keyArr.findIndex(item => item == key)
+        if (flag > -1) {
+          tag = true
         }
       }
-      return tag;
+      return tag
     },
     // 打印证件功能按钮
-    handlePrintCard(thisRouter){
-      this.printCardVisible = true;
-      this.printCardNodes = JSON.parse(JSON.stringify(this.node));
-      this.printCardRouter = JSON.parse(JSON.stringify(thisRouter.query));
+    handlePrintCard(thisRouter) {
+      this.printCardVisible = true
+      this.printCardNodes = JSON.parse(JSON.stringify(this.node))
+      this.printCardRouter = JSON.parse(JSON.stringify(thisRouter.query))
     },
     handlePrint() {
-      if (this.node.defaultPrint === "Y" && this.node.instanceId) {
+      if (this.node.defaultPrint === 'Y' && this.node.instanceId) {
         let routeData = this.$router.resolve({
-          name: this.node.processName + "Print",
+          name: this.node.processName + 'Print',
           query: {
             instanceId: this.node.instanceId
           }
-        });
-        let a = document.createElement("a");
+        })
+        let a = document.createElement('a')
         // 给创建好的a标签赋值
-        a.setAttribute("href", routeData.href);
+        a.setAttribute('href', routeData.href)
         // 设置css 隐藏属性
-        a.setAttribute("style", "display:none");
+        a.setAttribute('style', 'display:none')
         // 设置 a标签为新窗口打开
-        a.setAttribute("target", "_blank");
+        a.setAttribute('target', '_blank')
         // 将设置好的a标签，添加到 body 内
-        document.body.appendChild(a);
+        document.body.appendChild(a)
         // 模拟点击
-        a.click();
+        a.click()
         // 移除a标签
-        a.parentNode.removeChild(a);
+        a.parentNode.removeChild(a)
         // window.open(routeData.href, "_blank");
       } else {
-        this.isPrint = true;
+        this.isPrint = true
         this.$nextTick(() => {
-          window.print();
-          this.isPrint = false;
-        });
+          window.print()
+          this.isPrint = false
+        })
       }
     },
     getFormDataIsNull(node, data) {
       if (node.nodeTabLists) {
-        node.nodeTabLists.forEach((tab) => {
-          this.getFormDataIsNull(tab, data);
-        });
+        node.nodeTabLists.forEach(tab => {
+          this.getFormDataIsNull(tab, data)
+        })
       }
       if (node.rows) {
-        data[node.fieldName] = [];
+        data[node.fieldName] = []
         // data['tableName'] = node.relationType
-        node.rows.forEach((row) => {
-          const rowData = {};
-          data[node.fieldName].push(rowData);
-          this.getFormDataIsNull(row, rowData);
-        });
+        node.rows.forEach(row => {
+          const rowData = {}
+          data[node.fieldName].push(rowData)
+          this.getFormDataIsNull(row, rowData)
+        })
       } else if (node.nodeTableLists) {
-        node.nodeTableLists.forEach((table) => {
+        node.nodeTableLists.forEach(table => {
           // if (table.applyvalue) {
-          if (table.inputType === "date" || table.inputType === "date-edit") {
+          if (table.inputType === 'date' || table.inputType === 'date-edit') {
             data[table.fieldName] = table.applyvalue
-              ? moment(table.applyvalue).format("YYYY-MM-DD")
-              : "";
+              ? moment(table.applyvalue).format('YYYY-MM-DD')
+              : ''
           } else if (
-            table.inputType === "time" ||
-            table.inputType === "time-edits"
+            table.inputType === 'time' ||
+            table.inputType === 'time-edits'
           ) {
             data[table.fieldName] = table.applyvalue
-              ? moment(table.applyvalue).format("YYYY-MM-DD HH:mm:ss")
-              : "";
-          } else if (table.inputType === "double") {
+              ? moment(table.applyvalue).format('YYYY-MM-DD HH:mm:ss')
+              : ''
+          } else if (table.inputType === 'double') {
             if (table.applyvalue) {
               data[table.fieldName] = String(
                 this.$options.filters.delcommafy(table.applyvalue)
-              );
+              )
             }
-          } else if (table.inputType === "search-switch") {
+          } else if (table.inputType === 'search-switch') {
             if (table.applyvalue) {
-              data[table.fieldName] = "";
+              data[table.fieldName] = ''
             }
-          } else if (table.inputType === "nokt") {
-            if (table.value && table.value !== "undefined") {
-              data[table.fieldName] = table.value;
+          } else if (table.inputType === 'nokt') {
+            if (table.value && table.value !== 'undefined') {
+              data[table.fieldName] = table.value
             }
           } else {
-            data[table.fieldName] = table.applyvalue;
+            data[table.fieldName] = table.applyvalue
           }
           // }
           // data['tableName'] = table.relationType
 
-          if (table.inputType !== "hidden" && table.editstate === "W") {
+          if (table.inputType !== 'hidden' && table.editstate === 'W') {
             if (
-              table.isrequired === "required" &&
-              table.inputType === "subtable" &&
+              table.isrequired === 'required' &&
+              table.inputType === 'subtable' &&
               table.rows.length < 1
             ) {
-              this.errors.push(table);
-            } else if (table.inputType !== "subtable") {
-              if (table.inputType === "nokt") {
+              this.errors.push(table)
+            } else if (table.inputType !== 'subtable') {
+              if (table.inputType === 'nokt') {
                 if (
-                  (!table.value || table.value === "undefined") &&
-                  table.isrequired === "required"
+                  (!table.value || table.value === 'undefined') &&
+                  table.isrequired === 'required'
                 ) {
-                  this.errors.push(table);
-                  return;
+                  this.errors.push(table)
+                  return
                 }
               }
               if (
-                table.inputType !== "ckeditor" &&
-                table.inputType !== "project"
+                table.inputType !== 'ckeditor' &&
+                table.inputType !== 'project'
               ) {
                 if (
                   table.applyvalue &&
                   table.applyvalue.length > table.length
                 ) {
-                  this.errors.push(table);
+                  this.errors.push(table)
                 }
               }
             }
           }
-          this.getFormDataIsNull(table, data);
-        });
+          this.getFormDataIsNull(table, data)
+        })
       }
     },
     getFormData(node, data) {
       if (node.nodeTabLists) {
-        node.nodeTabLists.forEach((tab) => {
-          this.getFormData(tab, data);
-        });
+        node.nodeTabLists.forEach(tab => {
+          this.getFormData(tab, data)
+        })
       }
       if (node.rows) {
-        data[node.fieldName] = [];
+        data[node.fieldName] = []
         // data['tableName'] = node.relationType
-        node.rows.forEach((row) => {
-          const rowData = {};
-          data[node.fieldName].push(rowData);
-          this.getFormData(row, rowData);
-        });
+        node.rows.forEach(row => {
+          const rowData = {}
+          data[node.fieldName].push(rowData)
+          this.getFormData(row, rowData)
+        })
       } else if (node.nodeTableLists) {
-        node.nodeTableLists.forEach((table) => {
+        node.nodeTableLists.forEach(table => {
           if (table.applyvalue) {
-            if (table.inputType === "date" || table.inputType === "date-edit") {
+            if (table.inputType === 'date' || table.inputType === 'date-edit') {
               data[table.fieldName] = moment(table.applyvalue).format(
-                "YYYY-MM-DD"
-              );
+                'YYYY-MM-DD'
+              )
             } else if (
-              table.inputType === "time" ||
-              table.inputType === "time-edits" ||
-              table.inputType === "time-edit"
+              table.inputType === 'time' ||
+              table.inputType === 'time-edits' ||
+              table.inputType === 'time-edit'
             ) {
               data[table.fieldName] = moment(table.applyvalue).format(
-                "YYYY-MM-DD HH:mm:ss"
-              );
-            } else if (table.inputType === "double") {
+                'YYYY-MM-DD HH:mm:ss'
+              )
+            } else if (table.inputType === 'double') {
               if (table.applyvalue) {
                 data[table.fieldName] = this.$options.filters.delcommafy(
                   table.applyvalue
-                );
+                )
               }
-            } else if (table.inputType === "search-switch") {
+            } else if (table.inputType === 'search-switch') {
               if (table.applyvalue) {
-                data[table.fieldName] = "";
+                data[table.fieldName] = ''
               }
             } else {
-              data[table.fieldName] = table.applyvalue;
+              data[table.fieldName] = table.applyvalue
             }
           }
-          if (table.inputType === "nokt") {
-            if (table.value && table.value !== "undefined") {
-              data[table.fieldName] = table.value;
+          if (table.inputType === 'nokt') {
+            if (table.value && table.value !== 'undefined') {
+              data[table.fieldName] = table.value
             }
           }
           // data['tableName'] = table.relationType
-          if (table.inputType !== "hidden" && table.editstate === "W") {
+          if (table.inputType !== 'hidden' && table.editstate === 'W') {
             if (
-              table.isrequired === "required" &&
-              table.inputType === "subtable" &&
+              table.isrequired === 'required' &&
+              table.inputType === 'subtable' &&
               table.rows.length < 1
             ) {
-              this.errors.push(table);
-            } else if (table.inputType !== "subtable") {
-              if (table.inputType === "nokt") {
-                if (!table.value && table.isrequired === "required") {
-                  this.errors.push(table);
-                  return;
+              this.errors.push(table)
+            } else if (table.inputType !== 'subtable') {
+              if (table.inputType === 'nokt') {
+                if (!table.value && table.isrequired === 'required') {
+                  this.errors.push(table)
+                  return
                 }
               } else {
-                if (!table.applyvalue && table.isrequired === "required") {
-                  this.errors.push(table);
-                  return;
+                if (!table.applyvalue && table.isrequired === 'required') {
+                  this.errors.push(table)
+                  return
                 }
               }
               if (
-                table.inputType !== "ckeditor" &&
-                table.inputType !== "project"
+                table.inputType !== 'ckeditor' &&
+                table.inputType !== 'project'
               ) {
                 if (
                   table.applyvalue &&
                   table.applyvalue.length > table.length
                 ) {
-                  this.errors.push(table);
+                  this.errors.push(table)
                 }
               }
             }
           }
-          this.getFormData(table, data);
-        });
+          this.getFormData(table, data)
+        })
       }
     },
-    dateConversion: (time) => {
-      let date = new Date(time + 8 * 3600 * 1000);
-      let nyr = date.toJSON().substr(0, 10);
-      let sfm = date.toJSON().substr(11, 8);
-      return sfm === "00:00:00" ? nyr : `${nyr} ${sfm}`;
+    dateConversion: time => {
+      let date = new Date(time + 8 * 3600 * 1000)
+      let nyr = date.toJSON().substr(0, 10)
+      let sfm = date.toJSON().substr(11, 8)
+      return sfm === '00:00:00' ? nyr : `${nyr} ${sfm}`
     },
     slideToggle(show) {
-      const parent = this.$refs["card1"];
+      const parent = this.$refs['card1']
       if (show) {
-        parent.style.height = "98px";
+        parent.style.height = '98px'
       } else {
-        parent.style.height = "35px";
+        parent.style.height = '35px'
       }
     },
     handleTop() {
       // 回到顶部
-      const sTop =
-        document.documentElement.scrollTop || document.body.scrollTop;
-      scrollTop(window, sTop, 0, this.duration, this.timing);
-      document.getElementById("app").scrollTop = 0;
+      const sTop = document.documentElement.scrollTop || document.body.scrollTop
+      scrollTop(window, sTop, 0, this.duration, this.timing)
+      document.getElementById('app').scrollTop = 0
     },
     handleScroll() {
-      this.backTop = window.pageYOffset >= this.height;
+      this.backTop = window.pageYOffset >= this.height
     },
     // ajax请求 判断文件是否存在
     isExistsScript(url) {
-      var xmlhttp;
+      var xmlhttp
       if (window.XMLHttpRequest) {
-        xmlhttp = new XMLHttpRequest(); //其他浏览器
+        xmlhttp = new XMLHttpRequest() //其他浏览器
       } else if (window.ActiveXObject) {
         try {
-          xmlhttp = new ActiveXObject("Msxml2.XMLHTTP"); //旧版IE
-        } catch (e) {
-        }
+          xmlhttp = new ActiveXObject('Msxml2.XMLHTTP') //旧版IE
+        } catch (e) {}
         try {
-          xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); //新版IE
-        } catch (e) {
-        }
+          xmlhttp = new ActiveXObject('Microsoft.XMLHTTP') //新版IE
+        } catch (e) {}
         if (!xmlhttp) {
-          window.alert("不能创建XMLHttpRequest对象");
+          window.alert('不能创建XMLHttpRequest对象')
         }
       }
-      xmlhttp.open("GET", url, false);
-      xmlhttp.send();
+      xmlhttp.open('GET', url, false)
+      xmlhttp.send()
       // console.log(xmlhttp);
-      return xmlhttp.readyState === 4 && xmlhttp.status === 200;
+      return xmlhttp.readyState === 4 && xmlhttp.status === 200
     },
     importScript() {
       if (this.node.processName) {
         let baseUrl =
-          window.location.origin + window.location.pathname + "/processScript/";
+          window.location.origin + window.location.pathname + '/processScript/'
         let scriptPublic =
-          this.node.processName + "/" + this.node.processName + ".js";
+          this.node.processName + '/' + this.node.processName + '.js'
         let scriptPrivatc =
-          this.node.processName + "/" + this.node.scriptName + "/index.js";
+          this.node.processName + '/' + this.node.scriptName + '/index.js'
         const ctx = require.context(
-          "../../../../public/processScript/",
+          '../../../../public/processScript/',
           true,
           /\.js$/
-        );
-        if (ctx.keys().includes("./" + scriptPublic)) {
+        )
+        if (ctx.keys().includes('./' + scriptPublic)) {
           this.scriptPublic =
-            baseUrl + scriptPublic + "?v=" + new Date().getTime();
+            baseUrl + scriptPublic + '?v=' + new Date().getTime()
         }
-        if (ctx.keys().includes("./" + scriptPrivatc)) {
+        if (ctx.keys().includes('./' + scriptPrivatc)) {
           this.scriptPrivatc =
-            baseUrl + scriptPrivatc + "?v=" + new Date().getTime();
+            baseUrl + scriptPrivatc + '?v=' + new Date().getTime()
         }
       }
     },
@@ -1588,18 +1655,18 @@ export default {
           document.documentElement.clientWidth / 2 -
           this.$refs.companyStyle.clientWidth / 2 -
           50 +
-          "px"
-      };
+          'px'
+      }
     },
-  //  上传Excel文件
-    excel(excel){
+    //  上传Excel文件
+    excel(excel) {
       excelS(excel)
     },
     //数据导入
-    handleUpload (file) {
+    handleUpload(file) {
       this.readExcel(file)
     },
-    readExcel (file) {
+    readExcel(file) {
       const type = file.name.split('.')[1]
       if (!['xlsx', 'xls'].includes(type)) {
         this.$message({ type: 'warning', message: '文件格式错误！请重新选择' })
@@ -1614,7 +1681,7 @@ export default {
           type: 'binary'
         })
         // 这里需要遍历，因为 excel 左下角有多张 sheet 表，如果只需要第一张表就不用遍历
-        wb.SheetNames.forEach((sheetName) => {
+        wb.SheetNames.forEach(sheetName => {
           result.push({
             sheetName: sheetName,
             sheet: XLSX.utils.sheet_to_json(wb.Sheets[sheetName]) // 生成JSON表格内容
@@ -1636,14 +1703,64 @@ export default {
       }
       reader.readAsBinaryString(file.raw)
       console.log(reader)
+    },
+   //出门证相关流程查询操作
+    searchWjdata(data) {
+      searchWjdata({
+        createUser: this.node.applyUserDto.empuid,
+        //createUser: '',
+        materialNo:'',
+        materialName:'',
+        lendNo: this.searchCode,
+        pageNo:1,
+        pageSize:2147483646,
+        statusOne:5,
+        statusTwo:6
+      }).then(rt => {
+        let outTableData=[];
+        if (rt.status === 200) {
+          //console.log(rt)
+          rt.data.forEach(item => {
+            if(item.code==200 && item.result!=null){
+              item.result.records.forEach(outdata=>{
+                outTableData.push(outdata)
+              })
+            }
+          })
+           //console.log(outTableData)
+          // console.log("-------------------")
+           outTableData.sort(function(a,b){
+            var value1 = a.lendNo,
+                value2 = b.lendNo;
+            if(value1 !== value2){
+                return value1.localeCompare(value2);
+            }
+
+        })
+          this.outDoorItemColumn.data=outTableData;
+          console.log(this.outDoorItemColumn.data)
+          this.outDoorDialogVisible=true;
+        }else{
+          this.outDoorItemColumn={};
+          this.$message.error("获取数据失败")
+        }
+      })
+    },
+    submitData(data){
+       //console.log("收到数据-----");
+       //console.log(data);
+       //将数据添加入子表区域
+       insertWjwz(data);
     }
+
   },
+  
   beforeDestroy() {
-    off(window, "scroll", this.handleScroll);
-    off(window, "resize", this.handleScroll);
-    this.setIsTest(false);
+    off(window, 'scroll', this.handleScroll)
+    off(window, 'resize', this.handleScroll)
+    this.setIsTest(false)
   }
-};
+}
 </script>
 <style type="text/scss" lang="scss">
 .root {
@@ -1759,6 +1876,18 @@ export default {
       //   padding: 5px;
       // }
     }
+    .cards-info {
+      display: flex;
+      justify-content: space-between;
+      padding-right: 10px;
+      padding-left: 15px;
+      // .space {
+      //   flex-grow: 1;
+      // }
+      // span {
+      //   padding: 5px;
+      // }
+    }
   }
 
   .cancel-btn {
@@ -1814,7 +1943,7 @@ export default {
   }
 
   .risk:hover {
-    background-color: #FFB90F !important;
+    background-color: #ffb90f !important;
   }
 }
 
@@ -1907,7 +2036,7 @@ export default {
     }
   }
 }
-.excel{
+.excel {
   margin-top: 55px;
   margin-right: 20px;
 }

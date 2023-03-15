@@ -103,7 +103,7 @@
           autocomplete="off"
           show-word-limit
           :type="item.inputType"
-          :autosize="{minRows:4,maxRows:8}"
+          :autosize="{minRows: item.remark == 'h1' ? 1 : 4 ,maxRows: item.remark == 'h1' ? 1 : 8}"
           :maxlength="item.inputType === 'textarea' ? item.length : ''"
           :disabled="item.editstate === 'R' ||  item.inputType === 'applicant'"
           @click.native="

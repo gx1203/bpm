@@ -98,7 +98,7 @@
           :ref="item.id"
           v-model="item.applyvalue"
           clearable
-          :title="item.applyvalue"
+          :title="item.fieldShowName + ' : ' + item.applyvalue"
           :placeholder="item.placeholder"
           autocomplete="off"
           show-word-limit
@@ -152,7 +152,7 @@
           v-model="item.applyvalue"
           clearable
           :placeholder="item.placeholder"
-          :title="item.applyvalue"
+          :title="item.fieldShowName + ' : ' + item.applyvalue"
           maxlength="19"
           type="number"
           on-keypress="return(/[\d-]/.test(String.fromCharCode(event.keyCode)))"
@@ -195,7 +195,7 @@
           type="number"
           maxlength="19"
           on-keypress="return(/[\d.+-]/.test(String.fromCharCode(event.keyCode)))"
-          :title="item.applyvalue"
+          :title="item.fieldShowName + ' : ' + item.applyvalue"
           autocomplete="off"
           :disabled="item.editstate === 'R'"
           @click.native="
@@ -236,7 +236,7 @@
           autocomplete="off"
           type="text"
           maxlength="19"
-          :title="item.applyvalue"
+          :title="item.fieldShowName + ' : ' + item.applyvalue"
           :name="item.id"
           :disabled="item.editstate === 'R'"
           @click.native="
@@ -263,7 +263,7 @@
           type="number"
           maxlength="19"
           on-keypress="return(/[\d.+-]/.test(String.fromCharCode(event.keyCode)))"
-          :title="item.applyvalue"
+          :title="item.fieldShowName + ' : ' + item.applyvalue"
           autocomplete="off"
           :disabled="item.editstate === 'R'"
           @click.native="
@@ -300,7 +300,7 @@
           :ref="item.id"
           v-model="item.applyvalue"
           clearable
-          :title="item.applyvalue"
+          :title="item.fieldShowName + ' : ' + item.applyvalue"
           :placeholder="item.placeholder"
           autocomplete="off"
           show-word-limit
@@ -563,7 +563,7 @@
           :ref="item.id"
           v-model="item.applyvalue"
           autocomplete="off"
-          :title="item.applyvalue"
+          :title="item.fieldShowName + ' : ' + item.applyvalue"
           :disabled="item.editstate === 'R'"
           :placeholder="item.placeholder || '选择月份'"
           clearable
@@ -580,7 +580,7 @@
           :ref="item.id"
           v-model="item.applyvalue"
           autocomplete="off"
-          :title="item.applyvalue"
+          :title="item.fieldShowName + ' : ' + item.applyvalue"
           :disabled="item.editstate === 'R'"
           :placeholder="item.placeholder || '选择年份'"
           clearable
@@ -596,7 +596,7 @@
           :id="item.relationType + '_' + item.fieldName + (index || '')"
           :ref="item.id"
           v-model="item.applyvalue"
-          :title="item.applyvalue"
+          :title="item.fieldShowName + ' : ' + item.applyvalue"
           :disabled="item.editstate === 'R'"
           clearable
           type="datetimerange"
@@ -628,7 +628,7 @@
           v-model="item.applyvalue"
           autocomplete="off"
           :allow-half="item.inputType === 'rating-2'"
-          :title="item.applyvalue"
+          :title="item.fieldShowName + ' : ' + item.applyvalue"
           :disabled="item.editstate === 'R'"
           @change="changeValue"
         />
@@ -861,7 +861,7 @@
             :ref="item.id"
             v-model="item.applyvalue"
             clearable
-            :title="item.applyvalue"
+            :title="item.fieldShowName + ' : ' + item.applyvalue"
             autocomplete="off"
             :disabled="item.editstate === 'R'"
             :placeholder="item.placeholder"
@@ -1206,7 +1206,7 @@ export default {
           this.$set(val, 'applyvalue', userId)
           this.$set(val, 'showValue', userId)
         }
-        
+
         if (this.bizData2) {
           this.shiftData(val, this.bizData2)
         } else {
@@ -1314,7 +1314,7 @@ export default {
       }else {
         return [];
       }
-      
+
     },
     // 文件预览
     onPreviewAction(fileInfo) {

@@ -2018,6 +2018,12 @@ export default {
 </style>
 
 <style type="text/scss" lang="scss">
+@media print{
+   body, html, div {
+       height: auto !important;
+   }
+}
+
 .subject {
   margin-left: 15px;
   margin-top: 20px;
